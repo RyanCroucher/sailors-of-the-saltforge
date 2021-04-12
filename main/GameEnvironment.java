@@ -178,7 +178,7 @@ public class GameEnvironment {
 	 * Prompts the player to choose the duration of the game, during the initial setup of the game.
 	 * Loops until a valid game duration between 20 and 50 is given.
 	 */
-	private static void consoleChooseGameDuration() {
+	public static void consoleChooseGameDuration() {
 		
 		logToConsole("How many days do you need to save the Saltforge?");
 		
@@ -343,7 +343,7 @@ public class GameEnvironment {
 	/**
 	 * Initializes all of the necessary objects and states to be used in the game.
 	 */
-	private static void setupGame() {
+	public static void setupGame() {
 		
 		scanner = new Scanner(System.in);
 		
