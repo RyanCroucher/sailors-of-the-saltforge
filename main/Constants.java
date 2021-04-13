@@ -20,11 +20,11 @@ public class Constants {
 	 */
 	public final static String ISLAND_SALTFORGE_DESCRIPTION = "Welcome to The Salt Forge, the home to the salt dwarves ruled by the great Old Saltbeard, the"
 						+ "\nsaltiest of them all."
-						+ "\nAs you pull into port on the mountainous island, you can see that the fortress-city is in a state of"
+						+ "\n\nAs you pull into port on the mountainous island, you can see that the fortress-city is in a state of"
 						+ "\ndisrepair, buildings and roads need upkeep, and parts of the cliff are eroding, occassionally falling"
 						+ "\ninto areas of the city. When you arrive at the market however you are overwhelmed by the sound of"
 						+ "\nsmithys working in their forges and the sight of stacks of iron and other materials."
-						+ "\nI’m sure you won’t find it hard to to buy raw materials to take with you here, it’s also said that the"
+						+ "\n\nI’m sure you won’t find it hard to to buy raw materials to take with you here, it’s also said that the"
 						+ "\ndwarves will pay big coin for beers and ales, I hope you have some on board.";
 	
 	public final static String ISLAND_TUNIA = "The Grand Duchy of Tunia";

@@ -1,6 +1,7 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -24,7 +25,9 @@ public class GameEnvironment {
 	 */
 	private static Route[] routes;
 	
-	private static String curIsland = Constants.ISLAND_SALTFORGE;
+	private static Island[] islands;
+	
+	private static Island curIsland;
 	
 	/**
 	 * The scanner is created once when the game begins, and handles all console input.
@@ -79,17 +82,20 @@ public class GameEnvironment {
 		
 		banner += "\n";
 		
-		for (int i = 0; i < (banner_length - n) / 2; i++) {
-			banner += "*";
+		String midline = "";
+		
+		for (int i = 0; i < (banner_length - n - 2) / 2; i++) {
+			midline += "*";
 		}
 		
-		banner += " " + s + " ";
+		midline += " " + s + " ";
+		int difference = banner_length - midline.length();
 		
-		for (int i = 0; i < (banner_length - n - 3) / 2; i++) {
-			banner += "*";
+		for (int i = 0; i < difference; i++) {
+			midline += "*";
 		}
 		
-		banner += "\n";
+		banner += midline + "\n";
 		
 		for (int i = 0; i < banner_length; i++) {
 			banner += "*";
@@ -303,6 +309,8 @@ public class GameEnvironment {
 		Island skullHaven = new Island(Constants.ISLAND_SKULLHAVEN, Constants.ISLAND_SKULLHAVEN_DESCRIPTION);
 		Island seaNomads = new Island(Constants.ISLAND_SEANOMADS, Constants.ISLAND_SEANOMADS_DESCRIPTION);
 		
+		islands = new Island[] {saltForge, tunia, sandyFields, skullHaven, seaNomads};
+		
 		Island[] tranquilExpansePair = {saltForge, sandyFields};
 		Island[] basaltSpiresPair = {saltForge, tunia};
 		Island[] aroundBasaltPair = {saltForge, tunia};
@@ -338,6 +346,9 @@ public class GameEnvironment {
 		Route jackalSea = new Route("The Sea of Jackals", Constants.ROUTE_JACKAL_SEA_DESCRIPTION, 60, 12, jackalSeaPairList);
 		
 		routes = new Route[] {tranquilExpanse, basaltSpires, aroundBasaltSpires, shipwreckerShoals, oysterBay, jackalSea};
+	
+		
+		curIsland = saltForge;
 	}
 	
 	/**
@@ -373,6 +384,55 @@ public class GameEnvironment {
 		gameDuration = days;
 	}
 	
+	public static void consoleIslandWelcome(Island island) {
+		logToConsole("");
+		logToConsole(getBanner(island.getIslandName()));
+		logToConsole("");
+		logToConsole(island.getIslandDescription());
+		logToConsole("");
+	}
+	
+	public static void consolePresentIslandOptions(Island island) {
+		
+		int curOptionNumber = 1;
+		
+		//maps console option to object array of {Route, destination Island}
+		HashMap<Integer, Object[]> travelOptions = new HashMap<Integer, Object[]>();
+		
+		ArrayList<Route> myRoutes = new ArrayList<Route>();
+		for (Route route : routes) {
+			if (route.includesIsland(island))
+				myRoutes.add(route);
+		}
+		
+		for (Route route : myRoutes) {
+			for (Island destinationIsland : route.getPossibleDestinations(island)) {
+				travelOptions.put(curOptionNumber++, new Object[] {route, destinationIsland});
+			}
+		}
+		
+		for (int travelOption : travelOptions.keySet()) {
+			Object[] routeIslandPair = travelOptions.get(travelOption);
+			Island destinationIsland = (Island) routeIslandPair[1];
+			Route viaRoute = (Route) routeIslandPair[0];
+			
+			logToConsole(travelOption + ". Travel to " + destinationIsland.getIslandName() + " via " + viaRoute.getName() + ".");
+		}
+		
+	}
+	
+	public static void arriveAtIsland(Island island) {
+		
+		curIsland = island;
+		
+		//TODO set Screen?
+		
+		consoleIslandWelcome(curIsland);
+		
+		consolePresentIslandOptions(curIsland);
+		
+	}
+	
 	
 	/**
 	 * Initializes the game and walks the player through character creation.
@@ -404,6 +464,8 @@ public class GameEnvironment {
 		else {
 			//startGUI();
 		}
+		
+		arriveAtIsland(islands[0]); // arrive at the saltforge
 
 	}
 

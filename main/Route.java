@@ -128,6 +128,19 @@ public class Route {
 	}
 	
 	/**
+	 * Return whether you can travel to or from an island using this route
+	 * @param island the island to check
+	 * @return true if route includes this island, else false
+	 */
+	public boolean includesIsland(Island island) {
+		for (Island[] pair : locationPairs) {
+			if (pair[0] == island || pair[1] == island)
+				return true;
+		}
+		return false;
+	}
+	
+	/**
 	 * Returns a list of all islands reachable by the given island via this route.
 	 * @param currentLocation the location from where you want to find all possible destinations via this route
 	 * @return a list of all islands reachable by the given island via this route.
