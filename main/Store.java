@@ -92,5 +92,29 @@ public class Store {
 			inventory.setItemQuantity(item, (int) (Math.random() * (maxQuantity - minQuantity) + minQuantity));
 		}
 	}
+	
+	/**
+	 * 
+	 * @return the items in the store's inventory
+	 */
+	public ArrayList<Item> getInventoryItems() {
+		return inventory.getInventoryItems();
+	}
+	
+	/**
+	 * 
+	 * @return a list of all items imported at this store
+	 */
+	public ArrayList<Item> getImports() {
+		return imports;
+	}
+	
+	/**
+	 * 
+	 * @return a list of all items exported at this store
+	 */
+	public ArrayList<Item> getExports() {
+		return exports;
+	}
 
 }

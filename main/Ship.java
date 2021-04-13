@@ -13,6 +13,7 @@ public class Ship {
 	//private Inventory inventory;
 	private ArrayList<String> upgrades;
 	private ShipModel model;
+	private String modelName;
 	private int maxHull;
 	private int hull;
 	private int maxCrew;
@@ -99,6 +100,21 @@ public class Ship {
 	private void initializeShip(ShipModel model, int maxHull, int maxCrew, int cargoCapacity, int speed, int weaponRating) {
 		this.model = model;
 		
+		switch(model) {
+			case MERCHANTMAN:
+				modelName = "Merchantman";
+				break;
+			case CUTTER:
+				modelName = "Elven Cutter";
+				break;
+			case SLOOP:
+				modelName = "Tunian War-Sloop";
+				break;
+			case BARGE:
+				modelName = "Dwarven Barge";
+				break;
+		}
+		
 		this.maxHull = maxHull;
 		this.setHull(maxHull);
 		
@@ -148,6 +164,14 @@ public class Ship {
 	 */
 	public ShipModel getModel() {
 		return model;
+	}
+	
+	/**
+	 * 
+	 * @return the name of the model.
+	 */
+	public String getModelName() {
+		return modelName;
 	}
 
 	/**

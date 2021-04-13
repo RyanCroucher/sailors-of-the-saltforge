@@ -543,10 +543,97 @@ public class GameEnvironment {
 		logToConsole("");
 	}
 	
-	public static void consolePresentStoreOptions(Island island) {
+	public static HashMap<Integer, Item> consolePresentStoreOptions(Island island) {
+		
+		logToConsole("");
+		logToConsole("You enter the thriving marketplace, ready to earn your fortune in the name of The Salt Forge.");
+		logToConsole("");
+		logToConsole("You quickly discover the main imports and exports of this market:");
 		
 		Store store = island.getIslandStore();
 		
+		String importString = "Main imports (Will buy and sell for double the price): ";
+		ArrayList<Item> imports = store.getImports();
+		ArrayList<String> importStrings = new ArrayList<String>();
+		
+		for (Item importItem : imports) {
+			importStrings.add(importItem.getName());
+		}
+		
+		importString += String.join(", ", importStrings);
+		
+		String exportString = "Main exports (Will buy and sell for half the price): ";
+		ArrayList<Item> exports = store.getExports();
+		ArrayList<String> exportStrings = new ArrayList<String>();
+		
+		for (Item exportItem : exports) {
+			exportStrings.add(exportItem.getName());
+		}
+		
+		exportString += String.join(", ", exportStrings);
+		
+		logToConsole(importString);
+		logToConsole(exportString);
+		
+		logToConsole("");
+		logToConsole("To buy or sell an item, type the choice number and then the quantity to trade, seperated by a space.");
+		logToConsole("I.e. to buy the first good, type 1 10, to sell the first good, type 2 3");
+		logToConsole("");
+		
+		int consoleOptionNumber = 1;
+		
+		HashMap<Integer, Item> transactionOptions = new HashMap<Integer, Item>();
+		
+		for (Item item: store.getInventoryItems()) {
+			transactionOptions.put(consoleOptionNumber, item);
+			logToConsole(consoleOptionNumber++ + ". Buy " + item.getName() + " for " + store.getItemPrice(item) + " gold crowns each.");
+			transactionOptions.put(consoleOptionNumber, item);
+			logToConsole(consoleOptionNumber++ + ". Sell " + item.getName() + " for " + store.getItemPrice(item) + " gold crowns each.");
+		}
+		
+		logToConsole(consoleOptionNumber + ". Return to your " + Player.getShip().getModelName() + ".");
+		
+		logToConsole("");
+		
+		return transactionOptions;
+		
+	}
+	
+	public static void goToMarket(Island island) {
+		HashMap<Integer, Item> transactionOptions = consolePresentStoreOptions(island);
+		
+		int choice = 0;
+		int quantity = 0;
+		
+		while (choice < 1 || choice > transactionOptions.size() + 1) {
+			String input = consoleGetInput("What do you want to do?", false);
+			String[] splitInput = input.split(" ");
+			
+			try {
+				
+				choice = Integer.parseInt(splitInput[0]);
+				quantity = Integer.parseInt(splitInput[1]);
+				
+			} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+				logToConsole("Please enter a valid choice (and quantity)");
+			}
+		}
+		
+		//Not one of the buy/sell options, must be exit
+		if (choice == transactionOptions.size() + 1) {
+			arriveAtIsland(island);
+		} else {
+		
+			String buyOrSell = choice % 2 == 0 ? "sell" : "buy";
+			
+			logToConsole("Player wants to " + buyOrSell + " " + quantity + " " + transactionOptions.get(choice).getName());
+			
+			logToConsole("");
+			
+			consoleGetInput("<<Press enter to continue>>", true);
+			
+			goToMarket(island);
+		}
 	}
 	
 	/**
@@ -583,7 +670,7 @@ public class GameEnvironment {
 		
 		//go to market
 		if (choice == 1) {
-			consolePresentStoreOptions(island);
+			goToMarket(island);
 		}
 		
 		else if (travelOptions.containsKey(choice)) {
