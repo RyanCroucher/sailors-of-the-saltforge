@@ -18,7 +18,10 @@ import main.Constants.ShipModel;
 public class GameEnvironment {
 	
 	//String curScreen;
-	//ArrayList<Item>;
+	/**
+	 * an arraylist of all item instances in the game (one for each item type)
+	 */
+	private static ArrayList<Item> items;
 	
 	/**
 	 * An array of all of the routes between island pairs in the game.
@@ -309,11 +312,90 @@ public class GameEnvironment {
 	 */
 	private static void setupIslandsAndRoutes() {
 		
-		Island saltForge = new Island(Constants.ISLAND_SALTFORGE, Constants.ISLAND_SALTFORGE_DESCRIPTION);
-		Island tunia = new Island(Constants.ISLAND_TUNIA, Constants.ISLAND_TUNIA_DESCRIPTION);
-		Island sandyFields = new Island(Constants.ISLAND_SANDYFIELDS, Constants.ISLAND_SANDYFIELDS_DESCRIPTION);
-		Island skullHaven = new Island(Constants.ISLAND_SKULLHAVEN, Constants.ISLAND_SKULLHAVEN_DESCRIPTION);
-		Island seaNomads = new Island(Constants.ISLAND_SEANOMADS, Constants.ISLAND_SEANOMADS_DESCRIPTION);
+		//TODO clean this up
+		
+		
+		//initialize saltForge inventory and store
+		Inventory saltForgeInventory = new Inventory();
+		saltForgeInventory.addItem(items.get(0), 1);
+		saltForgeInventory.addItem(items.get(1), 1);
+		saltForgeInventory.addItem(items.get(2), 1);
+		saltForgeInventory.addItem(items.get(3), 1);
+		
+		ArrayList<Item> imports = new ArrayList<Item>();
+		ArrayList<Item> exports = new ArrayList<Item>();
+		imports.add(items.get(1));
+		exports.add(items.get(2));
+		
+		Store saltForgeStore = new Store(saltForgeInventory, imports, exports);
+		saltForgeStore.randomizeInventory(0, 60);
+		
+		//initialize tunia inventory and store
+		Inventory tuniaInventory = new Inventory();
+		tuniaInventory.addItem(items.get(0), 1);
+		tuniaInventory.addItem(items.get(1), 1);
+		tuniaInventory.addItem(items.get(2), 1);
+		tuniaInventory.addItem(items.get(3), 1);
+		
+		imports = new ArrayList<Item>();
+		exports = new ArrayList<Item>();
+		imports.add(items.get(0));
+		exports.add(items.get(1));
+		
+		Store tuniaStore = new Store(tuniaInventory, imports, exports);
+		tuniaStore.randomizeInventory(0, 60);
+		
+		//initialize sandyFields inventory and store
+		Inventory sandyFieldsInventory = new Inventory();
+		sandyFieldsInventory.addItem(items.get(0), 1);
+		sandyFieldsInventory.addItem(items.get(1), 1);
+		sandyFieldsInventory.addItem(items.get(2), 1);
+		sandyFieldsInventory.addItem(items.get(3), 1);
+		
+		imports = new ArrayList<Item>();
+		exports = new ArrayList<Item>();
+		imports.add(items.get(2));
+		exports.add(items.get(3));
+		
+		Store sandyFieldsStore = new Store(sandyFieldsInventory, imports, exports);
+		sandyFieldsStore.randomizeInventory(0, 60);
+		
+		//initialize skullHaven inventory and store
+		Inventory skullHavenInventory = new Inventory();
+		skullHavenInventory.addItem(items.get(0), 1);
+		skullHavenInventory.addItem(items.get(1), 1);
+		skullHavenInventory.addItem(items.get(2), 1);
+		skullHavenInventory.addItem(items.get(3), 1);
+		
+		imports = new ArrayList<Item>();
+		exports = new ArrayList<Item>();
+		imports.add(items.get(3));
+		imports.add(items.get(1));
+		
+		Store skullHavenStore = new Store(skullHavenInventory, imports, exports);
+		skullHavenStore.randomizeInventory(0, 60);
+		
+		//initialize skullHaven inventory and store
+		Inventory seaNomadsInventory = new Inventory();
+		seaNomadsInventory.addItem(items.get(0), 1);
+		seaNomadsInventory.addItem(items.get(1), 1);
+		seaNomadsInventory.addItem(items.get(2), 1);
+		seaNomadsInventory.addItem(items.get(3), 1);
+		
+		imports = new ArrayList<Item>();
+		exports = new ArrayList<Item>();
+		imports.add(items.get(2));
+		imports.add(items.get(3));
+		exports.add(items.get(0));
+		
+		Store seaNomadsStore = new Store(seaNomadsInventory, imports, exports);
+		seaNomadsStore.randomizeInventory(0, 60);
+		
+		Island saltForge = new Island(Constants.ISLAND_SALTFORGE, Constants.ISLAND_SALTFORGE_DESCRIPTION, saltForgeStore);
+		Island tunia = new Island(Constants.ISLAND_TUNIA, Constants.ISLAND_TUNIA_DESCRIPTION, tuniaStore);
+		Island sandyFields = new Island(Constants.ISLAND_SANDYFIELDS, Constants.ISLAND_SANDYFIELDS_DESCRIPTION, sandyFieldsStore);
+		Island skullHaven = new Island(Constants.ISLAND_SKULLHAVEN, Constants.ISLAND_SKULLHAVEN_DESCRIPTION, skullHavenStore);
+		Island seaNomads = new Island(Constants.ISLAND_SEANOMADS, Constants.ISLAND_SEANOMADS_DESCRIPTION, seaNomadsStore);
 		
 		islands = new Island[] {saltForge, tunia, sandyFields, skullHaven, seaNomads};
 		
@@ -357,6 +439,19 @@ public class GameEnvironment {
 		curIsland = saltForge;
 	}
 	
+	public static void setupItems() {
+		Item luxuryGoods = new Item("Luxury Goods", Constants.ITEM_BASE_PRICE_LUXURY);
+		Item alcohol = new Item("Alcohol", Constants.ITEM_BASE_PRICE_ALCOHOL);
+		Item rawMaterials = new Item("Raw Materials", Constants.ITEM_BASE_PRICE_RAW_MATERIALS);
+		Item food = new Item("Food", Constants.ITEM_BASE_PRICE_FOOD);
+		
+		items = new ArrayList<Item>();
+		items.add(luxuryGoods);
+		items.add(alcohol);
+		items.add(rawMaterials);
+		items.add(food);
+	}
+	
 	/**
 	 * Initializes all of the necessary objects and states to be used in the game.
 	 */
@@ -364,6 +459,7 @@ public class GameEnvironment {
 		
 		scanner = new Scanner(System.in);
 		
+		setupItems();
 		setupIslandsAndRoutes();
 		
 	}
@@ -447,6 +543,12 @@ public class GameEnvironment {
 		logToConsole("");
 	}
 	
+	public static void consolePresentStoreOptions(Island island) {
+		
+		Store store = island.getIslandStore();
+		
+	}
+	
 	/**
 	 * Displays a list of every action the player can take at the current island
 	 * @param island the current location of the player
@@ -454,6 +556,9 @@ public class GameEnvironment {
 	public static void consolePresentIslandOptions(Island island) {
 		
 		int curOptionNumber = 1;
+		
+		logToConsole(curOptionNumber + ". Go to the market.");
+		curOptionNumber++;
 		
 		HashMap<Integer, Object[]> travelOptions = getTravelOptions(curOptionNumber, island);
 		
@@ -476,7 +581,12 @@ public class GameEnvironment {
 			}
 		}
 		
-		if (travelOptions.containsKey(choice)) {
+		//go to market
+		if (choice == 1) {
+			consolePresentStoreOptions(island);
+		}
+		
+		else if (travelOptions.containsKey(choice)) {
 			
 			Island chosenIsland = (Island) travelOptions.get(choice)[1];
 			Route chosenRoute = (Route) travelOptions.get(choice)[0];

@@ -15,11 +15,11 @@ class RouteTest {
 	void getDestinationsTest() {
 		
 		//initialize some islands to create routes between
-		Island island_a = new Island("A", "this is a test island");
-		Island island_b = new Island("B", "this is a test island");
-		Island island_c = new Island("C", "this is a test island");
-		Island island_d = new Island("D", "this is a test island");
-		Island island_e = new Island("E", "this is a test island");
+		Island island_a = new Island("A", "this is a test island", null);
+		Island island_b = new Island("B", "this is a test island", null);
+		Island island_c = new Island("C", "this is a test island", null);
+		Island island_d = new Island("D", "this is a test island", null);
+		Island island_e = new Island("E", "this is a test island", null);
 		
 		//good pairs
 		Island[] pair_one = {island_a, island_b};
@@ -113,9 +113,9 @@ class RouteTest {
 	@Test
 	void includesIslandTest() {
 		//initialize some islands to create routes between
-		Island island_a = new Island("A", "this is a test island");
-		Island island_b = new Island("B", "this is a test island");
-		Island island_c = new Island("C", "this is a test island");
+		Island island_a = new Island("A", "this is a test island", null);
+		Island island_b = new Island("B", "this is a test island", null);
+		Island island_c = new Island("C", "this is a test island", null);
 		
 		Island[] pair_one = {island_a, island_b};
 		

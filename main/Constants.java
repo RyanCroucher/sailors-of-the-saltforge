@@ -184,4 +184,12 @@ public class Constants {
 	
 	public final static int SHIP_MIN_MAX_CREW = 1;
 	public final static int SHIP_MAX_MAX_CREW = 50;
+	
+	
+	
+	//ITEM stats
+	public final static int ITEM_BASE_PRICE_LUXURY = 100;
+	public final static int ITEM_BASE_PRICE_ALCOHOL = 50;
+	public final static int ITEM_BASE_PRICE_RAW_MATERIALS = 50;
+	public final static int ITEM_BASE_PRICE_FOOD = 20;
 }

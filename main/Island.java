@@ -8,17 +8,17 @@ public class Island {
 
 	private String islandName;
 	private String islandDescription;
-	//private Store islandStore;
+	private Store islandStore;
 	
 	/**
 	 * Constructs an instance of the island class with the given parameters
 	 * @param name The name of the island
 	 * @param description The description of the island
 	 */
-	public Island(String name, String description) {
+	public Island(String name, String description, Store store) {
 		islandName = name;
 		islandDescription = description;
-//		islandStore = store;
+		islandStore = store;
 	}
 	
 	
@@ -37,12 +37,14 @@ public class Island {
 	public String getIslandDescription() {
 		return islandDescription;
 	}
+
 	/**
-	 * TODO create Store class so we can add a store to the island
+	 * Get the store attached to the island
+	 * @return the store instance of this island
 	 */
-//	public Store getIslandStore() {
-//		return islandStore
-//	}
+	public Store getIslandStore() {
+		return islandStore;
+	}
 	
 	
 	

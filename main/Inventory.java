@@ -11,6 +11,10 @@ public class Inventory {
 
 	private HashMap<Item, Integer> inventory;
 	
+	public Inventory() {
+		inventory = new HashMap<Item, Integer>();
+	}
+	
 	/**
 	 * Get the quantity of an item given that it is in the HashMap
 	 * @param item The item we want to retrieve the quantity of

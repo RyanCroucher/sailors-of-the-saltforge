@@ -63,14 +63,14 @@ public class Store {
 			throw new IllegalArgumentException("Quantity must be greater than zero");
 		}
 		else {
-			inventory.addItem(Item item, int quantity);
+			inventory.addItem(item, quantity);
 		}
 	}
 	
 	/**
 	 * Calculate the price of an item depending on whether it's a main import/export or not
 	 * @param item the item to calculate the modified price of
-	 * @return the modified price of the itme
+	 * @return the modified price of the item
 	 */
 	public int getItemPrice(Item item) {
 		if (imports.contains(item)) {
