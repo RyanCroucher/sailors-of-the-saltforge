@@ -33,12 +33,12 @@ public class Constants {
 	 */
 	public final static String ISLAND_TUNIA_DESCRIPTION = "Welcome to the Grand Duchy of Tunia. It is ruled by the Grand Duke Frederick Von Kraus, and is"
 						+ "\nhome to the richest and greediest people along the coasts."
-						+ "\nAfter you manage to deal with the bureaucracy of coming into port, you see a grand city ahead of"
+						+ "\n\nAfter you manage to deal with the bureaucracy of coming into port, you see a grand city ahead of"
 						+ "\nyou filled with all the expected pomp and circumstance you have heard about. It boasts arguably the"
 						+ "\nlargest and busiest of marketplaces you’ve ever witnessed, with people trying to flog their wares to"
 						+ "\nyou from every angle. A large number of these are brewers and vinters telling you they have the"
 						+ "\nbest beers and wines you’ll ever have tasted."
-						+ "\nWith the number of people around here hawking alcohols of various varieties you should be able to"
+						+ "\n\nWith the number of people around here hawking alcohols of various varieties you should be able to"
 						+ "\nhaggle some good prices for them, that being said if you have anything aboard that might help"
 						+ "\nsomeone flaunt their wealth you might be able to make a fair bit of coin here.";
 	
@@ -48,13 +48,13 @@ public class Constants {
 	 */
 	public final static String ISLAND_SANDYFIELDS_DESCRIPTION = "Welcome to Sandy Fields. A town led by a peasant syndicate, it is the home to some of the hardest"
 						+ "\nworking and humblest farmers this side of the continent."
-						+ "\nYou dock at their pier and take in the sights of this humble town. There are no major defensive"
+						+ "\n\nYou dock at their pier and take in the sights of this humble town. There are no major defensive"
 						+ "\nwalls or castles in sight. For as far as your eyes can see there are fields of every variety you can"
 						+ "\nimagine, with farmhouses dotted amongst them. Just down from the pier you find the marketplace a"
 						+ "\nfairly busy place yet no one seems to be forcing their wares upon you. Most of the people selling"
 						+ "\ngoods have wagons filled with many different foodstuffs, wheat, pumpkins, fruits and meats. Each"
 						+ "\nmerchant happy to sell you whatever you need."
-						+ "\nThese people have ample food to go around and have no need of high prices; all foodstuffs seem to"
+						+ "\n\nThese people have ample food to go around and have no need of high prices; all foodstuffs seem to"
 						+ "\nbe incredibly cheap here. However, you have heard a few people mention they need more materials"
 						+ "\nsuch as wood for more barns and metals for their tools. Perhaps you could oblige these needs?";
 						
@@ -65,10 +65,10 @@ public class Constants {
 	public final static String ISLAND_SKULLHAVEN_DESCRIPTION = "YARRR!!! Welcome to Skull Haven. The hidden island home of the worst and most dangerous"
 						+ "\npeople around. This place doesn’t seem to have a stable leader but someone new appears to take the"
 						+ "\ntitle by force once a week or so."
-						+ "\nYou are able to navigate your way to the island from clues and maps given to you by Old Saltbeard."
+						+ "\n\nYou are able to navigate your way to the island from clues and maps given to you by Old Saltbeard."
 						+ "\nThe port is unkempt and riddled with ships flying a variety of colours, you can see in the city that"
 						+ "\nfights break out at the slightest of arguments and drunkards can be found littering the streets."
-						+ "\nWhat they pass as a marketplace has seen better days and doesn’t have a lot to offer you, however"
+						+ "\n\nWhat they pass as a marketplace has seen better days and doesn’t have a lot to offer you, however"
 						+ "\nthey are very eager to purchase food and alcohol from you if you have it and are more than happy to"
 						+ "\nuse their ill gotten gains to get it. If you’re brave enough and think you can handle them, you may"
 						+ "\nalso be able to aquire some cheap labour to help top up your crew here. ";
@@ -79,14 +79,14 @@ public class Constants {
 	 */		
 	public final static String ISLAND_SEANOMADS_DESCRIPTION = "Welcome to the flotilla of the Sea Nomads. This is an artificial island made of connected ships and"		
 						+"\nis ruled by “The Mother”, a particularly old and wise woman among the nomads."
-						+"\nUsually quite hard to find as they go where the currents take them, they have of late found"
+						+"\n\nUsually quite hard to find as they go where the currents take them, they have of late found"
 						+"\nthemselves staying a bit more sedentary so they can trade for the things they need more easily."
-						+"\nWhen you pull alongside the island and attach your ship you can see that it appears to function as"
+						+"\n\nWhen you pull alongside the island and attach your ship you can see that it appears to function as"
 						+"\nany town would; on the deck you see tents that the people work and socialise in during the day"
 						+"\nwhile they go below deck at night to their homes."
-						+"\nTheir marketplace is filled with fancy items, hand-made by the Nomad artisans. A lot of which are"
+						+"\n\nTheir marketplace is filled with fancy items, hand-made by the Nomad artisans. A lot of which are"
 						+"\nmade using pearls found in the oysters that are a staple of the Nomad’s diets."
-						+"\nWith the lack of natural resources here we should be able to sell them wood and metals to make"
+						+"\n\nWith the lack of natural resources here we should be able to sell them wood and metals to make"
 						+"\nrepairs to the ships and foods to supplement their seafood heavy diet. In return, perhaps we can"
 						+"\nnegotiate better deals for these hand-made goods to sell on in other ports.";
 	
