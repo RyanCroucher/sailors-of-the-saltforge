@@ -109,5 +109,26 @@ class RouteTest {
 		}
 		
 	}
+	
+	@Test
+	void includesIslandTest() {
+		//initialize some islands to create routes between
+		Island island_a = new Island("A", "this is a test island");
+		Island island_b = new Island("B", "this is a test island");
+		Island island_c = new Island("C", "this is a test island");
+		
+		Island[] pair_one = {island_a, island_b};
+		
+		ArrayList<Island[]> pairList_one = new ArrayList<Island[]>();
+		pairList_one.add(pair_one);
+		
+		Route route_a = new Route("Route A", "this is a test route", 20, 8, pairList_one);
+		
+		//route_a should contain islands a and b, but not c
+		assertTrue(route_a.includesIsland(island_a));
+		assertTrue(route_a.includesIsland(island_b));
+		assertFalse(route_a.includesIsland(island_c));
+		
+	}
 
 }

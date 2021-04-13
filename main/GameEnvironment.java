@@ -25,8 +25,14 @@ public class GameEnvironment {
 	 */
 	private static Route[] routes;
 	
+	/**
+	 * An array of all island locations in the game
+	 */
 	private static Island[] islands;
 	
+	/**
+	 * The island where the player is currently located
+	 */
 	private static Island curIsland;
 	
 	/**
@@ -384,6 +390,10 @@ public class GameEnvironment {
 		gameDuration = days;
 	}
 	
+	/**
+	 * Greet the player with some information about the island they've arrived at
+	 * @param island the current location of the player
+	 */
 	public static void consoleIslandWelcome(Island island) {
 		logToConsole("");
 		logToConsole(getBanner(island.getIslandName()));
@@ -392,10 +402,13 @@ public class GameEnvironment {
 		logToConsole("");
 	}
 	
-	public static void consolePresentIslandOptions(Island island) {
-		
-		int curOptionNumber = 1;
-		
+	/**
+	 * Gets all travel destinations (via route) from this location
+	 * @param curOptionNumber the current option number (for display/choice purposes)
+	 * @param island current player location
+	 * @return a hashmap mapping a choice number to a Route, Island pair
+	 */
+	public static HashMap<Integer, Object[]> getTravelOptions(int curOptionNumber, Island island) {
 		//maps console option to object array of {Route, destination Island}
 		HashMap<Integer, Object[]> travelOptions = new HashMap<Integer, Object[]>();
 		
@@ -411,15 +424,47 @@ public class GameEnvironment {
 			}
 		}
 		
+		return travelOptions;
+	}
+	/**
+	 * Given a list of options, display these choices to the player
+	 * @param travelOptions a hashmap mapping choice number to a Route, Island pair
+	 */
+	private static void consolePresentTravelOptions(HashMap<Integer, Object[]> travelOptions) {
 		for (int travelOption : travelOptions.keySet()) {
 			Object[] routeIslandPair = travelOptions.get(travelOption);
 			Island destinationIsland = (Island) routeIslandPair[1];
 			Route viaRoute = (Route) routeIslandPair[0];
 			
-			logToConsole(travelOption + ". Travel to " + destinationIsland.getIslandName() + " via " + viaRoute.getName() + ".");
+			int riskLevel = viaRoute.getRiskLevel();
+			int duration = viaRoute.getDuration();
+			
+			String routeInfo = "(Encounter Chance: " + riskLevel + "%, Travel Time: " + duration + " hours)";
+			
+			logToConsole(travelOption + ". Travel to " + destinationIsland.getIslandName() + " via " + viaRoute.getName() + " " + routeInfo);
 		}
 		
 		logToConsole("");
+	}
+	
+	/**
+	 * Displays a list of every action the player can take at the current island
+	 * @param island the current location of the player
+	 */
+	public static void consolePresentIslandOptions(Island island) {
+		
+		int curOptionNumber = 1;
+		
+		HashMap<Integer, Object[]> travelOptions = getTravelOptions(curOptionNumber, island);
+		
+		//update curOptionNumber to the latest value
+		for (int key : travelOptions.keySet()) {
+			curOptionNumber = Math.max(curOptionNumber, key);
+		}
+		
+		curOptionNumber++;
+		
+		consolePresentTravelOptions(travelOptions);
 		
 		int choice = 0;
 		
@@ -446,6 +491,10 @@ public class GameEnvironment {
 		
 	}
 	
+	/**
+	 * Set current location of the player to another island
+	 * @param island the island that the player arrives at
+	 */
 	public static void arriveAtIsland(Island island) {
 		
 		curIsland = island;
