@@ -94,30 +94,30 @@ public class Constants {
 	
 	public final static String ROUTE_TRANQUIL_EXPANSE_DESCRIPTION = "You sail through the Tranquil Expanse - a wide, gentle sea, reknowned for it’s easy sailing. "
 																	+ "\nThe vast ocean spreads before you in a seemingly endless expanse of azure blue and gentle breezes. "
-																	+ "\nYour sailors rejoice as they haul in bulging nets teeming with fish and you feel a sense of calm wash over you, this is where you belong, on the open sea. ";
+																	+ "\n\nYour sailors rejoice as they haul in bulging nets teeming with fish and you feel a sense of calm wash over you, this is where you belong, on the open sea. ";
 	
 	public final static String ROUTE_BASALT_SPIRES_DESCRIPTION = "You sail through the Basalt Spires – a treacherous region between Tunia and the Saltforge where great basalt spires thrust up from the sea bed and breach the surface. "
-																+ "\nWaves thunder and collapse into white spray upon the mysterious terrain, soaking your crew as they frantically use long poles to push the ship away from disaster. "
-																+ "\nLegend says that the spires were once the enormous tentacles of a sea monster who preyed upon entire fleets, dragging them into the depths. "
+																+ "\n\nWaves thunder and collapse into white spray upon the mysterious terrain, soaking your crew as they frantically use long poles to push the ship away from disaster. "
+																+ "\n\nLegend says that the spires were once the enormous tentacles of a sea monster who preyed upon entire fleets, dragging them into the depths. "
 																+ "\nOne day the sea monster preyed upon the wrong ship, and the mighty sorceror on board cast a spell and turned it to stone. "
-																+ "\nThese days, pirates and similar miscreants love to hide their ships behind the basalt spires and ambush unsuspecting merchants. ";
+																+ "\n\nThese days, pirates and similar miscreants love to hide their ships behind the basalt spires and ambush unsuspecting merchants. ";
 	
 	public final static String ROUTE_AROUND_BASALT_DESCRIPTION = "You direct your helmsman to carefully skirt Around the Basalt Spires – a treacherous region between Tunia and the Salt Forge. "
 																+ "\nThis adds time to the journey, but lowers the risk of being ambushed by any ill-doers lurking amongst and behind the huge rock pillars.";
 	
 	public final static String ROUTE_SHIPWRECKER_SHOALS_DESCRIPTION = "You skilfully guide your ship through the Shipwrecker Shoals, a deadly shallow reef that has claimed the lives of countless sailors who dared to navigate through. "
-																	+ "\nIt was not by mistake that Old Saltbeard chose you for this job and lent you his old map, you prove your worth as you tersely bark orders at your crew, dodging shipwrecks and hidden shallows alike as you follow the dubious directions. "
-																	+ "\nEventually, you heave a great sigh of relief as you reach the other side. ";
+																	+ "\n\nIt was not by mistake that Old Saltbeard chose you for this job and lent you his old map, you prove your worth as you tersely bark orders at your crew, dodging shipwrecks and hidden shallows alike as you follow the dubious directions. "
+																	+ "\n\nEventually, you heave a great sigh of relief as you reach the other side. ";
 	
 	public final static String ROUTE_JACKAL_SEA_DESCRIPTION = "You grit your teeth as you reluctantly order your helmsman to steer you into the Jackal Sea – a dark and stormy sea surrounding the mysterious Skull Island. "
 															+ "Only the brave, foolish or criminal would risk this route, as it is mostly populated by pirates. "
-															+ "\nThe corsairs of this region circle their areas like jackals, waiting for a vessel (merchant, farmers or even other pirates) to venture too close, "
+															+ "\n\nThe corsairs of this region circle their areas like jackals, waiting for a vessel (merchant, farmers or even other pirates) to venture too close, "
 															+ "whenceforth they raise their black flag and aim their cannons, seizing bounty or blood at their whim. ";
 	
 	public final static String ROUTE_OYSTER_BAY_DESCRIPTION = "Having completed your business, you set sail through Oyster Bay – a heavily patrolled region between the Grand Duchy of Tunia, and the floatilla of the Sea Nomads. "
-															+ "\nThe sea passage is thick with trade, and dotted with hundreds of diving bells – inverted and weighted barrels designed to carry their occupant down within an air pocket "
+															+ "\n\nThe sea passage is thick with trade, and dotted with hundreds of diving bells – inverted and weighted barrels designed to carry their occupant down within an air pocket "
 															+ "to hunt for valuable pearls in the oyster fields upon the seabed. "
-															+ "\nMany of the saltier Tunisian sailors on nearby ships call out insults to the nomadic pearl divers, but they pay little mind as they acquire their fortunes. ";
+															+ "\n\nMany of the saltier Tunisian sailors on nearby ships call out insults to the nomadic pearl divers, but they pay little mind as they acquire their fortunes. ";
 	
 	//
 	// Game Settings
