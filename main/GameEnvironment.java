@@ -419,6 +419,31 @@ public class GameEnvironment {
 			logToConsole(travelOption + ". Travel to " + destinationIsland.getIslandName() + " via " + viaRoute.getName() + ".");
 		}
 		
+		logToConsole("");
+		
+		int choice = 0;
+		
+		while (choice < 1 || choice >= curOptionNumber) {
+			try {
+				choice = Integer.parseInt(consoleGetInput("What do you want to do?", false));
+			} catch (NumberFormatException e) {
+				logToConsole("Please enter a valid number.");
+			}
+		}
+		
+		if (travelOptions.containsKey(choice)) {
+			
+			Island chosenIsland = (Island) travelOptions.get(choice)[1];
+			Route chosenRoute = (Route) travelOptions.get(choice)[0];
+			
+			logToConsole("");
+			logToConsole(chosenRoute.getDescription());
+			logToConsole("");
+			consoleGetInput("<<Press enter to continue>>", true);
+			
+			arriveAtIsland(chosenIsland);
+		}
+		
 	}
 	
 	public static void arriveAtIsland(Island island) {
