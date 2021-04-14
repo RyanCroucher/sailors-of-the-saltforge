@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import exceptions.InsufficientCargoCapacityException;
+import exceptions.InsufficientGoldException;
+import exceptions.InsufficientItemQuantityException;
 import main.Constants.ShipModel;
 
 /**
@@ -221,7 +224,7 @@ public class GameEnvironment {
 	 */
 	private static void consoleChooseShip() throws IllegalArgumentException {
 		
-		logToConsole("He will also grant you, " + Player.getName() + ", one ship of your choosing:\n");
+		logToConsole("He will also grant you, " + Player.getName() + ", " + Constants.PLAYER_START_GOLD + " " + Constants.NAME_CURRENCY + " and one ship of your choosing:\n");
 		
 		
 		ArrayList<String> shipOptions = new ArrayList<String>();
@@ -603,6 +606,9 @@ public class GameEnvironment {
 		//list player wealth
 		logToConsole("You have: " + Player.getGold() + " " + Constants.NAME_CURRENCY);
 		
+		//list cargo space available
+		logToConsole("Your current cargo is: " + Player.getShip().getCargo() + "/" + Player.getShip().getCargoCapacity());
+		
 		logToConsole("");
 		
 		int consoleOptionNumber = 1;
@@ -629,6 +635,7 @@ public class GameEnvironment {
 	 * @param island the island where the player currently is
 	 */
 	public static void goToMarket(Island island) {
+
 		HashMap<Integer, Item> transactionOptions = consolePresentStoreOptions(island);
 		
 		int choice = 0;
@@ -654,16 +661,78 @@ public class GameEnvironment {
 		} else {
 		
 			//sell orders are odd numbered
-			String buyOrSell = choice % 2 == 0 ? "sell" : "buy";
 			
-			logToConsole("Player wants to " + buyOrSell + " " + quantity + " " + transactionOptions.get(choice).getName());
+			//buy
+			if (choice % 2 == 1) {
 			
+				try {
+					buyItem(transactionOptions.get(choice), island.getIslandStore(), quantity);
+				} catch (IllegalArgumentException e) {
+					logToConsole(e.getMessage());
+				} catch (InsufficientGoldException e) {
+					logToConsole(e.getMessage());
+				} catch (InsufficientCargoCapacityException e) {
+					logToConsole(e.getMessage());
+				}
+				
+			}
+			
+			//sell
+			else {
+				try {
+					sellItem(transactionOptions.get(choice), island.getIslandStore(), quantity);
+				} catch (IllegalArgumentException | InsufficientItemQuantityException e) {
+					logToConsole(e.getMessage());
+				}
+			}
 			logToConsole("");
 			
 			consoleGetInput("<<Press enter to continue>>", true);
 			
 			goToMarket(island);
 		}
+	}
+	
+	public static void buyItem(Item item, Store store, int quantity) throws IllegalArgumentException, InsufficientGoldException, InsufficientCargoCapacityException {
+		
+		//validate input
+		if (quantity < 1)
+			throw new IllegalArgumentException("Quantity should be at least one");
+		
+		//can we afford it?
+		int cost = store.getItemPrice(item) * quantity;
+		if (cost > Player.getGold())
+			throw new InsufficientGoldException("You are too poor (" + cost + " > " + Player.getGold() + ")");
+		
+		//can it fit in cargo?
+		int availableCapacity = Player.getShip().getCargoCapacity() - Player.getShip().getCargo();
+		if (quantity > availableCapacity)
+			throw new InsufficientCargoCapacityException("Not enough space in the ship (" + (Player.getShip().getCargoCapacity() - Player.getShip().getCargo()) + ") capacity available.");
+		
+		//looks good, adjust player gold, ships cargo and add to ship's inventory
+		Player.setGold(Player.getGold() - cost);
+		Player.getShip().setCargo(Player.getShip().getCargo() + quantity);
+		Player.getShip().getInventory().addItem(item, quantity);
+		
+		//print a successful message
+		logToConsole("You purchase " + quantity + " " + item.getName() + " for " + cost + " " + Constants.NAME_CURRENCY);
+	}
+	
+	public static void sellItem(Item item, Store store, int quantity) throws IllegalArgumentException, InsufficientItemQuantityException {
+		
+		//validate input
+		if (quantity < 1)
+			throw new IllegalArgumentException("Quantity should be at least one");
+		
+		//do we have enough of this item to sell it?
+		int quantityOwned = Player.getShip().getInventory().getItemQuantity(item);
+		if (quantityOwned < quantity)
+			throw new InsufficientItemQuantityException("Not enough of this item to sell: (" + quantityOwned + " < " + quantity + ")");
+		
+		//looks good, adjust player gold, ships cargo and remove from ship's inventory
+		Player.setGold(Player.getGold() + store.getItemPrice(item) * quantity);
+		Player.getShip().setCargo(Player.getShip().getCargo() - quantity);
+		Player.getShip().getInventory().removeItem(item, quantity);
 	}
 	
 	/**
@@ -826,7 +895,11 @@ public class GameEnvironment {
 			//startGUI();
 		}
 		
-		arriveAtIsland(islands[0]); // arrive at the saltforge
+		//start with some gold
+		Player.setGold(Constants.PLAYER_START_GOLD);
+		
+		// arrive at the saltforge
+		arriveAtIsland(islands[0]);
 
 	}
 

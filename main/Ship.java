@@ -124,7 +124,7 @@ public class Ship {
 		this.setCrew(maxCrew);
 		
 		this.cargoCapacity = cargoCapacity;
-		this.setCargo(cargoCapacity);
+		this.setCargo(0);
 		
 		this.speed = speed;
 		
