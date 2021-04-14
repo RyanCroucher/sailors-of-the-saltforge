@@ -34,7 +34,7 @@ public class Inventory {
 	 * @param item The item to set, given it exists
 	 * @param quantity The quantity to set, must be > 0
 	 */
-	public void setItemQuantity(Item item, int quantity) {
+	public void setItemQuantity(Item item, int quantity) throws IllegalArgumentException {
 		if (quantity < 0) {
 			throw new IllegalArgumentException("Quantity should be a minimum of 0");
 		}
