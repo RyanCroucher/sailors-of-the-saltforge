@@ -429,11 +429,11 @@ public class GameEnvironment {
 		jackalSeaPairList.add(jackalSeaPairOne);
 		jackalSeaPairList.add(jackalSeaPairTwo);
 		
-		Route tranquilExpanse = new Route("The Tranquil Expanse", Constants.ROUTE_TRANQUIL_EXPANSE_DESCRIPTION, 20, 24, tranquilExpansePairList);
-		Route basaltSpires = new Route("Through the Basalt Spires", Constants.ROUTE_BASALT_SPIRES_DESCRIPTION, 40, 6, basaltSpiresPairList);
-		Route aroundBasaltSpires = new Route("Around the Basalt Spires", Constants.ROUTE_AROUND_BASALT_DESCRIPTION, 20, 12, aroundBasaltPairList);
+		Route tranquilExpanse = new Route("The Tranquil Expanse", Constants.ROUTE_TRANQUIL_EXPANSE_DESCRIPTION, 20, 28, tranquilExpansePairList);
+		Route basaltSpires = new Route("Through the Basalt Spires", Constants.ROUTE_BASALT_SPIRES_DESCRIPTION, 40, 10, basaltSpiresPairList);
+		Route aroundBasaltSpires = new Route("Around the Basalt Spires", Constants.ROUTE_AROUND_BASALT_DESCRIPTION, 20, 16, aroundBasaltPairList);
 		Route shipwreckerShoals = new Route("The Shipwrecker Shoals", Constants.ROUTE_SHIPWRECKER_SHOALS_DESCRIPTION, 20, 24, shipwreckerPairList);
-		Route oysterBay = new Route("Oyster Bay", Constants.ROUTE_OYSTER_BAY_DESCRIPTION, 20, 6, oysterBayPairList);
+		Route oysterBay = new Route("Oyster Bay", Constants.ROUTE_OYSTER_BAY_DESCRIPTION, 20, 10, oysterBayPairList);
 		Route jackalSea = new Route("The Sea of Jackals", Constants.ROUTE_JACKAL_SEA_DESCRIPTION, 60, 12, jackalSeaPairList);
 		
 		routes = new Route[] {tranquilExpanse, basaltSpires, aroundBasaltSpires, shipwreckerShoals, oysterBay, jackalSea};
@@ -540,9 +540,9 @@ public class GameEnvironment {
 			Route viaRoute = (Route) routeIslandPair[0];
 			
 			int riskLevel = viaRoute.getRiskLevel();
-			int duration = viaRoute.getDuration();
+			int distance = viaRoute.getDistance();
 			
-			String routeInfo = "(Encounter Chance: " + riskLevel + "%, Travel Time: " + getModifiedTravelTime(duration) + " hours)";
+			String routeInfo = "(Encounter Chance: " + riskLevel + "%, Travel Time: " + getModifiedTravelTime(distance) + " hours)";
 			
 			logToConsole(travelOption + ". Travel to " + destinationIsland.getIslandName() + " via " + viaRoute.getName() + " " + routeInfo);
 		}
@@ -812,7 +812,7 @@ public class GameEnvironment {
 			throw new IllegalArgumentException("Can't reach that island by that route!");
 		
 		//pass time given route duration and speed of your ship
-		int modifiedDuration = getModifiedTravelTime(chosenRoute.getDuration());
+		int modifiedDuration = getModifiedTravelTime(chosenRoute.getDistance());
 		passTime(modifiedDuration);
 		
 		//Show the description of the journey
@@ -856,17 +856,17 @@ public class GameEnvironment {
 	
 	/**
 	 * Gets the travel duration in hours modified by the speed of your ship
-	 * @param baseTime the base travel time in hours
+	 * @param distance the distance in miles to travel
 	 * @return the modified travel time in hours
 	 * @throws IllegalArgumentException
 	 */
-	public static int getModifiedTravelTime(int baseTime) throws IllegalArgumentException {
+	public static int getModifiedTravelTime(int distance) throws IllegalArgumentException {
 		
-		if (baseTime < 0)
-			throw new IllegalArgumentException("Time must be at least 0");
+		if (distance < 0)
+			throw new IllegalArgumentException("Distance must be at least 0");
 		
-		//the duration of time is reduced by the speed of the ship as a percentage
-		return (int) (baseTime * (100 - Player.getShip().getSpeed()) / 100);
+		//the duration of time is equal to the distance, reduced by the speed of the ship as a percentage
+		return (int) (distance * (100 - Player.getShip().getSpeed()) / 100);
 	}
 	
 	/**
