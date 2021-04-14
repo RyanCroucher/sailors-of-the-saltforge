@@ -44,7 +44,7 @@ class ShipTest {
 			assertEquals(validShip.getCrew(), crew);
 			
 			assertEquals(validShip.getCargoCapacity(), cargo);
-			assertEquals(validShip.getCargo(), cargo);
+			assertEquals(validShip.getCargo(), 0);
 			
 			assertEquals(validShip.getSpeed(), speed);
 			
@@ -73,7 +73,7 @@ class ShipTest {
 			assertEquals(validShip.getCrew(), crew);
 			
 			assertEquals(validShip.getCargoCapacity(), cargo);
-			assertEquals(validShip.getCargo(), cargo);
+			assertEquals(validShip.getCargo(), 0);
 			
 			assertEquals(validShip.getSpeed(), speed);
 			
@@ -104,7 +104,7 @@ class ShipTest {
 			assertEquals(validShip.getCrew(), crew);
 			
 			assertEquals(validShip.getCargoCapacity(), cargo);
-			assertEquals(validShip.getCargo(), cargo);
+			assertEquals(validShip.getCargo(), 0);
 			
 			assertEquals(validShip.getSpeed(), speed);
 			
@@ -133,7 +133,7 @@ class ShipTest {
 			assertEquals(validShip.getCrew(), crew);
 			
 			assertEquals(validShip.getCargoCapacity(), cargo);
-			assertEquals(validShip.getCargo(), cargo);
+			assertEquals(validShip.getCargo(), 0);
 			
 			assertEquals(validShip.getSpeed(), speed);
 			
@@ -253,7 +253,7 @@ class ShipTest {
 			assertEquals(validShip.getMaxCrew(), Constants.MERCHANTMAN_MAX_CREW);
 			assertEquals(validShip.getCrew(), Constants.MERCHANTMAN_MAX_CREW);
 			assertEquals(validShip.getCargoCapacity(), Constants.MERCHANTMAN_CARGO_CAPACITY);
-			assertEquals(validShip.getCargo(), Constants.MERCHANTMAN_CARGO_CAPACITY);
+			assertEquals(validShip.getCargo(), 0);
 			assertEquals(validShip.getSpeed(), Constants.MERCHANTMAN_SPEED);
 			assertEquals(validShip.getWeaponRating(), Constants.MERCHANTMAN_WEAPONS);
 			
@@ -271,7 +271,7 @@ class ShipTest {
 			assertEquals(validShip.getMaxCrew(), Constants.CUTTER_MAX_CREW);
 			assertEquals(validShip.getCrew(), Constants.CUTTER_MAX_CREW);
 			assertEquals(validShip.getCargoCapacity(), Constants.CUTTER_CARGO_CAPACITY);
-			assertEquals(validShip.getCargo(), Constants.CUTTER_CARGO_CAPACITY);
+			assertEquals(validShip.getCargo(), 0);
 			assertEquals(validShip.getSpeed(), Constants.CUTTER_SPEED);
 			assertEquals(validShip.getWeaponRating(), Constants.CUTTER_WEAPONS);
 			
@@ -289,7 +289,7 @@ class ShipTest {
 			assertEquals(validShip.getMaxCrew(), Constants.SLOOP_MAX_CREW);
 			assertEquals(validShip.getCrew(), Constants.SLOOP_MAX_CREW);
 			assertEquals(validShip.getCargoCapacity(), Constants.SLOOP_CARGO_CAPACITY);
-			assertEquals(validShip.getCargo(), Constants.SLOOP_CARGO_CAPACITY);
+			assertEquals(validShip.getCargo(), 0);
 			assertEquals(validShip.getSpeed(), Constants.SLOOP_SPEED);
 			assertEquals(validShip.getWeaponRating(), Constants.SLOOP_WEAPONS);
 			
@@ -307,7 +307,7 @@ class ShipTest {
 			assertEquals(validShip.getMaxCrew(), Constants.BARGE_MAX_CREW);
 			assertEquals(validShip.getCrew(), Constants.BARGE_MAX_CREW);
 			assertEquals(validShip.getCargoCapacity(), Constants.BARGE_CARGO_CAPACITY);
-			assertEquals(validShip.getCargo(), Constants.BARGE_CARGO_CAPACITY);
+			assertEquals(validShip.getCargo(), 0);
 			assertEquals(validShip.getSpeed(), Constants.BARGE_SPEED);
 			assertEquals(validShip.getWeaponRating(), Constants.BARGE_WEAPONS);
 			
