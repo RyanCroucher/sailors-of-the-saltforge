@@ -144,28 +144,28 @@ public class Constants {
 	// Merchantman
 	public final static int MERCHANTMAN_CARGO_CAPACITY = 40;
 	public final static int MERCHANTMAN_MAX_HULL = 40;
-	public final static int MERCHANTMAN_SPEED = 40;
+	public final static int MERCHANTMAN_SPEED = 20;
 	public final static int MERCHANTMAN_WEAPONS = 4;
 	public final static int MERCHANTMAN_MAX_CREW = 20;
 	
 	// Elven Cutter
 	public final static int CUTTER_CARGO_CAPACITY = 40;
 	public final static int CUTTER_MAX_HULL = 40;
-	public final static int CUTTER_SPEED = 60;
+	public final static int CUTTER_SPEED = 40;
 	public final static int CUTTER_WEAPONS = 2;
 	public final static int CUTTER_MAX_CREW = 20;
 	
 	// Tunian War-Sloop
 	public final static int SLOOP_CARGO_CAPACITY = 40;
 	public final static int SLOOP_MAX_HULL = 60;
-	public final static int SLOOP_SPEED = 40;
+	public final static int SLOOP_SPEED = 20;
 	public final static int SLOOP_WEAPONS = 6;
 	public final static int SLOOP_MAX_CREW = 30;
 	
 	// Dwarven Barge
 	public final static int BARGE_CARGO_CAPACITY = 60;
 	public final static int BARGE_MAX_HULL = 60;
-	public final static int BARGE_SPEED = 20;
+	public final static int BARGE_SPEED = 0;
 	public final static int BARGE_WEAPONS = 2;
 	public final static int BARGE_MAX_CREW = 10;
 	
@@ -176,7 +176,7 @@ public class Constants {
 	public final static int SHIP_MIN_CARGO_CAPACITY = 20;
 	public final static int SHIP_MAX_CARGO_CAPACITY = 100;
 	
-	public final static int SHIP_MIN_SPEED = 10;
+	public final static int SHIP_MIN_SPEED = 0;
 	public final static int SHIP_MAX_SPEED = 100;
 	
 	public final static int SHIP_MIN_WEAPONS = 0;

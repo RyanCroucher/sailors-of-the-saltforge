@@ -496,6 +496,8 @@ public class GameEnvironment {
 		logToConsole("");
 		logToConsole(island.getIslandDescription());
 		logToConsole("");
+		logToConsole("It is day " + hoursSinceStart / 24 + " of " + gameDuration + ".");
+		logToConsole("");
 	}
 	
 	/**
@@ -522,6 +524,7 @@ public class GameEnvironment {
 		
 		return travelOptions;
 	}
+	
 	/**
 	 * Given a list of options, display these choices to the player
 	 * @param travelOptions a hashmap mapping choice number to a Route, Island pair
@@ -535,7 +538,7 @@ public class GameEnvironment {
 			int riskLevel = viaRoute.getRiskLevel();
 			int duration = viaRoute.getDuration();
 			
-			String routeInfo = "(Encounter Chance: " + riskLevel + "%, Travel Time: " + duration + " hours)";
+			String routeInfo = "(Encounter Chance: " + riskLevel + "%, Travel Time: " + getModifiedTravelTime(duration) + " hours)";
 			
 			logToConsole(travelOption + ". Travel to " + destinationIsland.getIslandName() + " via " + viaRoute.getName() + " " + routeInfo);
 		}
@@ -543,6 +546,11 @@ public class GameEnvironment {
 		logToConsole("");
 	}
 	
+	/**
+	 * Presents the list of goods to buy and sell
+	 * @param island the island where the player currently is
+	 * @return a map of console option to item, so that player can choose among them
+	 */
 	public static HashMap<Integer, Item> consolePresentStoreOptions(Island island) {
 		
 		logToConsole("");
@@ -599,6 +607,10 @@ public class GameEnvironment {
 		
 	}
 	
+	/**
+	 * Go from island options to market options. Handles buying and selling.
+	 * @param island the island where the player currently is
+	 */
 	public static void goToMarket(Island island) {
 		HashMap<Integer, Item> transactionOptions = consolePresentStoreOptions(island);
 		
@@ -624,6 +636,7 @@ public class GameEnvironment {
 			arriveAtIsland(island);
 		} else {
 		
+			//sell orders are odd numbered
 			String buyOrSell = choice % 2 == 0 ? "sell" : "buy";
 			
 			logToConsole("Player wants to " + buyOrSell + " " + quantity + " " + transactionOptions.get(choice).getName());
@@ -640,14 +653,14 @@ public class GameEnvironment {
 	 * Displays a list of every action the player can take at the current island
 	 * @param island the current location of the player
 	 */
-	public static void consolePresentIslandOptions(Island island) {
+	public static void consolePresentIslandOptions(Island currentIsland) {
 		
 		int curOptionNumber = 1;
 		
 		logToConsole(curOptionNumber + ". Go to the market.");
 		curOptionNumber++;
 		
-		HashMap<Integer, Object[]> travelOptions = getTravelOptions(curOptionNumber, island);
+		HashMap<Integer, Object[]> travelOptions = getTravelOptions(curOptionNumber, currentIsland);
 		
 		//update curOptionNumber to the latest value
 		for (int key : travelOptions.keySet()) {
@@ -670,7 +683,7 @@ public class GameEnvironment {
 		
 		//go to market
 		if (choice == 1) {
-			goToMarket(island);
+			goToMarket(currentIsland);
 		}
 		
 		else if (travelOptions.containsKey(choice)) {
@@ -678,14 +691,71 @@ public class GameEnvironment {
 			Island chosenIsland = (Island) travelOptions.get(choice)[1];
 			Route chosenRoute = (Route) travelOptions.get(choice)[0];
 			
-			logToConsole("");
-			logToConsole(chosenRoute.getDescription());
-			logToConsole("");
-			consoleGetInput("<<Press enter to continue>>", true);
-			
-			arriveAtIsland(chosenIsland);
+			try {
+				travelToIsland(chosenIsland, chosenRoute);
+			} catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+				consolePresentIslandOptions(currentIsland);
+			}
 		}
 		
+	}
+	
+	/**
+	 * Travel to another island. Handles route description, event generation, passing of time etc
+	 * @param island the island to travel to
+	 * @param route the route to travel by
+	 */
+	public static void travelToIsland(Island destinationIsland, Route chosenRoute) throws IllegalArgumentException {
+		
+		if (!chosenRoute.includesIsland(destinationIsland))
+			throw new IllegalArgumentException("Can't reach that island by that route!");
+		
+		//pass time given route duration and speed of your ship
+		int modifiedDuration = getModifiedTravelTime(chosenRoute.getDuration());
+		passTime(modifiedDuration);
+		
+		//Show the description of the journey
+		logToConsole("");
+		logToConsole(chosenRoute.getDescription());
+		logToConsole("");
+		logToConsole(modifiedDuration + " hours have passed.");
+		consoleGetInput("<<Press enter to continue>>", true);
+		
+		//TODO: Handle events
+		
+		//Arrive at the island
+		arriveAtIsland(destinationIsland);
+		
+		
+	}
+	
+	/**
+	 * Increments elapsed game time by given duration. Checks if time elapsed exceeds game duration.
+	 * @param duration time passed in hours
+	 * @throws IllegalArgumentException
+	 */
+	public static void passTime(int duration) throws IllegalArgumentException {
+		//validate duration
+		if (duration < 0)
+			throw new IllegalArgumentException("Time passed must be at least 0");
+		
+		hoursSinceStart += duration;
+	}
+	
+	/**
+	 * Gets the travel duration in hours modified by the speed of your ship
+	 * @param baseTime the base travel time in hours
+	 * @return the modified travel time in hours
+	 * @throws IllegalArgumentException
+	 */
+	public static int getModifiedTravelTime(int baseTime) throws IllegalArgumentException {
+		
+		if (baseTime < 0)
+			throw new IllegalArgumentException("Time must be at least 0");
+		
+		//the duration of time is reduced by the speed of the ship as a percentage
+		return (int) (baseTime * (100 - Player.getShip().getSpeed()) / 100);
 	}
 	
 	/**
@@ -695,9 +765,7 @@ public class GameEnvironment {
 	public static void arriveAtIsland(Island island) {
 		
 		curIsland = island;
-		
-		//TODO set Screen?
-		
+
 		consoleIslandWelcome(curIsland);
 		
 		consolePresentIslandOptions(curIsland);
