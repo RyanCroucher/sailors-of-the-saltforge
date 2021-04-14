@@ -472,6 +472,7 @@ public class GameEnvironment {
 	 */
 	public static void exitGame() {
 		scanner.close();
+		System.exit(0);
 	}
 	
 	/**
@@ -848,7 +849,7 @@ public class GameEnvironment {
 		hoursSinceStart += duration;
 		
 		if (hoursSinceStart >= gameDuration * 24) {
-			logToConsole("Time is up, you lose!");
+			logToConsole("You survived " + gameDuration + " days!");
 			exitGame();
 		}
 	}
