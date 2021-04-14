@@ -119,7 +119,7 @@ class GameEnvironmentTest {
 			
 			assertEquals(main.GameEnvironment.getGameDuration(), Integer.parseInt(duration));
 		}
-		main.GameEnvironment.exitGame();
+		main.GameEnvironment.closeScanner();
 		
 		inputData = "";
 		
@@ -168,8 +168,7 @@ class GameEnvironmentTest {
 			assertEquals(main.GameEnvironment.getGameDuration(), 50);
 		}
 		
-		main.GameEnvironment.exitGame();
-		
+		main.GameEnvironment.closeScanner();
 	}
 
 }

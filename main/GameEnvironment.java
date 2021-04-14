@@ -471,7 +471,7 @@ public class GameEnvironment {
 	 * Completes a graceful exit of the program.
 	 */
 	public static void exitGame() {
-		scanner.close();
+		closeScanner();
 		System.exit(0);
 	}
 	
@@ -882,6 +882,13 @@ public class GameEnvironment {
 		consolePresentIslandOptions(curIsland);
 		
 		
+	}
+	
+	/**
+	 * Closes the main Scanner
+	 */
+	public static void closeScanner() {
+		scanner.close();
 	}
 	
 	
