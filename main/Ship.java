@@ -23,6 +23,8 @@ public class Ship {
 	private int speed;
 	private int weaponRating;
 	
+	private Inventory inventory;
+	
 	/**
 	 * Constructs a new ship instance with given parameters.
 	 * @param model the type of ship (must be one of four options).
@@ -127,6 +129,8 @@ public class Ship {
 		this.speed = speed;
 		
 		this.setWeaponRating(weaponRating);
+		
+		inventory = new Inventory();
 	}
 	
 	/**
