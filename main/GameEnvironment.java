@@ -221,7 +221,7 @@ public class GameEnvironment {
 	 */
 	private static void consoleChooseShip() throws IllegalArgumentException {
 		
-		logToConsole(Player.getName() + ", Old Saltbeard will grant you one ship of your choosing:\n");
+		logToConsole("He will also grant you, " + Player.getName() + ", one ship of your choosing:\n");
 		
 		
 		ArrayList<String> shipOptions = new ArrayList<String>();
@@ -553,6 +553,7 @@ public class GameEnvironment {
 	 */
 	public static HashMap<Integer, Item> consolePresentStoreOptions(Island island) {
 		
+		//intro
 		logToConsole("");
 		logToConsole("You enter the thriving marketplace, ready to earn your fortune in the name of The Salt Forge.");
 		logToConsole("");
@@ -560,6 +561,7 @@ public class GameEnvironment {
 		
 		Store store = island.getIslandStore();
 		
+		//imports and exports
 		String importString = "Main imports (Will buy and sell for double the price): ";
 		ArrayList<Item> imports = store.getImports();
 		ArrayList<String> importStrings = new ArrayList<String>();
@@ -583,9 +585,24 @@ public class GameEnvironment {
 		logToConsole(importString);
 		logToConsole(exportString);
 		
+		//instructions
 		logToConsole("");
 		logToConsole("To buy or sell an item, type the choice number and then the quantity to trade, seperated by a space.");
 		logToConsole("I.e. to buy the first good, type 1 10, to sell the first good, type 2 3");
+		logToConsole("");
+		
+		String playerInventoryString = "You have: ";
+		
+		//list what the player has in inventory
+		for (Item ownedItem : items) {
+			playerInventoryString += ownedItem.getName() + "- " + Player.getShip().getInventory().getItemQuantity(ownedItem) + " ";
+		}
+		
+		logToConsole(playerInventoryString);
+		
+		//list player wealth
+		logToConsole("You have: " + Player.getGold() + " " + Constants.NAME_CURRENCY);
+		
 		logToConsole("");
 		
 		int consoleOptionNumber = 1;
@@ -594,9 +611,9 @@ public class GameEnvironment {
 		
 		for (Item item: store.getInventoryItems()) {
 			transactionOptions.put(consoleOptionNumber, item);
-			logToConsole(consoleOptionNumber++ + ". Buy " + item.getName() + " for " + store.getItemPrice(item) + " gold crowns each.");
+			logToConsole(consoleOptionNumber++ + ". Buy " + item.getName() + " for " + store.getItemPrice(item) + " " + Constants.NAME_CURRENCY + " each.");
 			transactionOptions.put(consoleOptionNumber, item);
-			logToConsole(consoleOptionNumber++ + ". Sell " + item.getName() + " for " + store.getItemPrice(item) + " gold crowns each.");
+			logToConsole(consoleOptionNumber++ + ". Sell " + item.getName() + " for " + store.getItemPrice(item) + " " + Constants.NAME_CURRENCY + " each.");
 		}
 		
 		logToConsole(consoleOptionNumber + ". Return to your " + Player.getShip().getModelName() + ".");
@@ -741,6 +758,11 @@ public class GameEnvironment {
 			throw new IllegalArgumentException("Time passed must be at least 0");
 		
 		hoursSinceStart += duration;
+		
+		if (hoursSinceStart >= gameDuration * 24) {
+			logToConsole("Time is up, you lose!");
+			exitGame();
+		}
 	}
 	
 	/**

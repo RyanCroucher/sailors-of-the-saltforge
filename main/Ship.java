@@ -257,6 +257,14 @@ public class Ship {
 	public int getSpeed() {
 		return speed;
 	}
+	
+	/**
+	 * 
+	 * @return the inventory of the ship
+	 */
+	public Inventory getInventory() {
+		return inventory;
+	}
 
 	/**
 	 * 

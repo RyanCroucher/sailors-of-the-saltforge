@@ -7,9 +7,20 @@ package main;
  */
 public class Player {
 	
+	/**
+	 * The name of the player character
+	 */
 	private static String name;
 	//private static Ledger ledger;
+	/**
+	 * The player character's ship
+	 */
 	private static Ship ship;
+	
+	/**
+	 * The wealth of the player. Acquire 10,000 to win.
+	 */
+	private static int gold;
 	
 	/**
 	 * 
@@ -41,6 +52,22 @@ public class Player {
 	 */
 	public static void setShip(Ship ship) {
 		Player.ship = ship;
+	}
+
+	/**
+	 * 
+	 * @return the current gold of the player
+	 */
+	public static int getGold() {
+		return gold;
+	}
+
+	/**
+	 * 
+	 * @param gold the amount of gold to set the player's wealth to
+	 */
+	public static void setGold(int gold) {
+		Player.gold = gold;
 	}
 	
 }

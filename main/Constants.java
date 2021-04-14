@@ -4,12 +4,20 @@ public class Constants {
 	//
 	// Constant Strings
 	//
+	
+	
+	/**
+	 * Name of the ingame currency
+	 */
+	public final static String NAME_CURRENCY = "Gold Crowns";
+	
+	
 	/**
 	 * The character creation greeting text
 	 */
 	public final static String PRIMER = "You are a proud dwarf from The Saltforge, but the mountain-island is in decline." 
 						+ "\nThe costs to repair the decaying mountainside are rising ever higher."
-						+ "\nOld Saltbeard himself has tasked you to set forth and acquire 10,000 gold marks to return to your home."
+						+ "\nOld Saltbeard himself has tasked you to set forth and acquire 10,000 " + NAME_CURRENCY + " to return to your home."
 						+ "\nIt would be unwise to disobey him.\n";
 	
 	
@@ -118,6 +126,9 @@ public class Constants {
 															+ "\n\nThe sea passage is thick with trade, and dotted with hundreds of diving bells – inverted and weighted barrels designed to carry their occupant down within an air pocket "
 															+ "to hunt for valuable pearls in the oyster fields upon the seabed. "
 															+ "\n\nMany of the saltier Tunisian sailors on nearby ships call out insults to the nomadic pearl divers, but they pay little mind as they acquire their fortunes. ";
+	
+	
+	
 	
 	//
 	// Game Settings
