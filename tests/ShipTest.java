@@ -205,7 +205,7 @@ class ShipTest {
 		
 		//speed too low
 		try {
-			invalidShip = new Ship(ShipModel.CUTTER, hull, crew, cargo, 0, weapons);
+			invalidShip = new Ship(ShipModel.CUTTER, hull, crew, cargo, -10, weapons);
 			fail("Invalid parameter, should throw exception");
 		} catch (IllegalArgumentException e) {
 			assert(true);
