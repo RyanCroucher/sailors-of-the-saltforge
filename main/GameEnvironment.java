@@ -565,7 +565,7 @@ public class GameEnvironment {
 		Store store = island.getIslandStore();
 		
 		//imports and exports
-		String importString = "Main imports (Will buy and sell for double the price): ";
+		String importString = "Main imports (Will buy and sell for up to double the price): ";
 		ArrayList<Item> imports = store.getImports();
 		ArrayList<String> importStrings = new ArrayList<String>();
 		
@@ -575,7 +575,7 @@ public class GameEnvironment {
 		
 		importString += String.join(", ", importStrings);
 		
-		String exportString = "Main exports (Will buy and sell for half the price): ";
+		String exportString = "Main exports (Will buy and sell for down to half the price): ";
 		ArrayList<Item> exports = store.getExports();
 		ArrayList<String> exportStrings = new ArrayList<String>();
 		
@@ -617,7 +617,7 @@ public class GameEnvironment {
 		
 		for (Item item: store.getInventoryItems()) {
 			transactionOptions.put(consoleOptionNumber, item);
-			logToConsole(consoleOptionNumber++ + ". Buy " + item.getName() + " for " + store.getItemPrice(item) + " " + Constants.NAME_CURRENCY + " each.");
+			logToConsole(consoleOptionNumber++ + ". Buy " + item.getName() + " for " + store.getItemPrice(item) + " " + Constants.NAME_CURRENCY + " each (" + store.getItemQuantity(item) + " available).");
 			transactionOptions.put(consoleOptionNumber, item);
 			logToConsole(consoleOptionNumber++ + ". Sell " + item.getName() + " for " + store.getItemPrice(item) + " " + Constants.NAME_CURRENCY + " each.");
 		}
@@ -673,6 +673,8 @@ public class GameEnvironment {
 					logToConsole(e.getMessage());
 				} catch (InsufficientCargoCapacityException e) {
 					logToConsole(e.getMessage());
+				} catch (InsufficientItemQuantityException e) {
+					logToConsole(e.getMessage());
 				}
 				
 			}
@@ -693,7 +695,7 @@ public class GameEnvironment {
 		}
 	}
 	
-	public static void buyItem(Item item, Store store, int quantity) throws IllegalArgumentException, InsufficientGoldException, InsufficientCargoCapacityException {
+	public static void buyItem(Item item, Store store, int quantity) throws IllegalArgumentException, InsufficientGoldException, InsufficientCargoCapacityException, InsufficientItemQuantityException {
 		
 		//validate input
 		if (quantity < 1)
@@ -709,10 +711,16 @@ public class GameEnvironment {
 		if (quantity > availableCapacity)
 			throw new InsufficientCargoCapacityException("Not enough space in the ship (" + (Player.getShip().getCargoCapacity() - Player.getShip().getCargo()) + ") capacity available.");
 		
-		//looks good, adjust player gold, ships cargo and add to ship's inventory
+		//does the store have enough?
+		int storeQuantity = store.getItemQuantity(item);
+		if (storeQuantity < quantity)
+			throw new InsufficientItemQuantityException("You can't buy more than the market has (" + storeQuantity + " < " + quantity + ")");
+		
+		//looks good, adjust player gold, ships cargo and add to ship's inventory. remove from store inventory
 		Player.setGold(Player.getGold() - cost);
 		Player.getShip().setCargo(Player.getShip().getCargo() + quantity);
 		Player.getShip().getInventory().addItem(item, quantity);
+		store.buyItem(item, quantity);
 		
 		//print a successful message
 		logToConsole("You purchase " + quantity + " " + item.getName() + " for " + cost + " " + Constants.NAME_CURRENCY);
@@ -729,10 +737,15 @@ public class GameEnvironment {
 		if (quantityOwned < quantity)
 			throw new InsufficientItemQuantityException("Not enough of this item to sell: (" + quantityOwned + " < " + quantity + ")");
 		
-		//looks good, adjust player gold, ships cargo and remove from ship's inventory
-		Player.setGold(Player.getGold() + store.getItemPrice(item) * quantity);
+		//looks good, adjust player gold, ships cargo and remove from ship's inventory, add to store inventory
+		int netProfit = store.getItemPrice(item) * quantity;
+		Player.setGold(Player.getGold() + netProfit);
 		Player.getShip().setCargo(Player.getShip().getCargo() - quantity);
 		Player.getShip().getInventory().removeItem(item, quantity);
+		store.sellItem(item, quantity);
+		
+		//print a successful message
+		logToConsole("You sell " + quantity + " " + item.getName() + " for " + netProfit + " " + Constants.NAME_CURRENCY);
 	}
 	
 	/**
@@ -810,6 +823,12 @@ public class GameEnvironment {
 		
 		//TODO: Handle events
 		
+		
+		//Set the random price modifier for imports and exports
+		destinationIsland.getIslandStore().setFactor(1 + Math.random());
+		//set random item quantities
+		destinationIsland.getIslandStore().randomizeInventory(0, 60);
+		
 		//Arrive at the island
 		arriveAtIsland(destinationIsland);
 		
@@ -856,10 +875,11 @@ public class GameEnvironment {
 	public static void arriveAtIsland(Island island) {
 		
 		curIsland = island;
-
+		
 		consoleIslandWelcome(curIsland);
 		
 		consolePresentIslandOptions(curIsland);
+		
 		
 	}
 	
@@ -897,6 +917,9 @@ public class GameEnvironment {
 		
 		//start with some gold
 		Player.setGold(Constants.PLAYER_START_GOLD);
+		
+		//Set the random price modifier for imports and exports at the saltforge
+		islands[0].getIslandStore().setFactor(1 + Math.random());
 		
 		// arrive at the saltforge
 		arriveAtIsland(islands[0]);

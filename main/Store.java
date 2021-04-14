@@ -25,6 +25,11 @@ public class Store {
 	private ArrayList<Item> exports;
 	
 	/**
+	 * The randomised price factor that applies to transactions at this store
+	 */
+	private double factor;
+	
+	/**
 	 * Creates a new store object
 	 * @param inventory an object storing items + quantities, represents goods offered at the store
 	 * @param imports a list of items that the island trades at a higher price
@@ -34,6 +39,7 @@ public class Store {
 		this.inventory = inventory;
 		this.imports = imports;
 		this.exports = exports;
+		setFactor(1f);
 	}
 	
 	/**
@@ -74,9 +80,9 @@ public class Store {
 	 */
 	public int getItemPrice(Item item) {
 		if (imports.contains(item)) {
-			return item.getBasePrice() * 2;
+			return (int) (item.getBasePrice() * factor);
 		} else if (exports.contains(item)) {
-			return item.getBasePrice() / 2;
+			return (int) (item.getBasePrice() / factor);
 		} else {
 			return item.getBasePrice();
 		}
@@ -91,6 +97,15 @@ public class Store {
 		for (Item item : inventory.getInventoryItems()) {
 			inventory.setItemQuantity(item, (int) (Math.random() * (maxQuantity - minQuantity) + minQuantity));
 		}
+	}
+	
+	/**
+	 * 
+	 * @param item the item to check quantity of
+	 * @return quantity of given item (default 0)
+	 */
+	public int getItemQuantity(Item item) {
+		return inventory.getItemQuantity(item);
 	}
 	
 	/**
@@ -115,6 +130,22 @@ public class Store {
 	 */
 	public ArrayList<Item> getExports() {
 		return exports;
+	}
+
+	/**
+	 * 
+	 * @return the current price factor of the store
+	 */
+	public double getFactor() {
+		return factor;
+	}
+
+	/**
+	 * 
+	 * @param factor the new price factor of the store
+	 */
+	public void setFactor(double factor) {
+		this.factor = factor;
 	}
 
 }
