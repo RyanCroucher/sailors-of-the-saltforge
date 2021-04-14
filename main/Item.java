@@ -14,7 +14,10 @@ public class Item {
 	 * @param name The name of the item
 	 * @param basePrice The base price of the item before modifiers
 	 */
-	public Item(String name, int basePrice) {
+	public Item(String name, int basePrice) throws IllegalArgumentException {
+		if (basePrice < 1) {
+			throw new IllegalArgumentException("basePrice cannot be less than 1");
+		}
 		this.name = name;
 		this.basePrice = basePrice;
 	}
@@ -34,5 +37,6 @@ public class Item {
 	public int getBasePrice() {
 		return basePrice;
 	}
-		
+
+	
 }
