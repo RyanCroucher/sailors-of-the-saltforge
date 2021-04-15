@@ -331,7 +331,7 @@ public class GameEnvironment {
 		exports.add(items.get(2));
 		
 		Store saltForgeStore = new Store(saltForgeInventory, imports, exports);
-		saltForgeStore.randomizeInventory(0, 60);
+		saltForgeStore.randomizeInventory(0, 100);
 		
 		//initialize tunia inventory and store
 		Inventory tuniaInventory = new Inventory();
@@ -346,7 +346,7 @@ public class GameEnvironment {
 		exports.add(items.get(1));
 		
 		Store tuniaStore = new Store(tuniaInventory, imports, exports);
-		tuniaStore.randomizeInventory(0, 60);
+		tuniaStore.randomizeInventory(0, 100);
 		
 		//initialize sandyFields inventory and store
 		Inventory sandyFieldsInventory = new Inventory();
@@ -361,7 +361,7 @@ public class GameEnvironment {
 		exports.add(items.get(3));
 		
 		Store sandyFieldsStore = new Store(sandyFieldsInventory, imports, exports);
-		sandyFieldsStore.randomizeInventory(0, 60);
+		sandyFieldsStore.randomizeInventory(0, 100);
 		
 		//initialize skullHaven inventory and store
 		Inventory skullHavenInventory = new Inventory();
@@ -376,7 +376,7 @@ public class GameEnvironment {
 		imports.add(items.get(1));
 		
 		Store skullHavenStore = new Store(skullHavenInventory, imports, exports);
-		skullHavenStore.randomizeInventory(0, 60);
+		skullHavenStore.randomizeInventory(0, 100);
 		
 		//initialize skullHaven inventory and store
 		Inventory seaNomadsInventory = new Inventory();
@@ -392,7 +392,7 @@ public class GameEnvironment {
 		exports.add(items.get(0));
 		
 		Store seaNomadsStore = new Store(seaNomadsInventory, imports, exports);
-		seaNomadsStore.randomizeInventory(0, 60);
+		seaNomadsStore.randomizeInventory(0, 100);
 		
 		Island saltForge = new Island(Constants.ISLAND_SALTFORGE, Constants.ISLAND_SALTFORGE_DESCRIPTION, saltForgeStore);
 		Island tunia = new Island(Constants.ISLAND_TUNIA, Constants.ISLAND_TUNIA_DESCRIPTION, tuniaStore);
@@ -855,7 +855,7 @@ public class GameEnvironment {
 		//Set the random price modifier for imports and exports
 		destinationIsland.getIslandStore().setFactor(1 + Math.random());
 		//set random item quantities
-		destinationIsland.getIslandStore().randomizeInventory(0, 60);
+		destinationIsland.getIslandStore().randomizeInventory(0, 100);
 		
 		//Arrive at the island
 		arriveAtIsland(destinationIsland);
