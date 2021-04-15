@@ -134,6 +134,31 @@ public class Store {
 	
 	/**
 	 * 
+	 * @param item to add to the store as an export item
+	 * @throws IllegalArgumentException
+	 */
+	public void addExport(Item item) throws IllegalArgumentException {
+		
+		if (exports.contains(item))
+			throw new IllegalArgumentException("Store already has this item as an export.");
+		
+		exports.add(item);
+	}
+	
+	/**
+	 * Remove an import item from the store
+	 * @param item the item to remove
+	 * @throws IllegalArgumentException
+	 */
+	public void removeImport(Item item) throws IllegalArgumentException {
+		if (!imports.contains(item))
+			throw new IllegalArgumentException("Store doesn't contain this import.");
+		
+		imports.remove(item);
+	}
+	
+	/**
+	 * 
 	 * @return a list of all items exported at this store
 	 */
 	public ArrayList<Item> getExports() {

@@ -293,6 +293,32 @@ public class Ship {
 	}
 	
 	/**
+	 * Equips a ship with an upgrade
+	 * @param upgrade the upgrade to add to the ship
+	 * @throws IllegalArgumentException
+	 */
+	public void addUpgrade(String upgrade) throws IllegalArgumentException {
+		
+		if (upgrades.contains(upgrade))
+			throw new IllegalArgumentException("Ship already has this upgrade");
+		
+		switch (upgrade) {
+			case Constants.UPGRADE_CANNONS:
+				weaponRating += 2;
+				break;
+			case Constants.UPGRADE_HULL:
+				maxHull += 20;
+				hull += 20;
+				break;
+			case Constants.UPGRADE_SAILS:
+				speed += 10;
+				break;
+		}
+		
+		upgrades.add(upgrade);
+	}
+	
+	/**
 	 * Get the cost to fully stock up on crew
 	 * @param cheaperAtCurrentPort whether or not it is cheaper to hire crew
 	 * @return total cost to refill the crew

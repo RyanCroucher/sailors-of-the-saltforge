@@ -805,7 +805,7 @@ public class GameEnvironment {
 		logToConsole("");
 		consoleGetInput("<<Press enter to continue>>", true);
 		
-		goToMarket(curIsland);
+		arriveAtIsland(curIsland);
 	}
 	
 	public static void consoleViewLedger() {
@@ -852,6 +852,9 @@ public class GameEnvironment {
 		logToConsole(curOptionNumber + ". Ask your Quartermaster Olard about the transaction ledger.");
 		curOptionNumber++;
 		
+		logToConsole(curOptionNumber + ". Inquire about an upgrade for your ship.");
+		curOptionNumber++;
+		
 		HashMap<Integer, Object[]> travelOptions = getTravelOptions(curOptionNumber, currentIsland);
 		
 		//update curOptionNumber to the latest value
@@ -883,6 +886,10 @@ public class GameEnvironment {
 			consoleViewLedger();
 		}
 		
+		else if (choice == 4) {
+			consoleViewIslandUpgrade();
+		}
+		
 		else if (travelOptions.containsKey(choice)) {
 			
 			Island chosenIsland = (Island) travelOptions.get(choice)[1];
@@ -900,6 +907,102 @@ public class GameEnvironment {
 				consolePresentIslandOptions(currentIsland);
 			}
 		}
+		
+	}
+	
+	/**
+	 * See the unique upgrade for the island, and possibly purchase it
+	 */
+	public static void consoleViewIslandUpgrade() throws IllegalArgumentException {
+		
+		String upgrade = "";
+		int upgradeCost = 1000;
+		
+		switch (curIsland.getIslandName()) {
+			case (Constants.ISLAND_SALTFORGE):
+				upgrade = Constants.UPGRADE_CANNONS;
+				logToConsole("The dwarven smiths offer to upgrade your cannons for " + upgradeCost + " " + Constants.NAME_CURRENCY + ".");
+				break;
+			case (Constants.ISLAND_TUNIA):
+				upgrade = Constants.UPGRADE_HULL;
+				logToConsole("The Tunian shipyard can reinforce your ship's hull for " + upgradeCost + " " + Constants.NAME_CURRENCY + ".");
+				break;
+			case (Constants.ISLAND_SKULLHAVEN):
+				upgrade = Constants.UPGRADE_FLAG;
+				logToConsole("In a dark alley, a shady figure whispers that he can help you to evade attacks from pirates, and offers to sell you a genuine pirate flag for " + upgradeCost + " " + Constants.NAME_CURRENCY + ".");
+				break;
+			case (Constants.ISLAND_SANDYFIELDS):
+				upgrade = Constants.UPGRADE_CONTRACT;
+				logToConsole("The Council of Peasants declares that they will sell all goods to you at a reduced price, if you make an upfront investment for " + upgradeCost + " " + Constants.NAME_CURRENCY + ".");
+				break;
+			case (Constants.ISLAND_SEANOMADS):
+				upgrade = Constants.UPGRADE_SAILS;
+				logToConsole("An old woman with leathery hands offers you a painstakingly crafted main sail for " + upgradeCost + " " + Constants.NAME_CURRENCY + ".");
+				break;
+			default:
+				throw new IllegalArgumentException("Can't buy upgrades at this island");
+		}
+		
+		logToConsole("");
+		
+		if (Player.getShip().getUpgrades().contains(upgrade)) {
+			logToConsole("You already have this upgrade.");
+			logToConsole("");
+			consoleGetInput("<<Press enter to continue>>", true);
+			arriveAtIsland(curIsland);
+		}
+		else {
+			logToConsole("1. Purchase " + upgrade + " for " + upgradeCost + " " + Constants.NAME_CURRENCY + ".");
+			logToConsole("2. Return to your ship.");
+			logToConsole("");
+			
+			int choice = 0;
+			
+			while (choice != 1 && choice != 2) {
+				try {
+					choice = Integer.parseInt(consoleGetInput("What do you want to do?", false));
+				} catch (NumberFormatException e) {
+					logToConsole("Please enter a valid number.");
+				}
+			}
+			
+			if (choice == 1) {
+				
+				try {
+				
+					if (Player.getGold() < upgradeCost)
+						throw new InsufficientGoldException("You don't have enough " + Constants.NAME_CURRENCY + " to buy this upgrade.");
+					
+					Player.getShip().addUpgrade(upgrade);
+					
+					// if we buy the exclusive contract, give sandy fields all items as imports
+					if (curIsland.getIslandName() == Constants.ISLAND_SANDYFIELDS) {
+						curIsland.getIslandStore().addExport(items.get(0));
+						curIsland.getIslandStore().addExport(items.get(1));
+						curIsland.getIslandStore().addExport(items.get(2));
+						curIsland.getIslandStore().removeImport(items.get(2));
+					}
+					
+					Player.setGold(Player.getGold() - upgradeCost);
+					
+					logToConsole("You purchase " + upgrade + " for " + upgradeCost + " " + Constants.NAME_CURRENCY + ".");
+					consoleGetInput("<<Press enter to continue>>", true);
+					arriveAtIsland(curIsland);
+					
+				} catch (InsufficientGoldException e) {
+					logToConsole(e.getMessage());
+					logToConsole("");
+					consoleGetInput("<<Press enter to continue>>", true);
+					arriveAtIsland(curIsland);
+				}
+			}
+			
+			else {
+				arriveAtIsland(curIsland);
+			}
+		}
+		
+		
 		
 	}
 	
