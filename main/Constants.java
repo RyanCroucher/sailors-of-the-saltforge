@@ -129,6 +129,13 @@ public class Constants {
 	
 	
 	
+	// Ship upgrades
+
+	public final static String UPGRADE_CANNONS = "Dwarven Dragons";
+	public final static String UPGRADE_HULL = "Iron Cladding";
+	public final static String UPGRADE_FLAG = "Jolly Roger";
+	public final static String UPGRADE_CONTRACT = "Exclusive Trading Contract";
+	public final static String UPGRADE_SAILS = "Artisinal Sails";
 	
 	//
 	// Game Settings
