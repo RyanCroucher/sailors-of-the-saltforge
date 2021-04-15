@@ -310,7 +310,10 @@ public class Ship {
 	 * @param hours the time period to pay the crew over
 	 * @return the total cost in wages
 	 */
-	public int getWageCost(int hours) {
+	public int getWageCost(int hours) throws IllegalArgumentException {
+		
+		if (hours < 0)
+			throw new IllegalArgumentException("Hours must be at least 0 to calculate wage cost");
 		
 		//cost per crew member per day
 		int wageCost = (int) (maxCrew * 10 * (hours / 24f));
