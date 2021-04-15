@@ -17,10 +17,10 @@ class ItemTest {
 		
 		// Initialize a valid item
 		try {
-		Item testItem = new Item(name, basePrice);
-		
-		assertEquals(testItem.getName(), name);
-		assertEquals(testItem.getBasePrice(), basePrice);	
+			Item testItem = new Item(name, basePrice, "");
+			
+			assertEquals(testItem.getName(), name);
+			assertEquals(testItem.getBasePrice(), basePrice);	
 		} catch(IllegalArgumentException e) {
 			fail("Should not be an Exception");
 		}
@@ -28,7 +28,7 @@ class ItemTest {
 		
 		try {
 			
-			Item boundaryItem = new Item(name, 1);
+			Item boundaryItem = new Item(name, 1, "");
 			
 		} catch(IllegalArgumentException e) {
 			fail("Shouldn't be an exception");
@@ -38,7 +38,7 @@ class ItemTest {
 		
 		try {
 			
-			invalidItem = new Item(name, 0);
+			invalidItem = new Item(name, 0, "");
 			fail("Should have thrown exception");
 			
 		} catch(IllegalArgumentException e) {
@@ -48,7 +48,7 @@ class ItemTest {
 		
 		try {
 			
-			invalidItem = new Item(name, -1);
+			invalidItem = new Item(name, -1, "");
 			fail("Should have thrown exception");
 			
 		} catch(IllegalArgumentException e) {

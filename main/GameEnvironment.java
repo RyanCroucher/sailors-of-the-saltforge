@@ -443,10 +443,10 @@ public class GameEnvironment {
 	}
 	
 	public static void setupItems() {
-		Item luxuryGoods = new Item("Luxury Goods", Constants.ITEM_BASE_PRICE_LUXURY);
-		Item alcohol = new Item("Alcohol", Constants.ITEM_BASE_PRICE_ALCOHOL);
-		Item rawMaterials = new Item("Raw Materials", Constants.ITEM_BASE_PRICE_RAW_MATERIALS);
-		Item food = new Item("Food", Constants.ITEM_BASE_PRICE_FOOD);
+		Item luxuryGoods = new Item("Luxury Goods", Constants.ITEM_BASE_PRICE_LUXURY, "Silks, jewellery and spices");
+		Item alcohol = new Item("Alcohol", Constants.ITEM_BASE_PRICE_ALCOHOL, "Barrels and bottles of strong liquor");
+		Item rawMaterials = new Item("Raw Materials", Constants.ITEM_BASE_PRICE_RAW_MATERIALS, "Lumber, ores and coal");
+		Item food = new Item("Food", Constants.ITEM_BASE_PRICE_FOOD, "Crops, fruits and meats");
 		
 		items = new ArrayList<Item>();
 		items.add(luxuryGoods);
@@ -628,9 +628,9 @@ public class GameEnvironment {
 		
 		for (Item item: store.getInventoryItems()) {
 			transactionOptions.put(consoleOptionNumber, item);
-			logToConsole(consoleOptionNumber++ + ". Buy " + item.getName() + " for " + store.getItemPrice(item) + " " + Constants.NAME_CURRENCY + " each (" + store.getItemQuantity(item) + " available).");
+			logToConsole(consoleOptionNumber++ + ". Buy " + item.getName()  + " (" + item.getDescription() + ") for " + store.getItemPrice(item) + " " + Constants.NAME_CURRENCY + " each (" + store.getItemQuantity(item) + " available).");
 			transactionOptions.put(consoleOptionNumber, item);
-			logToConsole(consoleOptionNumber++ + ". Sell " + item.getName() + " for " + store.getItemPrice(item) + " " + Constants.NAME_CURRENCY + " each.");
+			logToConsole(consoleOptionNumber++ + ". Sell " + item.getName() + " (" + item.getDescription() + ") for " + store.getItemPrice(item) + " " + Constants.NAME_CURRENCY + " each.");
 		}
 		
 		logToConsole(consoleOptionNumber + ". Return to your " + Player.getShip().getModelName() + ".");

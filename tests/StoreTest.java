@@ -17,9 +17,9 @@ class StoreTest {
 	
 		// Valid construction of a store
 		Inventory inventory = new Inventory();
-		Item testItem1 = new Item("Raw Materials", 40);
-		Item testItem2 = new Item("Food", 20);
-		Item testItem3 = new Item("Alcohol", 50);
+		Item testItem1 = new Item("Raw Materials", 40, "");
+		Item testItem2 = new Item("Food", 20, "");
+		Item testItem3 = new Item("Alcohol", 50, "");
 		inventory.addItem(testItem1, 10);
 		inventory.addItem(testItem2, 5);
 		inventory.addItem(testItem3, 12);
@@ -48,8 +48,8 @@ class StoreTest {
 		try {
 			
 			Inventory emptyInventory = new Inventory();
-			Item emptyTestItem1 = new Item("Raw Materials", 40);
-			Item emptyTestItem2 = new Item("Food", 20);
+			Item emptyTestItem1 = new Item("Raw Materials", 40, "");
+			Item emptyTestItem2 = new Item("Food", 20, "");
 			ArrayList<Item> emptyTestImports = new ArrayList<Item>();
 			emptyTestImports.add(emptyTestItem1);
 			ArrayList<Item> emptyTestExports = new ArrayList<Item>();
@@ -70,9 +70,9 @@ class StoreTest {
 		
 		// Valid buying test
 		Inventory inventory = new Inventory();
-		Item testItem1 = new Item("Raw Materials", 40);
-		Item testItem2 = new Item("Food", 20);
-		Item testItem3 = new Item("Alcohol", 50);
+		Item testItem1 = new Item("Raw Materials", 40, "");
+		Item testItem2 = new Item("Food", 20, "");
+		Item testItem3 = new Item("Alcohol", 50, "");
 		inventory.addItem(testItem1, 10);
 		inventory.addItem(testItem2, 5);
 		inventory.addItem(testItem3, 12);
@@ -126,9 +126,9 @@ class StoreTest {
 		
 		// Valid selling test
 		Inventory inventory = new Inventory();
-		Item testItem1 = new Item("Raw Materials", 40);
-		Item testItem2 = new Item("Food", 20);
-		Item testItem3 = new Item("Alcohol", 50);
+		Item testItem1 = new Item("Raw Materials", 40, "");
+		Item testItem2 = new Item("Food", 20, "");
+		Item testItem3 = new Item("Alcohol", 50, "");
 		inventory.addItem(testItem1, 10);
 		inventory.addItem(testItem2, 5);
 		inventory.addItem(testItem3, 12);
@@ -173,9 +173,9 @@ class StoreTest {
 		
 		// Valid Get Item Price
 		Inventory inventory = new Inventory();
-		Item testItem1 = new Item("Raw Materials", 40);
-		Item testItem2 = new Item("Food", 20);
-		Item testItem3 = new Item("Alcohol", 50);
+		Item testItem1 = new Item("Raw Materials", 40, "");
+		Item testItem2 = new Item("Food", 20, "");
+		Item testItem3 = new Item("Alcohol", 50, "");
 		inventory.addItem(testItem1, 10);
 		inventory.addItem(testItem2, 5);
 		inventory.addItem(testItem3, 12);
@@ -220,9 +220,9 @@ class StoreTest {
 		
 		// Valid Randomization test
 		Inventory inventory = new Inventory();
-		Item testItem1 = new Item("Raw Materials", 40);
-		Item testItem2 = new Item("Food", 20);
-		Item testItem3 = new Item("Alcohol", 50);
+		Item testItem1 = new Item("Raw Materials", 40, "");
+		Item testItem2 = new Item("Food", 20, "");
+		Item testItem3 = new Item("Alcohol", 50, "");
 		inventory.addItem(testItem1, 10);
 		inventory.addItem(testItem2, 5);
 		inventory.addItem(testItem3, 12);
@@ -284,7 +284,7 @@ class StoreTest {
 		
 		// Valid Set Factor
 		Inventory inventory = new Inventory();
-		Item testItem1 = new Item("Raw Materials", 40);
+		Item testItem1 = new Item("Raw Materials", 40, "");
 		inventory.addItem(testItem1, 10);
 
 		ArrayList<Item> imports = new ArrayList<Item>();
