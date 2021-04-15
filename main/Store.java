@@ -35,7 +35,11 @@ public class Store {
 	 * @param imports a list of items that the island trades at a higher price
 	 * @param exports a list of items that the island trades at a lower price
 	 */
-	public Store(Inventory inventory, ArrayList<Item> imports, ArrayList<Item> exports) {
+	public Store(Inventory inventory, ArrayList<Item> imports, ArrayList<Item> exports) throws IllegalArgumentException {
+		
+		if (inventory.getInventoryItems().size() == 0)
+			throw new IllegalArgumentException("Inventory cannot be empty");
+		
 		this.inventory = inventory;
 		this.imports = imports;
 		this.exports = exports;
@@ -93,7 +97,11 @@ public class Store {
 	 * @param minQuantity the minimum new quantity of the item in the inventory
 	 * @param maxQuantity the maximum new quantity of the item in the inventory
 	 */
-	public void randomizeInventory(int minQuantity, int maxQuantity) {
+	public void randomizeInventory(int minQuantity, int maxQuantity) throws IllegalArgumentException {
+		
+		if (minQuantity < 0 || minQuantity > maxQuantity)
+			throw new IllegalArgumentException("Min quantity should be > 0 and < maxQuantity");
+		
 		for (Item item : inventory.getInventoryItems()) {
 			inventory.setItemQuantity(item, (int) (Math.random() * (maxQuantity - minQuantity) + minQuantity));
 		}
@@ -144,7 +152,11 @@ public class Store {
 	 * 
 	 * @param factor the new price factor of the store
 	 */
-	public void setFactor(double factor) {
+	public void setFactor(double factor) throws IllegalArgumentException {
+		
+		if (factor <= 0)
+			throw new IllegalArgumentException("Factor must be greater than 0");
+		
 		this.factor = factor;
 	}
 

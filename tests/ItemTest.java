@@ -45,6 +45,7 @@ class ItemTest {
 			
 			assert(true);
 		}
+		
 		try {
 			
 			invalidItem = new Item(name, -1);
