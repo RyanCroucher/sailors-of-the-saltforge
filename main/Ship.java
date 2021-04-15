@@ -290,5 +290,62 @@ public class Ship {
 		return upgrades;
 	}
 	
+	/**
+	 * Get the cost to fully stock up on crew
+	 * @param cheaperAtCurrentPort whether or not it is cheaper to hire crew
+	 * @return total cost to refill the crew
+	 */
+	public int getRefillCrewCost(boolean cheaperAtCurrentPort) {
+		
+		int refillCrewCost = (maxCrew - crew) * 20;
+		
+		if (cheaperAtCurrentPort)
+			refillCrewCost /= 2;
+		
+		return refillCrewCost;
+	}
+	
+	/**
+	 * Get the total wage cost to travel for a certain duration
+	 * @param hours the time period to pay the crew over
+	 * @return the total cost in wages
+	 */
+	public int getWageCost(int hours) throws IllegalArgumentException {
+		
+		if (hours < 0)
+			throw new IllegalArgumentException("Hours must be at least 0 to calculate wage cost");
+		
+		//cost per crew member per day
+		int wageCost = (int) (maxCrew * 10 * (hours / 24f));
+		return wageCost;
+		
+	}
+	
+	/**
+	 * Get the total cost to fully repair the ship's hull
+	 * @param cheaperAtCurrentPort whether or not it is cheaper to do repairs
+	 * @return the total cost in repairs
+	 */
+	public int getRepairCost(boolean cheaperAtCurrentPort) {
+		
+		//cost to fully repair the hull
+		int repairCost = (maxHull - hull) * 20;
+		
+		if (cheaperAtCurrentPort)
+			repairCost /= 2;
+		
+		return repairCost;
+	}
+	
+	public int totalCostToLeaveIsland(boolean cheaperRepairs, boolean cheaperCrewHire, int hours) {
+		
+		int hireAndWagesCost = Player.getShip().getRefillCrewCost(cheaperCrewHire) + Player.getShip().getWageCost(hours);
+		int repairCost = Player.getShip().getRepairCost(cheaperRepairs);
+
+		int totalCostToLeaveIsland = hireAndWagesCost + repairCost;
+		
+		return totalCostToLeaveIsland;
+	}
+	
 	
 }

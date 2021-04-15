@@ -16,9 +16,9 @@ public class Route {
 	private int riskLevel;
 	
 	/**
-	 * The amount of time it takes to travel via this route in hours.
+	 * The distance between islands via this route.
 	 */
-	private int duration;
+	private int distance;
 	
 	/**
 	 * The name of this route.
@@ -40,28 +40,28 @@ public class Route {
 	 * @param name the name of the route.
 	 * @param description a description of traveling the route.
 	 * @param riskLevel the relative likelihood of events occurring on the route.
-	 * @param duration the length of time to travel this route in hours.
+	 * @param distance the distance between islands through this route in miles.
 	 * @param locationPairs every pair of islands that can reach each other through this route.
 	 */
-	public Route(String name, String description, int riskLevel, int duration, ArrayList<Island[]> locationPairs) throws IllegalArgumentException {
+	public Route(String name, String description, int riskLevel, int distance, ArrayList<Island[]> locationPairs) throws IllegalArgumentException {
 		
-		if (!validRouteParams(riskLevel, duration, locationPairs)) {
+		if (!validRouteParams(riskLevel, distance, locationPairs)) {
 			throw new IllegalArgumentException("Invalid Route params");
 		}
 		
 		this.name = name;
 		this.description = description;
 		this.riskLevel = riskLevel;
-		this.duration = duration;
+		this.distance = distance;
 		this.locationPairs = locationPairs;
 	}
 	
-	private boolean validRouteParams(int riskLevel, int duration, ArrayList<Island[]> locationPairs) {
+	private boolean validRouteParams(int riskLevel, int distance, ArrayList<Island[]> locationPairs) {
 
 		if (riskLevel < 0 || riskLevel > 100) {
 			return false;
 		}
-		else if (duration < 0 || duration > 24) {
+		else if (distance < 0) {
 			return false;
 		}
 		
@@ -105,10 +105,10 @@ public class Route {
 	
 	/**
 	 * 
-	 * @return the duration of traveling the route in hours
+	 * @return the distance of the route in miles
 	 */
-	public int getDuration() {
-		return duration;
+	public int getDistance() {
+		return distance;
 	}
 	
 	/**

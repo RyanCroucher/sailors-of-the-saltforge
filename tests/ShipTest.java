@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import main.Ship;
 import main.Constants;
 import main.Constants.ShipModel;
+import main.Player;
 
 
 class ShipTest {
@@ -314,6 +315,134 @@ class ShipTest {
 		} catch (IllegalArgumentException e) {
 			fail("Invalid ship arguments.");
 		}
+	}
+	
+	@Test
+	void getRefillCrewCostTest() {
+		
+		Ship ship = new Ship(ShipModel.BARGE);
+		ship.setCrew(ship.getMaxCrew() - 5);
+		
+		//Blue Sky
+		
+		//confirm regular refill crew cost
+		assertEquals(ship.getRefillCrewCost(false), (ship.getMaxCrew() - ship.getCrew()) * 20);
+		
+		//confirm cheaper refill crew cost
+		assertEquals(ship.getRefillCrewCost(true), (ship.getMaxCrew() - ship.getCrew()) * 10);
+		
+		//One crew member
+		
+		ship = new Ship(ShipModel.CUTTER);
+		ship.setCrew(1);
+		
+		//confirm regular refill crew cost
+		assertEquals(ship.getRefillCrewCost(false), (ship.getMaxCrew() - ship.getCrew()) * 20);
+				
+		//confirm cheaper refill crew cost
+		assertEquals(ship.getRefillCrewCost(true), (ship.getMaxCrew() - ship.getCrew()) * 10);
+		
+		//Full crew
+		
+		ship = new Ship(ShipModel.MERCHANTMAN);
+		
+		//confirm regular refill crew cost
+		assertEquals(ship.getRefillCrewCost(false), 0);
+						
+		//confirm cheaper refill crew cost
+		assertEquals(ship.getRefillCrewCost(true), 0);
+	}
+	
+	@Test
+	void getWageCostTest() {
+		
+		Ship ship = new Ship(ShipModel.SLOOP);
+		
+		//blue sky
+		int duration = 10;
+		int expectedWageCost = (int) (ship.getMaxCrew() * 10 * (duration / 24f));
+		assertEquals(ship.getWageCost(duration), expectedWageCost);
+		
+		duration = 32;
+		expectedWageCost = (int) (ship.getMaxCrew() * 10 * (duration / 24f));
+		assertEquals(ship.getWageCost(duration), expectedWageCost);
+		
+		//edge case
+		//0 time passed should cost 0 wages
+		assertEquals(ship.getWageCost(0), 0);
+		
+		//invalid
+		try {
+			ship.getWageCost(-1);
+			fail("Should have thrown exception");
+		} catch (IllegalArgumentException e) {
+			assert(true);
+		}
+		
+	}
+	
+	@Test
+	void getRepairCost() {
+		
+		Ship ship = new Ship(ShipModel.CUTTER);
+		
+		//blue sky
+		ship.setHull(ship.getMaxHull() - 12);
+		int expectedRepairCost = (ship.getMaxHull() - ship.getHull()) * 20;
+		assertEquals(ship.getRepairCost(false), expectedRepairCost);
+		
+		ship.setHull(ship.getMaxHull() - 1);
+		expectedRepairCost = (ship.getMaxHull() - ship.getHull()) * 20;
+		assertEquals(ship.getRepairCost(false), expectedRepairCost);
+		
+		//cheaper repair at this island
+		ship.setHull(ship.getMaxHull() - 10);
+		expectedRepairCost = (ship.getMaxHull() - ship.getHull()) * 10;
+		assertEquals(ship.getRepairCost(true), expectedRepairCost);
+		
+		//ship is not damaged
+		ship.setHull(ship.getMaxHull());
+		expectedRepairCost = 0;
+		assertEquals(ship.getRepairCost(false), expectedRepairCost);
+	}
+	
+	@Test
+	void totalCostToLeaveIslandTest() {
+		
+		Ship ship = new Ship(ShipModel.BARGE);
+		Player.setShip(ship);
+		
+		//blue sky
+		ship.setHull(ship.getMaxHull() - 12);
+		ship.setCrew(ship.getMaxCrew() - 5);
+		int duration = 12;
+		int expectedCrewRefillCost = (ship.getMaxCrew() - ship.getCrew()) * 20;
+		int expectedRepairCost = (ship.getMaxHull() - ship.getHull()) * 20;
+		int expectedWageCost = (int) (ship.getMaxCrew() * 10 * (duration / 24f));
+		
+		assertEquals(ship.totalCostToLeaveIsland(false, false, duration), expectedCrewRefillCost + expectedRepairCost + expectedWageCost);
+		
+		//no repairs or crew needed
+		ship = new Ship(ShipModel.MERCHANTMAN);
+		Player.setShip(ship);
+		
+		duration = 30;
+		expectedCrewRefillCost = 0;
+		expectedRepairCost = 0;
+		expectedWageCost = (int) (ship.getMaxCrew() * 10 * (duration / 24f));
+		
+		assertEquals(ship.totalCostToLeaveIsland(false, false, duration), expectedCrewRefillCost + expectedRepairCost + expectedWageCost);
+		
+		//no travel duration
+		ship.setHull(ship.getMaxHull() - 7);
+		ship.setCrew(ship.getMaxCrew() - 2);
+		duration = 0;
+		expectedCrewRefillCost = (ship.getMaxCrew() - ship.getCrew()) * 20;
+		expectedRepairCost = (ship.getMaxHull() - ship.getHull()) * 20;
+		expectedWageCost = 0;
+		
+		assertEquals(ship.totalCostToLeaveIsland(false, false, duration), expectedCrewRefillCost + expectedRepairCost + expectedWageCost);
+		
 	}
 
 }
