@@ -733,8 +733,12 @@ public class GameEnvironment {
 		Player.getShip().getInventory().addItem(item, quantity);
 		store.buyItem(item, quantity);
 		
+		//record the transaction in the ledger
+		Ledger.addTransaction(quantity, item, true, store.getItemPrice(item), curIsland, hoursSinceStart);
+		
 		//print a successful message
 		logToConsole("You purchase " + quantity + " " + item.getName() + " for " + cost + " " + Constants.NAME_CURRENCY);
+		logToConsole("Beside you, Olard scribbles a note in the ledger, grumbling about the expense.");
 	}
 	
 	public static void sellItem(Item item, Store store, int quantity) throws IllegalArgumentException, InsufficientItemQuantityException {
@@ -755,8 +759,12 @@ public class GameEnvironment {
 		Player.getShip().getInventory().removeItem(item, quantity);
 		store.sellItem(item, quantity);
 		
+		//record the transaction in the ledger
+		Ledger.addTransaction(quantity, item, false, store.getItemPrice(item), curIsland, hoursSinceStart);
+		
 		//print a successful message
 		logToConsole("You sell " + quantity + " " + item.getName() + " for " + netProfit + " " + Constants.NAME_CURRENCY);
+		logToConsole("Olard grabs the bag of coin as soon as you make the sale, stashing it somewhere under his armour.");
 	}
 	
 	/**
@@ -796,6 +804,35 @@ public class GameEnvironment {
 		
 		logToConsole("");
 		consoleGetInput("<<Press enter to continue>>", true);
+		
+		goToMarket(curIsland);
+	}
+	
+	public static void consoleViewLedger() {
+		
+		logToConsole("As you enter Olard's cabin, you inquire about the ship's ledger, but he motions his hand to shush you. He appears to kneeling before a great book, deep in prayer.");
+		logToConsole("After an awkward few minutes, he stands up and gestures to a small book on a nearby table. 'Oh, the ledger is over there.'");
+		logToConsole("");
+		logToConsole("Up to 20 previous transactions:");
+		
+		ArrayList<Transaction> transactions;
+		
+		try {
+			transactions = Ledger.getTransactions(20);
+			
+			for (Transaction transaction : transactions) {
+				logToConsole(transaction.toString());
+			}
+			
+		} catch (NullPointerException e) {
+			logToConsole("There are no transactions yet.");
+		}
+		
+		logToConsole("");
+		consoleGetInput("<<Press enter to continue>>", true);
+		
+		arriveAtIsland(curIsland);
+		
 	}
 	
 	/**
@@ -809,7 +846,10 @@ public class GameEnvironment {
 		logToConsole(curOptionNumber + ". Go to the market.");
 		curOptionNumber++;
 		
-		logToConsole(curOptionNumber + ". Ask your Quartermaster Lothar about the state of your " + Player.getShip().getModelName() + ".");
+		logToConsole(curOptionNumber + ". Ask your Bosun Lothar about the state of your " + Player.getShip().getModelName() + ".");
+		curOptionNumber++;
+		
+		logToConsole(curOptionNumber + ". Ask your Quartermaster Olard about the transaction ledger.");
 		curOptionNumber++;
 		
 		HashMap<Integer, Object[]> travelOptions = getTravelOptions(curOptionNumber, currentIsland);
@@ -837,6 +877,10 @@ public class GameEnvironment {
 
 		else if (choice == 2) {
 			consoleShowShipDetails();
+		}
+		
+		else if (choice == 3) {
+			consoleViewLedger();
 		}
 		
 		else if (travelOptions.containsKey(choice)) {
