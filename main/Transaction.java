@@ -92,9 +92,9 @@ public class Transaction {
 	 */
 	public String toString() {
 		
-		String purchaseString = new String("Bought: ");
+		String purchaseString = new String("Bought ");
 		if (!isPurchase)
-			purchaseString = ("Sold: ");
+			purchaseString = ("Sold ");
 		
 		String dayString = "days";
 		if (((GameEnvironment.getHoursSinceStart() - timeOfTransaction)/24) == 1)
@@ -103,7 +103,7 @@ public class Transaction {
 		String transactionString;
 		transactionString = purchaseString + quantity + " " + item.getName() + " for " + price + " " + Constants.NAME_CURRENCY 
 				+  " each (Total: " +  (price * quantity) + ") at " + location.getIslandName() + ", " 
-				+ ((GameEnvironment.getHoursSinceStart() - timeOfTransaction)/24) + dayString + " ago.";
+				+ ((GameEnvironment.getHoursSinceStart() - timeOfTransaction)/24) + " " + dayString + " ago.";
 					
 		return transactionString;
 		
