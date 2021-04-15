@@ -137,6 +137,93 @@ public class Constants {
 	public final static String UPGRADE_CONTRACT = "Exclusive Trading Contract";
 	public final static String UPGRADE_SAILS = "Artisinal Sails";
 	
+	// Event Descriptions
+	
+	//Storm
+	public final static String EVENT_STORM_DESCRIPTION = "Whilst discussing the day's events on the deck with your First Mate Semli, the ship is suddenly"
+												 + "\nengulfed in shadow. You look up to see a black cloud forming, and without warning the heavens"
+												 + "\nopen up and winds start gusting. Semli turns to you “This don’t look good Captain, what shall we do?”";
+	public final static String EVENT_STORM_OPTION_RISKY = "'Batten the hatches and raise the sails, we see the storm through.'"
+														+ "\nThe crew hurry to make preparations to weather the storm."
+														+ "\nOnce the storm passes you exit your cabin and tell Semli to do a head count of the crew whilst you"
+														+ "\ncheck for damage to the ship."
+														+ "\n"
+														+ "\nYou’ve weathered the storm.";
+	public final static String EVENT_STORM_OPTION_SAFE = "'Turn the ship around and make for port, we’ll wait the storm out there.'"
+													   + "\nThe crew hurry to prepare the ship to go back to port."
+													   + "\nYou arrive back in port and wait until you see a break in the weather before attempting your route"
+													   + "\nagain."
+													   + "\n"
+													   + "\nFinally, there’s a break in the storm and you reach your destination. ";
+	
+	//Rescued Sailors
+	public final static String EVENT_RESCUE_DESCRIPTION = "Whilst having a drink in your cabin you hear a commotion outside. You exit to hear Sugnar yelling"
+														+ "\n“There’s men in the water, ease the sails we have to collect them.” You bring the ship alongside the"
+														+ "\nstranded men and throw down lines for them to climb aboard."
+														+ "\nThey explain they were caught in a storm, and they were surely goners if you hadn’t rescued them,"
+														+ "\nthey offer you a reward of coin for their lives."
+														+ "\n"
+														+ "\nYou rescued some sailors!";
+	
+	//Something from beneath
+	public final static String EVENT_FROM_BENEATH_DESCRIPTION = "In the dead of night, you lie sleeping in your cabin. Suddenly you are tossed from your bed by an"
+															  + "\nimpact of some sort. As you stand up, something seems wrong. You hear commotion on the deck of"
+															  + "\nthe ship. You emerge to find many of your crew looking over the edge of the ship waving lanterns"
+															  + "\nat the water. You hear them talking about the crew on patrol seeing something large emerge from"
+															  + "\nthe water before the impact. Some of them seem terrified, adamant that it wasn’t a whale but maybe"
+															  + "\nsomething ancient from the depths below."
+															  + "\nYou don’t have time for the conspiracies, all you can do is assess the damage and do a head count"
+															  + "\nof the crew and make sure you can get to port."
+															  + "\n"
+															  + "\nSomething from the depths attacked you.";
+
+	//Pirate attack
+	public final static String EVENT_PIRATE_ATTACK_DESCRIPTION = "It has been a peaceful trip thus far; you have been checking your ledger with Olard trying to figure"
+															   + "\nout what best to sell at the next port. You are startled at the sound of the horn in the crow's nest."
+															   + "\nYou exit onto the deck to hear Sugnar yelling down from the crow's nest, “Ship approaching fast,"
+															   + "\nno colours and black sails. I think it’s pirates, Captain.” The ship is abuzz as the crew scurry to"
+															   + "\npositions awaiting your orders. "
+															   + "\n"
+															   + "\nAvast ye!!! We have been set upon by Pirates. We must make a decison Captain. ";
+	public final static String EVENT_PIRATE_ATTACK_FIGHT_SUCCESS = "We fight!!"
+			+ ""
+			+ "Your men man the guns and you unleash devastating volleys against your attackers whilst you"
+		    + "\nskilfully manoeuvre the ship to avoid crippling damage to the ship."
+		    + "\nThe enemy limp away with their tails beneath their legs."
+		    + "\n"
+		    + "\nYou Win";
+	public final static String EVENT_PIRATE_ATTACK_FIGHT_FAIL = "We fight!!"
+			+ "\n"
+			+ "Your men man the guns and prepare for battle. They fight well but they are out matched, and you"
+			+ "\nhave had to surrender to save the remaining mens lives. The pirates hook their ship to yours and"
+			+ "\ncome aboard, ready to judge if your goods are enough to satisfy their greed."
+			+ "\n"
+			+ "\nYou lose";
+	public final static String EVENT_PIRATE_ATTACK_RUN_SUCCESS = "We have got to outrun them!!"
+			+ "\n"
+			+ "\nYour crew jump to action to loose the sails and as if the gods themselves were watching you, a"
+			+ "\nlucky gust of wind fills the sails, allowing you to surge ahead in the water leaving the pirates in"
+			+ "\nyour wake."
+			+ "\n"
+			+ "\nYou Escaped!";
+	public final static String EVENT_PIRATE_ATTACK_RUN_FAIL = "We have got to outrun them!!"
+			+ "\n"
+			+ "Your crew jump to action to loose the sails, the sails catch a big gust of wind and just as you feel"
+			+ "\nthe ship roll forward with speed the worst happens - your main sail has torn! You are now dead in"
+			+ "\nthe water."
+			+ "\nThe pirates approach and hook their ship to yours and board ready to judge if your goods are"
+			+ "\nenough to satisfy their greed."
+			+ "\n"
+			+ "\nThey caught you.";
+	public final static String EVENT_PIRATE_ATTACK_SURRENDER = "We cannot beat them boys, we must surrender!!"
+			+ "\n"
+			+ "\nReluctantly the crew agree that surrender is the only way to survive the encounter, you just hope"
+			+ "\nthey take it easy on you because you gave them what they wanted."
+			+ "\n"
+			+ "\nYou have Surrendered.";
+	
+	
+	
 	//
 	// Game Settings
 	//
