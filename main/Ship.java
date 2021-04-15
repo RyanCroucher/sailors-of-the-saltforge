@@ -131,6 +131,8 @@ public class Ship {
 		this.setWeaponRating(weaponRating);
 		
 		inventory = new Inventory();
+		
+		upgrades = new ArrayList<String>();
 	}
 	
 	/**

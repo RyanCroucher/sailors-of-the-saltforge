@@ -501,6 +501,7 @@ public class GameEnvironment {
 		logToConsole(island.getIslandDescription());
 		logToConsole("");
 		logToConsole("It is day " + hoursSinceStart / 24 + " of " + gameDuration + ".");
+		logToConsole("You have: " + Player.getGold() + " " + Constants.NAME_CURRENCY + ".");
 		logToConsole("");
 	}
 	
@@ -759,6 +760,45 @@ public class GameEnvironment {
 	}
 	
 	/**
+	 * Displays all relevant information about the state of your ship
+	 */
+	public static void consoleShowShipDetails() {
+		
+		Ship ship = Player.getShip();
+		
+		logToConsole("You find Lothar where he is mumbling to himself in the corner, and demand to know the state of your ship.");
+		logToConsole("He tells you:");
+		logToConsole("");
+		logToConsole("You are Captain " + Player.getName() + ", a dwarven merchant from the Salt Forge.");
+		logToConsole("Your ship is a " + ship.getModelName() + ".");
+		
+		String refillCrewString = "You do not need to hire more crew.";
+		if (ship.getCrew() < ship.getMaxCrew()) {
+			int costToRefill = ship.getRefillCrewCost(curIsland.getIslandName() == Constants.ISLAND_SKULLHAVEN);
+			refillCrewString = "It will cost you " + costToRefill + " " + Constants.NAME_CURRENCY + " to hire more crew.";
+		}
+		logToConsole("Your ship has " + ship.getCrew() + " crew out of a maximum of " + ship.getMaxCrew() + ". " + refillCrewString);
+		
+		logToConsole("You must pay your crew a total wage of " + ship.getWageCost(24) + " " + Constants.NAME_CURRENCY + " per day.");
+		logToConsole("The " + ship.getModelName() + " is carrying " + ship.getCargo() + " items out of a maximum of " + ship.getCargoCapacity() + ".");
+		
+		String upgradeString = "You have not yet purchased any upgrades for your ship.";
+		if (ship.getUpgrades().size() > 0)
+			upgradeString = "You have wisely purchased these upgrades: " + String.join(", ", ship.getUpgrades());
+		logToConsole(upgradeString);
+		
+		String hullRepairString = "Your hull has not sustained any damage.";
+		if (ship.getHull() < ship.getMaxHull()) {
+			int costToRepair = ship.getRepairCost(curIsland.getIslandName() == Constants.ISLAND_SKULLHAVEN);
+			hullRepairString = "Your ship has taken damage and is at " + ship.getHull() + " out of a maximum of " + ship.getMaxHull() + " hull points. It will cost " + costToRepair + " " + Constants.NAME_CURRENCY + " to repair.";
+		}
+		logToConsole(hullRepairString);
+		
+		logToConsole("");
+		consoleGetInput("<<Press enter to continue>>", true);
+	}
+	
+	/**
 	 * Displays a list of every action the player can take at the current island
 	 * @param island the current location of the player
 	 */
@@ -769,14 +809,15 @@ public class GameEnvironment {
 		logToConsole(curOptionNumber + ". Go to the market.");
 		curOptionNumber++;
 		
+		logToConsole(curOptionNumber + ". Ask your Quartermaster Lothar about the state of your " + Player.getShip().getModelName() + ".");
+		curOptionNumber++;
+		
 		HashMap<Integer, Object[]> travelOptions = getTravelOptions(curOptionNumber, currentIsland);
 		
 		//update curOptionNumber to the latest value
 		for (int key : travelOptions.keySet()) {
-			curOptionNumber = Math.max(curOptionNumber, key);
+			curOptionNumber = Math.max(curOptionNumber, key) + 1;
 		}
-		
-		curOptionNumber++;
 		
 		consolePresentTravelOptions(travelOptions);
 		
@@ -790,9 +831,12 @@ public class GameEnvironment {
 			}
 		}
 		
-		//go to market
 		if (choice == 1) {
 			goToMarket(currentIsland);
+		}
+
+		else if (choice == 2) {
+			consoleShowShipDetails();
 		}
 		
 		else if (travelOptions.containsKey(choice)) {
@@ -916,6 +960,14 @@ public class GameEnvironment {
 	 */
 	public static void closeScanner() {
 		scanner.close();
+	}
+	
+	/**
+	 * 
+	 * @return the number of hours since the game started
+	 */
+	public static int getHoursSinceStart() {
+		return hoursSinceStart;
 	}
 	
 	
