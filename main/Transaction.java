@@ -1,7 +1,7 @@
 package main;
 
 /**
- * Class to detail a transaction for adding to Ledger
+ * Class to detail a transaction for adding to Ledger		
  * @author Steven Johnson sjo139
  *
  */
@@ -97,8 +97,8 @@ public class Transaction {
 			purchaseString = ("Sold: ");
 		
 		String transactionString;
-		transactionString = purchaseString + quantity + " " + item + " for " + price + " " + Constants.NAME_CURRENCY 
-				+  " each (Total: " +  (price * quantity) + ") at " + location + ", " 
+		transactionString = purchaseString + quantity + " " + item.getName() + " for " + price + " " + Constants.NAME_CURRENCY 
+				+  " each (Total: " +  (price * quantity) + ") at " + location.getIslandName() + ", " 
 				+ ((GameEnvironment.getHoursSinceStart() - timeOfTransaction)/24) + " days ago.";
 					
 		return transactionString;
