@@ -541,8 +541,17 @@ public class GameEnvironment {
 			
 			int riskLevel = viaRoute.getRiskLevel();
 			int distance = viaRoute.getDistance();
+			int modifiedTravelTime = getModifiedTravelTime(distance);
 			
-			String routeInfo = "(Encounter Chance: " + riskLevel + "%, Travel Time: " + getModifiedTravelTime(distance) + " hours)";
+			int travelDays = modifiedTravelTime / 24;
+			int travelHours = modifiedTravelTime % 24;
+			
+			boolean cheaperCrewHire = curIsland.getIslandName() == Constants.ISLAND_SKULLHAVEN;
+			boolean cheaperRepairs = curIsland.getIslandName() == Constants.ISLAND_SKULLHAVEN;
+
+			int totalCostToLeaveIsland = Player.getShip().totalCostToLeaveIsland(cheaperRepairs, cheaperCrewHire, modifiedTravelTime);
+			
+			String routeInfo = "(" + distance + " miles, Encounter Chance: " + riskLevel + "%, Travel Time: " + travelDays + " days " + travelHours + " hours, Crew and Repairs Cost: " + totalCostToLeaveIsland + ")";
 			
 			logToConsole(travelOption + ". Travel to " + destinationIsland.getIslandName() + " via " + viaRoute.getName() + " " + routeInfo);
 		}
@@ -795,6 +804,11 @@ public class GameEnvironment {
 				travelToIsland(chosenIsland, chosenRoute);
 			} catch (IllegalArgumentException e) {
 				System.out.println(e.getMessage());
+				consoleGetInput("<<Press enter to continue>>", true);
+				consolePresentIslandOptions(currentIsland);
+			} catch (InsufficientGoldException e) {
+				logToConsole(e.getMessage());
+				consoleGetInput("<<Press enter to continue>>", true);
 				consolePresentIslandOptions(currentIsland);
 			}
 		}
@@ -806,13 +820,25 @@ public class GameEnvironment {
 	 * @param island the island to travel to
 	 * @param route the route to travel by
 	 */
-	public static void travelToIsland(Island destinationIsland, Route chosenRoute) throws IllegalArgumentException {
+	public static void travelToIsland(Island destinationIsland, Route chosenRoute) throws IllegalArgumentException, InsufficientGoldException {
 		
 		if (!chosenRoute.includesIsland(destinationIsland))
 			throw new IllegalArgumentException("Can't reach that island by that route!");
 		
-		//pass time given route duration and speed of your ship
 		int modifiedDuration = getModifiedTravelTime(chosenRoute.getDistance());
+		
+		boolean cheaperRepairs = curIsland.getIslandName() == Constants.ISLAND_SKULLHAVEN;
+		boolean cheaperCrewHire = curIsland.getIslandName() == Constants.ISLAND_SKULLHAVEN;
+		
+		int totalCostToTravel = Player.getShip().totalCostToLeaveIsland(cheaperRepairs, cheaperCrewHire, modifiedDuration);
+				
+		if (totalCostToTravel > Player.getGold())
+			throw new InsufficientGoldException("Not enough money to leave port!");
+		
+		//deduct gold from the player
+		Player.setGold(Player.getGold() - totalCostToTravel);
+		
+		//pass time given route duration and speed of your ship
 		passTime(modifiedDuration);
 		
 		//Show the description of the journey
@@ -820,6 +846,7 @@ public class GameEnvironment {
 		logToConsole(chosenRoute.getDescription());
 		logToConsole("");
 		logToConsole(modifiedDuration + " hours have passed.");
+		logToConsole("You spent " + totalCostToTravel + " " + Constants.NAME_CURRENCY + " on crew hire, wages and repairs.");
 		consoleGetInput("<<Press enter to continue>>", true);
 		
 		//TODO: Handle events
