@@ -93,13 +93,17 @@ public class Transaction {
 	public String toString() {
 		
 		String purchaseString = new String("Bought: ");
-		if (isPurchase == true)
+		if (!isPurchase)
 			purchaseString = ("Sold: ");
+		
+		String dayString = "days";
+		if (((GameEnvironment.getHoursSinceStart() - timeOfTransaction)/24) == 1)
+			dayString = "day";
 		
 		String transactionString;
 		transactionString = purchaseString + quantity + " " + item.getName() + " for " + price + " " + Constants.NAME_CURRENCY 
 				+  " each (Total: " +  (price * quantity) + ") at " + location.getIslandName() + ", " 
-				+ ((GameEnvironment.getHoursSinceStart() - timeOfTransaction)/24) + " days ago.";
+				+ ((GameEnvironment.getHoursSinceStart() - timeOfTransaction)/24) + dayString + " ago.";
 					
 		return transactionString;
 		
