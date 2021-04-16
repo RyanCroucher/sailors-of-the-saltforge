@@ -21,7 +21,7 @@ class TransactionTest {
 		
 		// Intialize some objects
 		Inventory inventory = new Inventory();
-		Item testItem = new Item("Food", 20, "Grains, Fruits and Meats");
+		Item testItem = new Item("Food", 20, "Grains, Fruits and Meats", 1);
 		inventory.addItem(testItem, 10);
 		ArrayList<Item> imports = new ArrayList<Item>();
 		ArrayList<Item> exports = new ArrayList<Item>();

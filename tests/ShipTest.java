@@ -444,5 +444,40 @@ class ShipTest {
 		assertEquals(ship.totalCostToLeaveIsland(false, false, duration), expectedCrewRefillCost + expectedRepairCost + expectedWageCost);
 		
 	}
+	
+	@Test
+	void addUpgradeTest() {
+		
+		//Initialize the ship
+		Ship ship = new Ship(ShipModel.BARGE);
+		
+		// add some upgrades
+		ship.addUpgrade(Constants.UPGRADE_FLAG);
+		ship.addUpgrade(Constants.UPGRADE_CONTRACT);
+		ship.addUpgrade(Constants.UPGRADE_HULL);
+		ship.addUpgrade(Constants.UPGRADE_CANNONS);
+		ship.addUpgrade(Constants.UPGRADE_SAILS);
+		
+		//Check ship now has 5 upgrades
+		assertEquals(ship.getUpgrades().size(), 5);
+		
+		// Check if upgrades work
+		assertEquals(ship.getHull(), Constants.BARGE_MAX_HULL + 20);
+		assertEquals(ship.getSpeed(), Constants.BARGE_SPEED + 10);
+		assertEquals(ship.getWeaponRating(), Constants.BARGE_WEAPONS + 2);
+		
+		try {
+			ship.addUpgrade(Constants.UPGRADE_HULL);
+			fail("Can't add same upgrade twice, should throw exception");
+			
+		} catch (IllegalArgumentException e) {
+			assert(true);
+		}
+		
+		
+		
+	}
+	
+	
 
 }
