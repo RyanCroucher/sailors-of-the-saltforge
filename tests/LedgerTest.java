@@ -23,7 +23,7 @@ class LedgerTest {
 	}
 
 	@Test
-	void testAddTransaction() {
+	void addTransactionTest() {
 		
 		// Initialize needed objects
 		Inventory inventory = new Inventory();
@@ -72,7 +72,7 @@ class LedgerTest {
 
 
 	@Test
-	void testGetTransactions() {
+	void getTransactionsTest() {
 
 		// Initialize needed objects
 		Inventory inventory = new Inventory();

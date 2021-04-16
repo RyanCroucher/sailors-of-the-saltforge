@@ -13,7 +13,7 @@ import main.Store;
 class StoreTest {
 
 	@Test
-	void testStoreConstruction() {
+	void storeConstructionTest() {
 	
 		// Valid construction of a store
 		Inventory inventory = new Inventory();
@@ -66,7 +66,7 @@ class StoreTest {
 	}
 
 	@Test
-	void testBuyItem() {
+	void buyItemTest() {
 		
 		// Valid buying test
 		Inventory inventory = new Inventory();
@@ -122,7 +122,7 @@ class StoreTest {
 	}
 
 	@Test
-	void testSellItem() {
+	void sellItemTest() {
 		
 		// Valid selling test
 		Inventory inventory = new Inventory();
@@ -169,7 +169,7 @@ class StoreTest {
 	}
 
 	@Test
-	void testGetItemPrice() {
+	void getItemPriceTest() {
 		
 		// Valid Get Item Price
 		Inventory inventory = new Inventory();
@@ -216,7 +216,7 @@ class StoreTest {
 	}
 
 	@Test
-	void testRandomizeInventory() {
+	void randomizeInventoryTest() {
 		
 		// Valid Randomization test
 		Inventory inventory = new Inventory();
@@ -280,7 +280,7 @@ class StoreTest {
 	}
 	
 	@Test
-	void testSetFactor() {
+	void setFactorTest() {
 		
 		// Valid Set Factor
 		Inventory inventory = new Inventory();

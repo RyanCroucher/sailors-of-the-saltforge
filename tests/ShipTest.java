@@ -382,7 +382,7 @@ class ShipTest {
 	}
 	
 	@Test
-	void getRepairCost() {
+	void getRepairCostTest() {
 		
 		Ship ship = new Ship(ShipModel.CUTTER);
 		

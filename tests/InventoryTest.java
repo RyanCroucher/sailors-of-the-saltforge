@@ -12,7 +12,7 @@ import main.Item;
 class InventoryTest {
 
 	@Test
-	void testGetItemQuantity() {
+	void getItemQuantityTest() {
 		// Valid test
 		Inventory inventory1 = new Inventory();
 		Item testItem = new Item("Food", 20, "");
@@ -43,7 +43,7 @@ class InventoryTest {
 		
 
 	@Test
-	void testSetItemQuantity() {
+	void setItemQuantityTest() {
 		
 		// Valid test, Item exists and quantity to set >= 0  
 		Inventory inventory = new Inventory();
@@ -77,7 +77,7 @@ class InventoryTest {
 		
 
 	@Test
-	void testAddItem() {
+	void addItemTest() {
 		
 		// Valid use test
 		Inventory inventory = new Inventory();
@@ -117,7 +117,7 @@ class InventoryTest {
 	}
 
 	@Test
-	void testRemoveItem() {
+	void removeItemTest() {
 		
 		// Valid use test
 		Inventory inventory = new Inventory();
@@ -166,7 +166,7 @@ class InventoryTest {
 	}
 
 	@Test
-	void testGetInventoryItems() {
+	void getInventoryItemsTest() {
 		
 		// Valid use test
 		Inventory inventory = new Inventory();

@@ -17,7 +17,7 @@ import main.Transaction;
 class TransactionTest {
 
 	@Test
-	void testToString() {
+	void toStringTest() {
 		
 		// Intialize some objects
 		Inventory inventory = new Inventory();
