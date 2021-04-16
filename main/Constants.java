@@ -140,21 +140,19 @@ public class Constants {
 	// Event Descriptions
 	
 	//Storm
-	public final static String EVENT_STORM_DESCRIPTION = "Whilst discussing the day's events on the deck with your First Mate Semli, the ship is suddenly"
-												 + "\nengulfed in shadow. You look up to see a black cloud forming, and without warning the heavens"
-												 + "\nopen up and winds start gusting. Semli turns to you “This don’t look good Captain, what shall we do?”";
+	public final static String EVENT_STORM_DESCRIPTION = "Whilst discussing the day's events on the deck with your First Mate Semli, the ship is suddenly engulfed in shadow."
+												 + "\nYou look up to see a black cloud forming, and without warning the heavens open up and winds start gusting."
+												 + "\nSemli turns to you “This don’t look good Captain, what shall we do?”";
 	
 	public final static String EVENT_STORM_OPTION_RISKY = "'Batten the hatches and raise the sails, we see the storm through.'"
 														+ "\nThe crew hurry to make preparations to weather the storm."
-														+ "\nOnce the storm passes you exit your cabin and tell Semli to do a head count of the crew whilst you"
-														+ "\ncheck for damage to the ship."
+														+ "\nOnce the storm passes you exit your cabin and tell Semli to do a head count of the crew whilst you check for damage to the ship."
 														+ "\n"
 														+ "\nYou’ve weathered the storm.";
 	
 	public final static String EVENT_STORM_OPTION_SAFE = "'Turn the ship around and make for port, we’ll wait the storm out there.'"
 													   + "\nThe crew hurry to prepare the ship to go back to port."
-													   + "\nYou arrive back in port and wait until you see a break in the weather before attempting your route"
-													   + "\nagain."
+													   + "\nYou arrive back in port and wait until you see a break in the weather before attempting your route again."
 													   + "\n"
 													   + "\nFinally, there’s a break in the storm and you reach your destination. ";
 	

@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import events.RandomEvent;
 import events.RescueEvent;
+import events.WeatherEvent;
 import exceptions.InsufficientCargoCapacityException;
 import exceptions.InsufficientGoldException;
 import exceptions.InsufficientItemQuantityException;
@@ -1124,6 +1125,10 @@ public class GameEnvironment {
 		//deduct gold from the player
 		Player.setGold(Player.getGold() - totalCostToTravel);
 		
+		//restore hull and crew
+		Player.getShip().setHull(Player.getShip().getMaxHull());
+		Player.getShip().setCrew(Player.getShip().getMaxCrew());
+		
 		//pass time given route duration and speed of your ship
 		passTime(modifiedDuration);
 		
@@ -1147,22 +1152,7 @@ public class GameEnvironment {
 		consoleGetInput("<<Press enter to continue>>", true);
 		
 		if (eventOccurs) {
-			RandomEvent event = rollRandomEvent();
-			
-			logToConsole(getBanner(event.getName()));
-			logToConsole("");
-			logToConsole(event.getDescription());
-			logToConsole("");
-			
-			ArrayList<String> options = event.getOptions();
-			
-			if (options.size() == 0) {
-				logToConsole(event.getEffect());
-				event.doEffect();
-			}
-			
-			consoleGetInput("<<Press enter to continue>>", true);
-			
+			executeEvent();
 		}
 		
 		
@@ -1177,6 +1167,49 @@ public class GameEnvironment {
 		
 	}
 	
+	private static void executeEvent() {
+		RandomEvent event = rollRandomEvent();
+		
+		logToConsole(getBanner(event.getName()));
+		logToConsole("");
+		logToConsole(event.getDescription());
+		logToConsole("");
+		
+		ArrayList<String> options = event.getOptions();
+		
+		if (options.size() == 0) {
+			logToConsole(event.getEffect());
+			event.doEffect();
+		}
+		//we need to pick an option
+		else {
+			
+			int optionNumber = 1;
+			
+			for (String option : options) {
+				logToConsole(optionNumber++ + ". " + option);
+			}
+			
+			logToConsole("");
+			
+			int choice = 0;
+			
+			while (choice < 1 || choice > options.size()) {
+				try {
+					choice = Integer.parseInt(consoleGetInput("What do you want to do?", false));
+				} catch (NumberFormatException e) {
+					logToConsole("Please enter a valid number.");
+				}
+			}
+			
+			event.chooseOption(choice);
+			logToConsole(event.getEffect());
+			event.doEffect();
+		}
+		
+		consoleGetInput("<<Press enter to continue>>", true);
+	}
+	
 	private static RandomEvent rollRandomEvent() {
 		
 		//random number between 0 and 10
@@ -1187,9 +1220,17 @@ public class GameEnvironment {
 			int prize = (int) (Math.random() * 75 + 25);
 			event = new RescueEvent("Drowning Sailors", Constants.EVENT_RESCUE_DESCRIPTION, prize);
 		}
-		else if (eventType <= 10) {
+		else if (eventType == 1) {
 			int prize = (int) (Math.random() * 100 + 100);
 			event = new RescueEvent("Dead in the Water", Constants.EVENT_RESCUE_TWO_DESCRIPTION, prize);
+		}
+		else if (eventType <= 10) {
+			
+			int hullDamage = (int) (Math.random() * 20 + 5);
+			int crewLoss = (int) (Math.random() * 10 + 1);
+			int hoursLoss = 12;
+			
+			event = new WeatherEvent("Sudden Storm", Constants.EVENT_STORM_DESCRIPTION, hullDamage, crewLoss, hoursLoss);
 		}
 		
 		return event;

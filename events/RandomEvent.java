@@ -54,6 +54,14 @@ public abstract class RandomEvent {
 		this.effectString = effectString;
 	}
 	
+	public int getStage() {
+		return stage;
+	}
+	
+	public void setStage(int stage) {
+		this.stage = stage;
+	}
+	
 	public abstract void doEffect();
 	
 	public abstract ArrayList<String> getOptions();
