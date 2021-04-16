@@ -405,10 +405,15 @@ public class GameEnvironment {
 		Island[] tranquilExpansePair = {saltForge, sandyFields};
 		Island[] basaltSpiresPair = {saltForge, tunia};
 		Island[] aroundBasaltPair = {saltForge, tunia};
-		Island[] shipwreckerPair = {sandyFields, skullHaven};
+		Island[] shipwreckerPairOne = {sandyFields, skullHaven};
+		Island[] shipwreckerPairTwo = {seaNomads, skullHaven};
 		Island[] oysterBayPair = {tunia, seaNomads};
 		Island[] jackalSeaPairOne = {sandyFields, skullHaven};
-		Island[] jackalSeaPairTwo = {seaNomads, skullHaven};
+		Island[] jackalSeaPairTwo = {saltForge, skullHaven};
+		Island[] jackalSeaPairThree = {saltForge, seaNomads};
+		Island[] jackalSeaPairFour = {tunia, sandyFields};
+		Island[] jackalSeaPairFive = {tunia, skullHaven};
+		Island[] jackalSeaPairSix = {seaNomads, sandyFields};
 		
 		ArrayList<Island[]> tranquilExpansePairList = new ArrayList<Island[]>();
 		tranquilExpansePairList.add(tranquilExpansePair);
@@ -420,7 +425,8 @@ public class GameEnvironment {
 		aroundBasaltPairList.add(aroundBasaltPair);
 		
 		ArrayList<Island[]> shipwreckerPairList = new ArrayList<Island[]>();
-		shipwreckerPairList.add(shipwreckerPair);
+		shipwreckerPairList.add(shipwreckerPairOne);
+		shipwreckerPairList.add(shipwreckerPairTwo);
 		
 		ArrayList<Island[]> oysterBayPairList = new ArrayList<Island[]>();
 		oysterBayPairList.add(oysterBayPair);
@@ -428,6 +434,10 @@ public class GameEnvironment {
 		ArrayList<Island[]> jackalSeaPairList = new ArrayList<Island[]>();
 		jackalSeaPairList.add(jackalSeaPairOne);
 		jackalSeaPairList.add(jackalSeaPairTwo);
+		jackalSeaPairList.add(jackalSeaPairThree);
+		jackalSeaPairList.add(jackalSeaPairFour);
+		jackalSeaPairList.add(jackalSeaPairFive);
+		jackalSeaPairList.add(jackalSeaPairSix);
 		
 		Route tranquilExpanse = new Route("The Tranquil Expanse", Constants.ROUTE_TRANQUIL_EXPANSE_DESCRIPTION, 20, 28, tranquilExpansePairList);
 		Route basaltSpires = new Route("Through the Basalt Spires", Constants.ROUTE_BASALT_SPIRES_DESCRIPTION, 40, 10, basaltSpiresPairList);
@@ -443,10 +453,10 @@ public class GameEnvironment {
 	}
 	
 	public static void setupItems() {
-		Item luxuryGoods = new Item("Luxury Goods", Constants.ITEM_BASE_PRICE_LUXURY, "Silks, jewellery and spices");
-		Item alcohol = new Item("Alcohol", Constants.ITEM_BASE_PRICE_ALCOHOL, "Barrels and bottles of strong liquor");
-		Item rawMaterials = new Item("Raw Materials", Constants.ITEM_BASE_PRICE_RAW_MATERIALS, "Lumber, ores and coal");
-		Item food = new Item("Food", Constants.ITEM_BASE_PRICE_FOOD, "Crops, fruits and meats");
+		Item luxuryGoods = new Item("Luxury Goods", Constants.ITEM_BASE_PRICE_LUXURY, "Silks, jewellery and spices", 1);
+		Item alcohol = new Item("Alcohol", Constants.ITEM_BASE_PRICE_ALCOHOL, "Barrels and bottles of strong liquor", 1);
+		Item rawMaterials = new Item("Raw Materials", Constants.ITEM_BASE_PRICE_RAW_MATERIALS, "Lumber, ores and coal [takes 2 cargo space]", 2);
+		Item food = new Item("Food", Constants.ITEM_BASE_PRICE_FOOD, "Crops, fruits and meats", 1);
 		
 		items = new ArrayList<Item>();
 		items.add(luxuryGoods);
@@ -526,7 +536,7 @@ public class GameEnvironment {
 			//if player reached the gold target, less days is better
 			//lose up to half your score based on percentage of total game duration passed.
 			score -= (int) (5f * ((hoursSinceStart / 24f) / gameDuration));
-		else if (hoursSinceStart / 24 < gameDuration){
+		else if (endGameCode != 0){
 			//if you didn't reach the gold target, and didn't reach the game duration, more days and more gold is better
 			score -= (int) (5f * (1f - ((hoursSinceStart / 24f) / gameDuration) * Player.getGold() / 10000));
 		}
@@ -754,7 +764,7 @@ public class GameEnvironment {
 			arriveAtIsland(island);
 		} else {
 		
-			//sell orders are odd numbered
+			//buy orders are odd numbered
 			
 			//buy
 			if (choice % 2 == 1) {
@@ -812,7 +822,7 @@ public class GameEnvironment {
 		
 		//looks good, adjust player gold, ships cargo and add to ship's inventory. remove from store inventory
 		Player.setGold(Player.getGold() - cost);
-		Player.getShip().setCargo(Player.getShip().getCargo() + quantity);
+		Player.getShip().setCargo(Player.getShip().getCargo() + (quantity * item.getSize()));
 		Player.getShip().getInventory().addItem(item, quantity);
 		store.buyItem(item, quantity);
 		
@@ -838,7 +848,7 @@ public class GameEnvironment {
 		//looks good, adjust player gold, ships cargo and remove from ship's inventory, add to store inventory
 		int netProfit = store.getItemPrice(item) * quantity;
 		Player.setGold(Player.getGold() + netProfit);
-		Player.getShip().setCargo(Player.getShip().getCargo() - quantity);
+		Player.getShip().setCargo(Player.getShip().getCargo() - (quantity * item.getSize()));
 		Player.getShip().getInventory().removeItem(item, quantity);
 		store.sellItem(item, quantity);
 		
@@ -1177,6 +1187,10 @@ public class GameEnvironment {
 		
 		curIsland = island;
 		
+		if (hoursSinceStart + minHoursToLeaveIsland(island) >= gameDuration * 24) {
+			endGame(0);
+		}
+		
 		if (Player.getNetWorth() < minCostToLeaveIsland())
 			endGame(2);
 		
@@ -1224,6 +1238,20 @@ public class GameEnvironment {
 		}
 		
 		return cost;
+		
+	}
+	
+	public static int minHoursToLeaveIsland(Island island) {
+		
+		int hours = 10000;
+		
+		for (Route route : routes) {
+			if (route.includesIsland(island)) {
+				hours = Math.min(hours, getModifiedTravelTime(route.getDistance()));
+			}
+		}
+		
+		return hours;
 		
 	}
 	
