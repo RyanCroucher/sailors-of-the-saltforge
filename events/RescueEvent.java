@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import main.Constants;
 import main.Player;
 
-public class RescueEvent extends FortuneEvent implements RandomEvent {
+public class RescueEvent extends RandomEvent {
 	
 	private int prize;
 	
@@ -14,24 +14,13 @@ public class RescueEvent extends FortuneEvent implements RandomEvent {
 		
 		this.prize = prize;
 		
-		super.effectString = "The sailors give you " + prize + " " + Constants.NAME_CURRENCY + ".";
+		super.setEffectString("The sailors give you " + prize + " " + Constants.NAME_CURRENCY + ".");
 	}
 	
 	public void chooseOption(int choice) {
 		
 	}
 	
-	public String getName() {
-		return super.name;
-	}
-	
-	public String getDescription() {
-		return super.description;
-	}
-	
-	public String getEffect() {
-		return super.effectString;
-	}
 	
 	public void doEffect() {
 		Player.setGold(Player.getGold() + prize);
