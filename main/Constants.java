@@ -235,7 +235,7 @@ public class Constants {
 	//
 	public final static int MIN_GAME_DURATION = 20;
 	public final static int MAX_GAME_DURATION = 50;
-	public final static int PLAYER_START_GOLD = 5000;
+	public final static int PLAYER_START_GOLD = 1000;
 	
 	
 	//

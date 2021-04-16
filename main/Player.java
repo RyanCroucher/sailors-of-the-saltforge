@@ -73,4 +73,20 @@ public class Player {
 		}
 	}
 	
+	public static int getNetWorth() {
+		int netWorth = gold;
+		
+		
+		for (Item item : ship.getInventory().getInventoryItems()) {
+			int quantity = ship.getInventory().getItemQuantity(item);
+			Store currentStore = GameEnvironment.getCurrentIsland().getIslandStore();
+			
+			int value = currentStore.getItemPrice(item);
+			
+			netWorth += quantity * value;
+		}
+		
+		return netWorth;
+	}
+	
 }

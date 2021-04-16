@@ -467,6 +467,10 @@ public class GameEnvironment {
 		
 	}
 	
+	/**
+	 * Ends the game and prints your stats
+	 * @param endGameCode the reason the game ended. 0 for max day reached, 1 for max gold reached, 2 for out of money, 3 for random event
+	 */
 	public static void endGame(int endGameCode) {
 		
 		logToConsole(getBanner("GAME OVER"));
@@ -1173,6 +1177,9 @@ public class GameEnvironment {
 		
 		curIsland = island;
 		
+		if (Player.getNetWorth() < minCostToLeaveIsland())
+			endGame(2);
+		
 		consoleIslandWelcome(curIsland);
 		
 		consolePresentIslandOptions(curIsland);
@@ -1193,6 +1200,31 @@ public class GameEnvironment {
 	 */
 	public static int getHoursSinceStart() {
 		return hoursSinceStart;
+	}
+	
+	/**
+	 * 
+	 * @return the current island where the player is
+	 */
+	public static Island getCurrentIsland() {
+		return curIsland;
+	}
+	
+	public static int minCostToLeaveIsland() {
+		
+		int cost = 10000;
+		
+		boolean cheaperCrewHire = curIsland.getIslandName() == Constants.ISLAND_SKULLHAVEN;
+		boolean cheaperRepairs = curIsland.getIslandName() == Constants.ISLAND_SKULLHAVEN;
+		
+		for (Route route : routes) {
+			if (route.includesIsland(curIsland)) {
+				cost = Math.min(cost, Player.getShip().totalCostToLeaveIsland(cheaperRepairs, cheaperCrewHire, getModifiedTravelTime(route.getDistance())));
+			}
+		}
+		
+		return cost;
+		
 	}
 	
 	
