@@ -2,25 +2,6 @@ package events;
 
 import java.util.ArrayList;
 
-//package events;
-//
-//import java.util.ArrayList;
-//
-//public interface RandomEvent {
-//	
-//	String getName();
-//	String getDescription();
-//	
-//	String getEffect();
-//	void doEffect();
-//	
-//	ArrayList<String> getOptions();
-//	
-//	void chooseOption(int choice);
-//	
-//
-//}
-
 public abstract class RandomEvent {
 	
 	private String name;
