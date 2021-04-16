@@ -86,14 +86,6 @@ class LedgerTest {
 		String testIslandDesc = "Salty dwarven island";
 		Island testIsland = new Island(testIslandName, testIslandDesc, testStore);
 		
-//		Transaction testTransaction1 = new Transaction(inventory.getItemQuantity(testItem), testItem, true, testItem.getBasePrice(), testIsland, 0);
-//		Transaction testTransaction2 = new Transaction(inventory.getItemQuantity(testItem), testItem, false, testItem.getBasePrice(), testIsland, 0);
-//		Transaction testTransaction3 = new Transaction(inventory.getItemQuantity(testItem), testItem, true, testItem.getBasePrice(), testIsland, 0);
-//		ArrayList<Transaction> testTransactions = new ArrayList<Transaction>();
-//		testTransactions.add(testTransaction1);
-//		testTransactions.add(testTransaction2);
-//		testTransactions.add(testTransaction3);
-		
 		Ledger.addTransaction(inventory.getItemQuantity(testItem), testItem, true, testItem.getBasePrice(), testIsland, 0);
 		Ledger.addTransaction(inventory.getItemQuantity(testItem), testItem, false, testItem.getBasePrice(), testIsland, 0);
 		Ledger.addTransaction(inventory.getItemQuantity(testItem), testItem, true, testItem.getBasePrice(), testIsland, 0);
