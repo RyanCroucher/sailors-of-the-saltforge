@@ -1180,12 +1180,16 @@ public class GameEnvironment {
 	private static RandomEvent rollRandomEvent() {
 		
 		//random number between 0 and 10
-		int eventType = (int) Math.random() * 11;
+		int eventType = (int) (Math.random() * 11);
 		RandomEvent event = null;
 		
-		if (eventType <= 10) {
-			int prize = (int) (Math.random() * 150 + 50);
+		if (eventType == 0) {
+			int prize = (int) (Math.random() * 75 + 25);
 			event = new RescueEvent("Drowning Sailors", Constants.EVENT_RESCUE_DESCRIPTION, prize);
+		}
+		else if (eventType <= 10) {
+			int prize = (int) (Math.random() * 100 + 100);
+			event = new RescueEvent("Dead in the Water", Constants.EVENT_RESCUE_TWO_DESCRIPTION, prize);
 		}
 		
 		return event;
