@@ -159,11 +159,10 @@ public class Constants {
 													   + "\nFinally, there’s a break in the storm and you reach your destination. ";
 	
 	//Rescued Sailors
-	public final static String EVENT_RESCUE_DESCRIPTION = "Whilst having a drink in your cabin you hear a commotion outside. You exit to hear Sugnar yelling"
-														+ "\n“There’s men in the water, ease the sails we have to collect them.” You bring the ship alongside the"
-														+ "\nstranded men and throw down lines for them to climb aboard."
-														+ "\nThey explain they were caught in a storm, and they were surely goners if you hadn’t rescued them,"
-														+ "\nthey offer you a reward of coin for their lives."
+	public final static String EVENT_RESCUE_DESCRIPTION = "Whilst having a drink in your cabin you hear a commotion outside. You exit to hear Sugnar yelling “There’s men in the water, ease the sails we have to collect them.”"
+														+ "\n You bring the ship alongside the stranded men and throw down lines for them to climb aboard."
+														+ "\nThey explain they were caught in a storm, and they were surely goners if you hadn’t rescued them."
+														+ "\nThey offer you a reward of coin for their lives."
 														+ "\n"
 														+ "\nYou rescued some sailors!";
 	

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import events.RandomEvent;
+import events.RescueEvent;
 import exceptions.InsufficientCargoCapacityException;
 import exceptions.InsufficientGoldException;
 import exceptions.InsufficientItemQuantityException;
@@ -812,7 +814,7 @@ public class GameEnvironment {
 		
 		//can it fit in cargo?
 		int availableCapacity = Player.getShip().getCargoCapacity() - Player.getShip().getCargo();
-		if (quantity > availableCapacity)
+		if (quantity * item.getSize() > availableCapacity)
 			throw new InsufficientCargoCapacityException("Not enough space in the ship (" + (Player.getShip().getCargoCapacity() - Player.getShip().getCargo()) + ") capacity available.");
 		
 		//does the store have enough?
@@ -1125,15 +1127,43 @@ public class GameEnvironment {
 		//pass time given route duration and speed of your ship
 		passTime(modifiedDuration);
 		
+		//Handle events
+		boolean eventOccurs = Math.random() * 100 < chosenRoute.getRiskLevel();
+		
 		//Show the description of the journey
 		logToConsole("");
 		logToConsole(chosenRoute.getDescription());
 		logToConsole("");
 		logToConsole(modifiedDuration + " hours have passed.");
 		logToConsole("You spent " + totalCostToTravel + " " + Constants.NAME_CURRENCY + " on crew hire, wages and repairs.");
+		
+		if (eventOccurs) {
+			logToConsole("");
+			logToConsole("Something happened along the way!");
+		}
+		
+		logToConsole("");
+		
 		consoleGetInput("<<Press enter to continue>>", true);
 		
-		//TODO: Handle events
+		if (eventOccurs) {
+			RandomEvent event = rollRandomEvent();
+			
+			logToConsole(getBanner(event.getName()));
+			logToConsole("");
+			logToConsole(event.getDescription());
+			logToConsole("");
+			
+			ArrayList<String> options = event.getOptions();
+			
+			if (options.size() == 0) {
+				logToConsole(event.getEffect());
+				event.doEffect();
+			}
+			
+			consoleGetInput("<<Press enter to continue>>", true);
+			
+		}
 		
 		
 		//Set the random price modifier for imports and exports
@@ -1145,6 +1175,20 @@ public class GameEnvironment {
 		arriveAtIsland(destinationIsland);
 		
 		
+	}
+	
+	private static RandomEvent rollRandomEvent() {
+		
+		//random number between 0 and 10
+		int eventType = (int) Math.random() * 11;
+		RandomEvent event = null;
+		
+		if (eventType <= 10) {
+			int prize = (int) (Math.random() * 150 + 50);
+			event = new RescueEvent("Drowning Sailors", Constants.EVENT_RESCUE_DESCRIPTION, prize);
+		}
+		
+		return event;
 	}
 	
 	/**
