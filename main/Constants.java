@@ -166,6 +166,12 @@ public class Constants {
 														+ "\n"
 														+ "\nYou rescued some sailors!";
 	
+	//Dead in the water
+	public final static String EVENT_RESCUE_TWO_DESCRIPTION = "Sugnar calls down from his nest that he sees a motionless body in the water ahead. As you sail past your men pull the body aboard to see it clutching at some sort of object."
+			+ "\nYou take the object from its grasp. It is made of solid gold and riddled with jewels. It should fetch a pretty penny in port."
+			+ "\n"
+			+ "\nYou sell the object for Gold Crowns!";
+	
 	//Something from beneath
 	public final static String EVENT_FROM_BENEATH_DESCRIPTION = "In the dead of night, you lie sleeping in your cabin. Suddenly you are tossed from your bed by an"
 															  + "\nimpact of some sort. As you stand up, something seems wrong. You hear commotion on the deck of"
