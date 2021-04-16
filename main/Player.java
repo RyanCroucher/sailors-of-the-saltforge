@@ -69,8 +69,7 @@ public class Player {
 	public static void setGold(int gold) {
 		Player.gold = gold;
 		if (Player.gold > 10000) {
-			GameEnvironment.logToConsole("You acquired 10,000 " + Constants.NAME_CURRENCY + ". You won!");
-			GameEnvironment.exitGame();
+			GameEnvironment.endGame(1);
 		}
 	}
 	
