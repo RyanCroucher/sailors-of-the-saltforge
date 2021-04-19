@@ -365,7 +365,10 @@ public class Ship {
 		return repairCost;
 	}
 	
-	public int totalCostToLeaveIsland(boolean cheaperRepairs, boolean cheaperCrewHire, int hours) {
+	public int totalCostToLeaveIsland(int hours) {
+		
+		boolean cheaperCrewHire = GameEnvironment.getCurrentIsland().getIslandName() == Constants.ISLAND_SKULLHAVEN;
+		boolean cheaperRepairs = GameEnvironment.getCurrentIsland().getIslandName()  == Constants.ISLAND_SKULLHAVEN;
 		
 		int hireAndWagesCost = Player.getShip().getRefillCrewCost(cheaperCrewHire) + Player.getShip().getWageCost(hours);
 		int repairCost = Player.getShip().getRepairCost(cheaperRepairs);

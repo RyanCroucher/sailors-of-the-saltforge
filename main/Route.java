@@ -159,5 +159,19 @@ public class Route {
 		return possibleDestinations;
 		
 	}
+	
+	public String getRouteInfoString() {
+		
+		int modifiedTravelTime = GameEnvironment.getModifiedTravelTime(distance);
+		
+		int travelDays = modifiedTravelTime / 24;
+		int travelHours = modifiedTravelTime % 24;
+
+		int totalCostToLeaveIsland = Player.getShip().totalCostToLeaveIsland(modifiedTravelTime);
+		
+		String routeInfo = "(" + distance + " miles, Encounter Chance: " + riskLevel + "%, Travel Time: " + travelDays + " days " + travelHours + " hours, Crew and Repairs Cost: " + totalCostToLeaveIsland + ")";
+		
+		return routeInfo;
+	}
 
 }

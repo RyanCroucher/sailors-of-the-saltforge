@@ -69,7 +69,7 @@ public class Player {
 	public static void setGold(int gold) {
 		Player.gold = gold;
 		if (Player.gold > 10000) {
-			GameEnvironment.endGame(1);
+			GameEnvironment.checkEndgameConditions();
 		}
 	}
 	
