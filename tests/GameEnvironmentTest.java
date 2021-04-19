@@ -3,6 +3,7 @@ package tests;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -143,6 +144,163 @@ class GameEnvironmentTest {
 		} catch (IllegalArgumentException e) {
 			assert(true);
 		} 
+	}
+	
+	@Test
+	void getTravelOptionsTest() {
+		
+		Island[] islands = GameEnvironment.getIslands();
+
+		Island saltForge = islands[0];
+		Island tunia = islands[1];
+		Island sandyFields = islands[2];
+		Island skullHaven = islands[3];
+		Island seaNomads = islands[4];
+		
+		Route[] routes = GameEnvironment.getRoutes();
+		//routes = new Route[] {tranquilExpanse, basaltSpires, aroundBasaltSpires, shipwreckerShoals, oysterBay, jackalSea};
+		Route tranquilExpanse = routes[0];
+		Route basaltSpires = routes[1];
+		Route aroundBasaltSpires = routes[2];
+		Route shipwreckerShoals = routes[3];
+		Route oysterBay = routes[4];
+		Route jackalSea = routes[5];
+		
+		//Test all Route, Destination pairs from saltforge
+		HashMap<Integer, Object[]> saltForgeTravelOptions = GameEnvironment.getTravelOptions(0, saltForge);
+		
+		//should be 5 travel options from the saltforge
+		assertEquals(saltForgeTravelOptions.values().size(), 5);
+		
+		ArrayList<Route> containedRoutes = new ArrayList<Route>();
+		HashSet<Island> containedIslands = new HashSet<Island>();
+		
+		for (Object[] routeIslandPair : saltForgeTravelOptions.values()) {
+			containedRoutes.add((Route) routeIslandPair[0]);
+			containedIslands.add((Island) routeIslandPair[1]);
+		}
+		
+		//saltforge can travel via these routes
+		assertTrue(containedRoutes.contains(tranquilExpanse));
+		assertTrue(containedRoutes.contains(basaltSpires));
+		assertTrue(containedRoutes.contains(aroundBasaltSpires));
+		assertTrue(containedRoutes.contains(jackalSea));
+		
+		//saltforge can't travel via these routes
+		assertTrue(!containedRoutes.contains(oysterBay));
+		assertTrue(!containedRoutes.contains(shipwreckerShoals));
+		
+		//saltforge can travel to every island
+		assertEquals(containedIslands.size(), 4);
+		
+		//Test all Route, Destination pairs from tunia
+		HashMap<Integer, Object[]> tuniaTravelOptions = GameEnvironment.getTravelOptions(0, tunia);
+		
+		//should be 5 travel options from the tunia
+		assertEquals(tuniaTravelOptions.values().size(), 5);
+		
+		containedRoutes = new ArrayList<Route>();
+		containedIslands = new HashSet<Island>();
+		
+		for (Object[] routeIslandPair : tuniaTravelOptions.values()) {
+			containedRoutes.add((Route) routeIslandPair[0]);
+			containedIslands.add((Island) routeIslandPair[1]);
+		}
+		
+		//tunia can travel via these routes
+		assertTrue(containedRoutes.contains(basaltSpires));
+		assertTrue(containedRoutes.contains(aroundBasaltSpires));
+		assertTrue(containedRoutes.contains(jackalSea));
+		assertTrue(containedRoutes.contains(oysterBay));
+		
+		//tunia can't travel via these routes
+		assertTrue(!containedRoutes.contains(tranquilExpanse));
+		assertTrue(!containedRoutes.contains(shipwreckerShoals));
+		
+		//tunia can travel to every island
+		assertEquals(containedIslands.size(), 4);
+		
+		//Test all Route, Destination pairs from sandyFields
+		HashMap<Integer, Object[]> sandyFieldsTravelOptions = GameEnvironment.getTravelOptions(0, sandyFields);
+		
+		//should be 5 travel options from the sandyFields
+		assertEquals(sandyFieldsTravelOptions.values().size(), 5);
+		
+		containedRoutes = new ArrayList<Route>();
+		containedIslands = new HashSet<Island>();
+		
+		for (Object[] routeIslandPair : sandyFieldsTravelOptions.values()) {
+			containedRoutes.add((Route) routeIslandPair[0]);
+			containedIslands.add((Island) routeIslandPair[1]);
+		}
+		
+		//sandyFields can travel via these routes
+		assertTrue(containedRoutes.contains(jackalSea));
+		assertTrue(containedRoutes.contains(tranquilExpanse));
+		assertTrue(containedRoutes.contains(shipwreckerShoals));
+		
+		//sandyFields can't travel via these routes
+		assertTrue(!containedRoutes.contains(oysterBay));
+		assertTrue(!containedRoutes.contains(basaltSpires));
+		assertTrue(!containedRoutes.contains(aroundBasaltSpires));
+		
+		//sandyFields can travel to every island
+		assertEquals(containedIslands.size(), 4);
+		
+		//Test all Route, Destination pairs from skullHaven
+		HashMap<Integer, Object[]> skullHavenTravelOptions = GameEnvironment.getTravelOptions(0, skullHaven);
+		
+		//should be 5 travel options from the skullHaven
+		assertEquals(skullHavenTravelOptions.values().size(), 5);
+		
+		containedRoutes = new ArrayList<Route>();
+		containedIslands = new HashSet<Island>();
+		
+		for (Object[] routeIslandPair : skullHavenTravelOptions.values()) {
+			containedRoutes.add((Route) routeIslandPair[0]);
+			containedIslands.add((Island) routeIslandPair[1]);
+		}
+		
+		//skullHaven can travel via these routes
+		assertTrue(containedRoutes.contains(jackalSea));
+		assertTrue(containedRoutes.contains(shipwreckerShoals));
+		
+		//skullHaven can't travel via these routes
+		assertTrue(!containedRoutes.contains(tranquilExpanse));
+		assertTrue(!containedRoutes.contains(oysterBay));
+		assertTrue(!containedRoutes.contains(basaltSpires));
+		assertTrue(!containedRoutes.contains(aroundBasaltSpires));
+		
+		//skullHaven can travel to every island
+		assertEquals(containedIslands.size(), 4);
+		
+		//Test all Route, Destination pairs from seaNomads
+		HashMap<Integer, Object[]> seaNomadsTravelOptions = GameEnvironment.getTravelOptions(0, seaNomads);
+		
+		//should be 5 travel options from the seaNomads
+		assertEquals(seaNomadsTravelOptions.values().size(), 4);
+		
+		containedRoutes = new ArrayList<Route>();
+		containedIslands = new HashSet<Island>();
+		
+		for (Object[] routeIslandPair : seaNomadsTravelOptions.values()) {
+			containedRoutes.add((Route) routeIslandPair[0]);
+			containedIslands.add((Island) routeIslandPair[1]);
+		}
+		
+		//seaNomads can travel via these routes
+		assertTrue(containedRoutes.contains(jackalSea));
+		assertTrue(containedRoutes.contains(shipwreckerShoals));
+		assertTrue(containedRoutes.contains(oysterBay));
+		
+		//seaNomads can't travel via these routes
+		assertTrue(!containedRoutes.contains(tranquilExpanse));
+		assertTrue(!containedRoutes.contains(basaltSpires));
+		assertTrue(!containedRoutes.contains(aroundBasaltSpires));
+		
+		//seaNomads can travel to every island
+		assertEquals(containedIslands.size(), 4);
+		
 	}
 	
 	@Test
@@ -401,6 +559,77 @@ class GameEnvironmentTest {
 			} catch (IllegalArgumentException e) {
 				assert(true);
 			}
+		}
+		
+	}
+	
+	@Test
+	void buyIslandUpgradeTest() {
+		
+		Player.setShip(new Ship(ShipModel.CUTTER));
+		Player.setGold(5000);
+		
+		//buy every upgrade, make sure it was added to the ship and money deducted
+		try {
+			GameEnvironment.buyIslandUpgrade(Constants.UPGRADE_CANNONS, 1000);
+			assertTrue(Player.getShip().getUpgrades().contains(Constants.UPGRADE_CANNONS));
+			assertEquals(Player.getGold(), 4000);
+		} catch (IllegalArgumentException | InsufficientGoldException e) {
+			fail("Valid test, shouldn't have thrown exception- " + e.getMessage());
+		}
+		
+		try {
+			GameEnvironment.buyIslandUpgrade(Constants.UPGRADE_CONTRACT, 1000);
+			assertTrue(Player.getShip().getUpgrades().contains(Constants.UPGRADE_CONTRACT));
+			assertEquals(Player.getGold(), 3000);
+		} catch (IllegalArgumentException | InsufficientGoldException e) {
+			fail("Valid test, shouldn't have thrown exception- " + e.getMessage());
+		}
+		
+		try {
+			GameEnvironment.buyIslandUpgrade(Constants.UPGRADE_FLAG, 1000);
+			assertTrue(Player.getShip().getUpgrades().contains(Constants.UPGRADE_FLAG));
+			assertEquals(Player.getGold(), 2000);
+		} catch (IllegalArgumentException | InsufficientGoldException e) {
+			fail("Valid test, shouldn't have thrown exception- " + e.getMessage());
+		}
+		
+		try {
+			GameEnvironment.buyIslandUpgrade(Constants.UPGRADE_HULL, 1000);
+			assertTrue(Player.getShip().getUpgrades().contains(Constants.UPGRADE_HULL));
+			assertEquals(Player.getGold(), 1000);
+		} catch (IllegalArgumentException | InsufficientGoldException e) {
+			fail("Valid test, shouldn't have thrown exception- " + e.getMessage());
+		}
+		
+		try {
+			GameEnvironment.buyIslandUpgrade(Constants.UPGRADE_SAILS, 1000);
+			assertTrue(Player.getShip().getUpgrades().contains(Constants.UPGRADE_SAILS));
+			assertEquals(Player.getGold(), 0);
+		} catch (IllegalArgumentException | InsufficientGoldException e) {
+			fail("Valid test, shouldn't have thrown exception- " + e.getMessage());
+		}
+		
+		
+		//Try to buy an upgrade without enough money
+		try {
+			GameEnvironment.buyIslandUpgrade(Constants.UPGRADE_SAILS, 1000);
+			fail("Should throw InsufficientGoldException");
+		} catch (InsufficientGoldException e) {
+			assert(true);
+		} catch (IllegalArgumentException e) {
+			fail("Wrong exception thrown");
+		}
+		
+		//Try to buy an upgrade you already have
+		Player.setGold(1000);
+		try {
+			GameEnvironment.buyIslandUpgrade(Constants.UPGRADE_CANNONS, 1000);
+			fail("Should throw IllegalArgumentException");
+		} catch (InsufficientGoldException e) {
+			fail("Wrong exception thrown");
+		} catch (IllegalArgumentException e) {
+			assert(true);
 		}
 		
 	}

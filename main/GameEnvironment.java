@@ -399,7 +399,7 @@ public class GameEnvironment {
 		
 	}
 	
-	public static void buyIslandUpgrade(String upgrade, int upgradeCost) throws InsufficientGoldException {
+	public static void buyIslandUpgrade(String upgrade, int upgradeCost) throws InsufficientGoldException, IllegalArgumentException {
 		
 		if (Player.getGold() < upgradeCost)
 			throw new InsufficientGoldException("You don't have enough " + Constants.NAME_CURRENCY + " to buy this upgrade.");
@@ -407,11 +407,12 @@ public class GameEnvironment {
 		Player.getShip().addUpgrade(upgrade);
 		
 		// if we buy the exclusive contract, give sandy fields all items as imports
-		if (curIsland.getIslandName() == Constants.ISLAND_SANDYFIELDS) {
-			curIsland.getIslandStore().addExport(items.get(0));
-			curIsland.getIslandStore().addExport(items.get(1));
-			curIsland.getIslandStore().addExport(items.get(2));
-			curIsland.getIslandStore().removeImport(items.get(2));
+		if (upgrade.equals(Constants.UPGRADE_CONTRACT)) {
+			Island sandyFields = islands[2];
+			sandyFields.getIslandStore().addExport(items.get(0));
+			sandyFields.getIslandStore().addExport(items.get(1));
+			sandyFields.getIslandStore().addExport(items.get(2));
+			sandyFields.getIslandStore().removeImport(items.get(2));
 		}
 		
 		Player.setGold(Player.getGold() - upgradeCost);
