@@ -13,7 +13,9 @@ import org.junit.jupiter.api.Test;
 
 import main.Ship;
 import main.Constants;
+import main.GameEnvironment;
 import main.Constants.ShipModel;
+import main.Island;
 import main.Player;
 
 
@@ -412,6 +414,9 @@ class ShipTest {
 		Ship ship = new Ship(ShipModel.BARGE);
 		Player.setShip(ship);
 		
+		Island testIsland = new Island("Test island", "A really cool test island", null);
+		GameEnvironment.setCurrentIsland(testIsland);
+		
 		//blue sky
 		ship.setHull(ship.getMaxHull() - 12);
 		ship.setCrew(ship.getMaxCrew() - 5);
@@ -420,7 +425,7 @@ class ShipTest {
 		int expectedRepairCost = (ship.getMaxHull() - ship.getHull()) * 20;
 		int expectedWageCost = (int) (ship.getMaxCrew() * 10 * (duration / 24f));
 		
-		assertEquals(ship.totalCostToLeaveIsland(false, false, duration), expectedCrewRefillCost + expectedRepairCost + expectedWageCost);
+		assertEquals(ship.totalCostToLeaveIsland(duration), expectedCrewRefillCost + expectedRepairCost + expectedWageCost);
 		
 		//no repairs or crew needed
 		ship = new Ship(ShipModel.MERCHANTMAN);
@@ -431,7 +436,7 @@ class ShipTest {
 		expectedRepairCost = 0;
 		expectedWageCost = (int) (ship.getMaxCrew() * 10 * (duration / 24f));
 		
-		assertEquals(ship.totalCostToLeaveIsland(false, false, duration), expectedCrewRefillCost + expectedRepairCost + expectedWageCost);
+		assertEquals(ship.totalCostToLeaveIsland(duration), expectedCrewRefillCost + expectedRepairCost + expectedWageCost);
 		
 		//no travel duration
 		ship.setHull(ship.getMaxHull() - 7);
@@ -441,7 +446,7 @@ class ShipTest {
 		expectedRepairCost = (ship.getMaxHull() - ship.getHull()) * 20;
 		expectedWageCost = 0;
 		
-		assertEquals(ship.totalCostToLeaveIsland(false, false, duration), expectedCrewRefillCost + expectedRepairCost + expectedWageCost);
+		assertEquals(ship.totalCostToLeaveIsland(duration), expectedCrewRefillCost + expectedRepairCost + expectedWageCost);
 		
 	}
 	
