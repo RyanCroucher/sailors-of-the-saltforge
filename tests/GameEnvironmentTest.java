@@ -8,12 +8,19 @@ import java.util.HashSet;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import exceptions.InsufficientCargoCapacityException;
+import exceptions.InsufficientGoldException;
+import exceptions.InsufficientItemQuantityException;
 import main.Constants;
 import main.GameEnvironment;
 import main.Island;
+import main.Item;
+import main.Ledger;
 import main.Player;
 import main.Route;
 import main.Ship;
+import main.Store;
+import main.Transaction;
 import main.Constants.ShipModel;
 
 class GameEnvironmentTest {
@@ -136,6 +143,215 @@ class GameEnvironmentTest {
 		} catch (IllegalArgumentException e) {
 			assert(true);
 		} 
+	}
+	
+	@Test
+	void buyItemTest() {
+		
+		//need a ship to store items in
+		Player.setShip(new Ship(ShipModel.MERCHANTMAN));
+		
+		Island island = GameEnvironment.getCurrentIsland();
+		Store store = island.getIslandStore();
+		
+		Item food = GameEnvironment.getItems().get(3);
+		Item rawMaterials = GameEnvironment.getItems().get(2);
+		
+		store.randomizeInventory(10, 20);
+		
+		//blue sky scenario
+		Player.setGold(5000);
+		try {
+			GameEnvironment.buyItem(food, store, 10);
+			
+			//check the item arrived in my ship
+			assertEquals(Player.getShip().getInventory().getItemQuantity(food), 10);
+			
+			//check gold was deducted
+			assertEquals(Player.getGold(), 5000 - store.getItemPrice(food) * 10);
+			
+			//check ledger was updated
+			Transaction previousTransaction = Ledger.getTransactions(1).get(0);
+			
+			assertTrue(previousTransaction.getIsPurchase());
+			assertEquals(previousTransaction.getItem(), food);
+			assertEquals(previousTransaction.getLocation(), island);
+			assertEquals(previousTransaction.getPrice(), store.getItemPrice(food));
+			assertEquals(previousTransaction.getQuantity(), 10);
+			assertEquals(previousTransaction.getTimeOfTransaction(), 0);
+			
+		} catch (IllegalArgumentException | InsufficientGoldException | InsufficientCargoCapacityException | InsufficientItemQuantityException e) {
+			fail("Valid test shouldn't throw exception. " + e.getMessage());
+		}
+		
+		store.randomizeInventory(10, 20);
+		
+		Player.setGold(5000);
+		try {
+			
+			GameEnvironment.buyItem(rawMaterials, store, 8);
+			
+			//check the item arrived in my ship
+			assertEquals(Player.getShip().getInventory().getItemQuantity(rawMaterials), 8);
+			
+			//check gold was deducted
+			assertEquals(Player.getGold(), 5000 - store.getItemPrice(rawMaterials) * 8);
+			
+			//check ledger was updated
+			Transaction previousTransaction = Ledger.getTransactions(1).get(0);
+			
+			assertTrue(previousTransaction.getIsPurchase());
+			assertEquals(previousTransaction.getItem(), rawMaterials);
+			assertEquals(previousTransaction.getLocation(), island);
+			assertEquals(previousTransaction.getPrice(), store.getItemPrice(rawMaterials));
+			assertEquals(previousTransaction.getQuantity(), 8);
+			assertEquals(previousTransaction.getTimeOfTransaction(), 0);
+			
+		} catch (IllegalArgumentException | InsufficientGoldException | InsufficientCargoCapacityException | InsufficientItemQuantityException e) {
+			fail("Valid test shouldn't throw exception. " + e.getMessage());
+		}
+		
+		
+		//invalid purchases
+		
+		//not enough items available
+		Player.setGold(5000);
+		store.randomizeInventory(5, 10);
+		try {
+			
+			GameEnvironment.buyItem(food, store, 15);
+			fail("Should have thrown InsufficientItemQuantityException");
+			
+		} catch (InsufficientItemQuantityException e) {
+			assert(true);
+		} catch (IllegalArgumentException | InsufficientGoldException | InsufficientCargoCapacityException e) {
+			fail("Wrong exception thrown.");
+		}
+		
+		//boundary value
+		Player.setGold(5000);
+		store.randomizeInventory(10, 10);
+		try {
+			
+			GameEnvironment.buyItem(food, store, 11);
+			fail("Should have thrown InsufficientItemQuantityException");
+			
+		} catch (InsufficientItemQuantityException e) {
+			assert(true);
+		} catch (IllegalArgumentException | InsufficientGoldException | InsufficientCargoCapacityException e) {
+			fail("Wrong exception thrown.");
+		}
+		
+		//not enough gold
+		Player.setGold(0);
+		
+		try {
+			GameEnvironment.buyItem(food, store, 1);
+			fail("Should have thrown InsufficientGoldException");
+		} catch (InsufficientGoldException e) {
+			assert(true);
+		} catch (IllegalArgumentException | InsufficientCargoCapacityException | InsufficientItemQuantityException e) {
+			fail("Wrong exception thrown.");
+		}
+		
+		//not enough cargo space
+		Player.setGold(10000);
+		store.randomizeInventory(61, 100);
+		try {
+			GameEnvironment.buyItem(food, store, 60);
+			fail("Should have thrown InsufficientCargoCapacityException");
+		} catch (InsufficientCargoCapacityException e) {
+			assert(true);
+		} catch (IllegalArgumentException | InsufficientGoldException | InsufficientItemQuantityException e) {
+			fail("Wrong exception thrown.");
+		}
+		
+		//invalid item quantity
+		try {
+			GameEnvironment.buyItem(food, store, 0);
+			fail("Should have thrown IllegalArgumentException");
+		} catch (IllegalArgumentException e) {
+			assert(true);
+		} catch (InsufficientCargoCapacityException | InsufficientGoldException | InsufficientItemQuantityException e) {
+			fail("Wrong exception thrown.");
+		}
+		
+	}
+	
+	@Test
+	void sellItemTest() {
+		
+		//buy some items first
+		Player.setShip(new Ship(ShipModel.BARGE));
+		
+		Island island = GameEnvironment.getCurrentIsland();
+		Store store = island.getIslandStore();
+		store.randomizeInventory(20, 100);
+		
+		Item food = GameEnvironment.getItems().get(3);
+		Item rawMaterials = GameEnvironment.getItems().get(2);
+		
+		Player.setGold(2000);
+		
+		try {
+			GameEnvironment.buyItem(food, store, 10);
+			GameEnvironment.buyItem(rawMaterials, store, 10);
+		} catch (IllegalArgumentException | InsufficientGoldException | InsufficientCargoCapacityException | InsufficientItemQuantityException e) {
+			fail("shouldn't have thrown exception here");
+		}
+		
+		//blue sky
+		try {
+			Player.setGold(2000);
+			GameEnvironment.sellItem(food, store, 5);
+			
+			//check items removed from ship
+			assertEquals(Player.getShip().getInventory().getItemQuantity(food), 5);
+			
+			//check gold has been gained
+			assertEquals(Player.getGold(), 2000 + store.getItemPrice(food) * 5);
+			
+		} catch (IllegalArgumentException | InsufficientItemQuantityException e) {
+			fail("Shouldn't throw exception on valid test");
+		}
+		
+		//clear out inventory
+		try {
+			Player.setGold(2000);
+			GameEnvironment.sellItem(food, store, 5);
+			
+			//check items removed from ship
+			assertEquals(Player.getShip().getInventory().getItemQuantity(food), 0);
+			
+			//check gold has been gained
+			assertEquals(Player.getGold(), 2000 + store.getItemPrice(food) * 5);
+			
+		} catch (IllegalArgumentException | InsufficientItemQuantityException e) {
+			fail("Shouldn't throw exception on valid test");
+		}
+		
+		
+		
+		//invalid, sell more than you have	
+		try {
+			GameEnvironment.sellItem(rawMaterials, store, 11);
+			fail("Should throw InsufficientItemQuantityException");
+		} catch (InsufficientItemQuantityException e) {
+			assert(true);
+		} catch (IllegalArgumentException e) {
+			fail("Wrong exception thrown");
+		}
+		
+		//invalid item quantity
+		try {
+			GameEnvironment.sellItem(rawMaterials, store, 0);
+			fail("Should throw IllegalArgumentException");
+		} catch (IllegalArgumentException e) {
+			assert(true);
+		} catch (InsufficientItemQuantityException e) {
+			fail("Wrong exception thrown");
+		}
+	
 	}
 
 	@Test
