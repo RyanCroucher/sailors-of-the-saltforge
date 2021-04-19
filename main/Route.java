@@ -56,6 +56,13 @@ public class Route {
 		this.locationPairs = locationPairs;
 	}
 	
+	/**
+	 * Check vaild Route parameters
+	 * @param riskLevel Return false if risklevel is less than 0 or greater than 100
+	 * @param distance Return false if distance is less tha 0
+	 * @param locationPairs Return false if there are no routes available
+	 * @return true
+	 */
 	private boolean validRouteParams(int riskLevel, int distance, ArrayList<Island[]> locationPairs) {
 
 		if (riskLevel < 0 || riskLevel > 100) {
@@ -160,6 +167,10 @@ public class Route {
 		
 	}
 	
+	/**
+	 * Get a string with the details of the route
+	 * @return String detailing the distance, risklevel, travel time(in days and hours), and total cost to leave the island(crew wages and ship repairs)
+	 */
 	public String getRouteInfoString() {
 		
 		int modifiedTravelTime = GameEnvironment.getModifiedTravelTime(distance);

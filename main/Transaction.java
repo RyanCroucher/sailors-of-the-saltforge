@@ -7,16 +7,34 @@ package main;
  */
 public class Transaction {
 
+	/**
+	 * Amount of an item transacted
+	 */
 	private int quantity;
 	
+	/**
+	 * Item being transacted
+	 */
 	private Item item;
 	
+	/**
+	 * Boolean to see if item was bought or sold
+	 */
 	private Boolean isPurchase;
 	
+	/**
+	 * Price of the item transacted
+	 */
 	private int price;
 	
+	/**
+	 * Island that the transaction happened
+	 */
 	private Island location;
 	
+	/**
+	 * Time when the transaction happened
+	 */
 	private int timeOfTransaction;
 	
 	/**
@@ -86,6 +104,7 @@ public class Transaction {
 	public int getTimeOfTransaction() {
 		return timeOfTransaction;
 	}
+	
 	/**
 	 * Creates a string detailing the transaction
 	 * @return A string detailing the transaction

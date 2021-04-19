@@ -6,8 +6,19 @@ package main;
  */
 public class Island {
 
+	/**
+	 * String that holds the name of the island
+	 */
 	private String islandName;
+	
+	/**
+	 * String that contains the description of the island
+	 */
 	private String islandDescription;
+	
+	/**
+	 * Store object to be able to access a Store on an island
+	 */
 	private Store islandStore;
 	
 	/**

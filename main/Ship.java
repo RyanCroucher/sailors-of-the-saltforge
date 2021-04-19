@@ -10,19 +10,63 @@ import main.Constants.ShipModel;
  */
 public class Ship {
 	
-	//private Inventory inventory;
+	/**
+	 * ArrayList for storing ship upgrades that have been purchased
+	 */
 	private ArrayList<String> upgrades;
+	
+	/**
+	 * Model of the ship that determines its default stats/properties
+	 */
 	private ShipModel model;
+	
+	/**
+	 * Name of the ship model
+	 */
 	private String modelName;
+	
+	/**
+	 * Maximum hull value
+	 */
 	private int maxHull;
+	/**
+	 * Current hull value. This value will decrease if damage is taken.
+	 */
 	private int hull;
+	
+	/**
+	 * Maximum crew value
+	 */
 	private int maxCrew;
+	
+	/**
+	 * Current crew value. This value will decrease if crew loss occurs
+	 */
 	private int crew;
+	
+	/**
+	 * Maximum cargo capacity value
+	 */
 	private int cargoCapacity;
+	
+	/**
+	 * Current cargo value. This value will increase and decrease as items are bought and sold 
+	 */
 	private int cargo;
+	
+	/**
+	 * Speed rating of the ship. Effects travel time between islands
+	 */
 	private int speed;
+	
+	/**
+	 * Rating of the ships weapons. Can effect the chances of surviving a pirate attack
+	 */
 	private int weaponRating;
 	
+	/**
+	 * The inventory that belongs to the ship. Will allow you to store items and their quantities in the ship
+	 */
 	private Inventory inventory;
 	
 	/**
@@ -365,6 +409,12 @@ public class Ship {
 		return repairCost;
 	}
 	
+	/**
+	 * Total cost to leave an island
+	 * @param hours The modified duration of the route
+	 * @return An integer for the total cost to leave the island. This is determined by whether you have crew to replace and damage to repair
+	 * it also checks how much in wages it'll cost to pay your crew for the journey(total number of crew * hours in travel)
+	 */
 	public int totalCostToLeaveIsland(int hours) {
 		
 		boolean cheaperCrewHire = GameEnvironment.getCurrentIsland().getIslandName() == Constants.ISLAND_SKULLHAVEN;

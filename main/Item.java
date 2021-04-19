@@ -6,9 +6,24 @@ package main;
  */
 public class Item {
 
+	/**
+	 * String containing the name of the Item
+	 */
 	private String name;
+	
+	/**
+	 * Integer that holds the base price of the Item
+	 */
 	private int basePrice;
+	
+	/**
+	 * String containing the description of the Item
+	 */
 	private String description;
+	
+	/**
+	 * Integer that holds the size of an item. Most objects are only size one but Raw Materials are size 2.
+	 */
 	private int size;
 	
 	/**

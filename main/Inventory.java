@@ -8,9 +8,15 @@ import java.util.HashMap;
  * 
  */
 public class Inventory {
-
+	
+	/**
+	 * Inventory Hashmap that stores Items as keys and quantities as values
+	 */
 	private HashMap<Item, Integer> inventory;
 	
+	/**
+	 * Constructs an Inventory item 
+	 */
 	public Inventory() {
 		inventory = new HashMap<Item, Integer>();
 	}

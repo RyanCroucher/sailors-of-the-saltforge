@@ -25,7 +25,7 @@ public class Store {
 	private ArrayList<Item> exports;
 	
 	/**
-	 * The randomised price factor that applies to transactions at this store
+	 * The randomizSed price factor that applies to transactions at this store
 	 */
 	private double factor;
 	
