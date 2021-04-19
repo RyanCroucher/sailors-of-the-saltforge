@@ -2,36 +2,140 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.HashSet;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import main.Constants;
+import main.GameEnvironment;
+import main.Island;
+import main.Player;
+import main.Route;
+import main.Ship;
+import main.Constants.ShipModel;
 
 class GameEnvironmentTest {
 	
-	private static Scanner scanner;
-
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
-		//scanner = new Scanner(System.in);
+    @BeforeAll
+    static void init() {
+    	//sets up islandAndRoutes, items, player gold and store price modifiers
+    	GameEnvironment.setupGame();
+    }
+	
+	@Test
+	void setupIslandsAndRoutesTest() {
+		
+		Island[] islands = GameEnvironment.getIslands();
+		Route[] routes = GameEnvironment.getRoutes();
+		
+		//Do we have the correct number of islands?
+		assertEquals(islands.length, 5);
+		
+		//Do we have the correct number of routes?
+		assertEquals(routes.length, 6);
+		
+		//Can every island reach every other island?
+		for (Island island : islands) {
+			HashSet<Island> reachableIslands = new HashSet<Island>();
+			
+			for (Route route : routes) {
+				for (Island destIsland : route.getPossibleDestinations(island)) {
+					reachableIslands.add(destIsland);
+				}
+			}
+			
+			assertEquals(reachableIslands.size(), 4);
+		}
+		
 	}
-
-	@AfterAll
-	static void tearDownAfterClass() throws Exception {
+	
+	@Test
+	void setupItemsTest() {
+		
+		//do we have 4 items?
+		assertEquals(GameEnvironment.getItems().size(), 4);
+		
 	}
-
-	@BeforeEach
-	void setUp() throws Exception {
-	}
-
-	@AfterEach
-	void tearDown() throws Exception {
-		//scanner.close();
+	
+	@Test
+	void calculateScoreTest() {
+		
+		//'won' by reaching 10,000 gold
+		Player.setGold(10000);
+		
+		Ship ship = new Ship(ShipModel.BARGE);
+		Player.setShip(ship);
+		
+		//hit gold target but days were close to the limit, score should be lower
+		GameEnvironment.setGameDuration(10);
+		GameEnvironment.passTime(225);
+		assertEquals(GameEnvironment.calculateScore(1), 6);
+		GameEnvironment.reverseTime(225);
+		
+		//hit gold target and heaps of time left
+		assertEquals(GameEnvironment.calculateScore(1), 10);
+		
+		//hit gold target and half time left
+		GameEnvironment.passTime(5 * 24);
+		assertEquals(GameEnvironment.calculateScore(1), 8);
+		GameEnvironment.reverseTime(5 * 24);
+		
+		
+		//'won' by reaching the max duration
+		
+		//lower gold = lower score
+		//gold close to 0
+		Player.setGold(0);
+		assertEquals(GameEnvironment.calculateScore(0), 5);
+		
+		Player.setGold(1423);
+		assertEquals(GameEnvironment.calculateScore(0), 6);
+		
+		Player.setGold(8432);
+		assertEquals(GameEnvironment.calculateScore(0), 9);
+		
+		//gold close to threshold
+		Player.setGold(9500);
+		assertEquals(GameEnvironment.calculateScore(0), 10);
+		
+		
+		//'lost' by running out of money, or killed by an event
+		
+		//more gold + more days passed = higher score
+		//low gold, low days
+		Player.setGold(0);
+		assertEquals(GameEnvironment.calculateScore(2), 0);
+		
+		//high gold, low days
+		Player.setGold(9000);
+		assertEquals(GameEnvironment.calculateScore(2), 3);
+		
+		//low gold, high days
+		Player.setGold(500);
+		GameEnvironment.passTime(220);
+		assertEquals(GameEnvironment.calculateScore(2), 3);
+		
+		//high gold, high days
+		Player.setGold(9000);
+		assertEquals(GameEnvironment.calculateScore(2), 5);
+		
+		GameEnvironment.reverseTime(220);
+		
+		//invalid endgame code
+		try {
+			GameEnvironment.calculateScore(-1);
+			fail("Invalid endgameCode should throw exception");
+		} catch (IllegalArgumentException e) {
+			assert(true);
+		} 
+		try {
+			GameEnvironment.calculateScore(3);
+			fail("Invalid endgameCode should throw exception");
+		} catch (IllegalArgumentException e) {
+			assert(true);
+		} 
 	}
 
 	@Test
@@ -55,7 +159,7 @@ class GameEnvironmentTest {
 
 		//valid assertions
 		for (String name : validNames) {
-			assertTrue(main.GameEnvironment.isValidName(name));
+			assertTrue(GameEnvironment.isValidName(name));
 		}
 		
 		ArrayList<String> invalidNames = new ArrayList<String>();
@@ -76,7 +180,7 @@ class GameEnvironmentTest {
 		//invalid assertions
 		for (String name : invalidNames) {
 			try {
-				main.GameEnvironment.isValidName(name);
+				GameEnvironment.isValidName(name);
 				fail("Should have thown an exception");
 			} catch (IllegalArgumentException e) {
 				assert(true);

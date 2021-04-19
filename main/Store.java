@@ -43,7 +43,9 @@ public class Store {
 		this.inventory = inventory;
 		this.imports = imports;
 		this.exports = exports;
-		setFactor(1f);
+		
+		//start with a random price modifier for imports/exports
+		setFactor(1 + Math.random());
 	}
 	
 	/**

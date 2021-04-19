@@ -262,13 +262,13 @@ public class GameEnvironment {
 		
 		//start with some gold
 		Player.setGold(Constants.PLAYER_START_GOLD);
-				
-		//Set the random price modifier for imports and exports at the saltforge
-		getIslands()[0].getIslandStore().setFactor(1 + Math.random());
 		
 	}
 	
 	public static int calculateScore(int endGameCode) {
+		
+		if (endGameCode < 0 || endGameCode > 2)
+			throw new IllegalArgumentException("Invalid endgame code");
 		
 		int score = 10;
 		
@@ -282,11 +282,11 @@ public class GameEnvironment {
 			score -= (int) (5f * ((hoursSinceStart / 24f) / gameDuration));
 		else if (endGameCode != 0){
 			//if you didn't reach the gold target, and didn't reach the game duration, more days and more gold is better
-			score -= (int) (5f * (1f - ((hoursSinceStart / 24f) / gameDuration) * Player.getGold() / 10000));
+			score -= (int) (5f * (1f - (((hoursSinceStart / 24f) / gameDuration) + Player.getGold() / 10000f)/2f));
 		}
 		//reached game duration, more gold is better
 		else {
-			score -= (int) (5f * (1f - Player.getGold() / 10000));
+			score -= Math.round((5f * (1f - Player.getGold() / 10000f)));
 		}
 		
 		return score;
@@ -492,6 +492,14 @@ public class GameEnvironment {
 	}
 	
 	/**
+	 * Reverse time, but can't reduce hoursSinceStart below 0
+	 * @param duration the hours to go backwards in time by
+	 */
+	public static void reverseTime(int duration) {
+		hoursSinceStart = Math.max(0, hoursSinceStart - duration);
+	}
+	
+	/**
 	 * Gets the travel duration in hours modified by the speed of your ship
 	 * @param distance the distance in miles to travel
 	 * @return the modified travel time in hours
@@ -568,6 +576,14 @@ public class GameEnvironment {
 	 */
 	public static Island[] getIslands() {
 		return islands;
+	}
+	
+	/**
+	 * 
+	 * @return the list of all routes in the game
+	 */
+	public static Route[] getRoutes() {
+		return routes;
 	}
 	
 	/**

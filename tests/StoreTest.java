@@ -188,8 +188,6 @@ class StoreTest {
 		Store testStore;
 		
 		testStore = new Store(inventory, imports, exports);
-		assertEquals(testStore.getItemPrice(testItem1), testItem1.getBasePrice());
-		assertEquals(testStore.getItemPrice(testItem2), testItem2.getBasePrice());
 		
 		// Test for if item is an Import
 		testStore = new Store(inventory, imports, exports);

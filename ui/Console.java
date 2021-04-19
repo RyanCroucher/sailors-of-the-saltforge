@@ -21,6 +21,11 @@ import main.Store;
 import main.Transaction;
 import main.Constants.ShipModel;
 
+/**
+ * Plays the game in a console interface, if GUIMode is off
+ * @author Ryan Croucher rcr69
+ *
+ */
 public class Console {
 	
 	/**
