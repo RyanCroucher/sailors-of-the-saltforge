@@ -79,9 +79,11 @@ class GameEnvironmentTest {
 		
 		//hit gold target but days were close to the limit, score should be lower
 		GameEnvironment.setGameDuration(10);
-		GameEnvironment.passTime(225);
-		assertEquals(GameEnvironment.calculateScore(1), 6);
-		GameEnvironment.reverseTime(225);
+		GameEnvironment.passTime(191);
+		assertEquals(GameEnvironment.calculateScore(1), 7);
+		
+		//roll back time for other tests
+		GameEnvironment.reverseTime(GameEnvironment.getHoursSinceStart());
 		
 		//hit gold target and heaps of time left
 		assertEquals(GameEnvironment.calculateScore(1), 10);
@@ -89,7 +91,9 @@ class GameEnvironmentTest {
 		//hit gold target and half time left
 		GameEnvironment.passTime(5 * 24);
 		assertEquals(GameEnvironment.calculateScore(1), 8);
-		GameEnvironment.reverseTime(5 * 24);
+		
+		//roll back time for other tests
+		GameEnvironment.reverseTime(GameEnvironment.getHoursSinceStart());
 		
 		
 		//'won' by reaching the max duration
@@ -123,14 +127,15 @@ class GameEnvironmentTest {
 		
 		//low gold, high days
 		Player.setGold(500);
-		GameEnvironment.passTime(220);
+		GameEnvironment.passTime(190);
 		assertEquals(GameEnvironment.calculateScore(2), 3);
 		
 		//high gold, high days
 		Player.setGold(9000);
 		assertEquals(GameEnvironment.calculateScore(2), 5);
 		
-		GameEnvironment.reverseTime(220);
+		//roll back time for other tests
+		GameEnvironment.reverseTime(GameEnvironment.getHoursSinceStart());
 		
 		//invalid endgame code
 		try {
@@ -640,6 +645,7 @@ class GameEnvironmentTest {
 		
 		Player.setShip(new Ship(ShipModel.BARGE));
 		Player.setGold(5000);
+		GameEnvironment.setGameDuration(20);
 		
 		Island saltForge = GameEnvironment.getIslands()[0];
 		
@@ -652,6 +658,7 @@ class GameEnvironmentTest {
 		//start damaged
 		Player.getShip().setHull(Player.getShip().getHull() - 5);
 		Player.getShip().setCrew(Player.getShip().getCrew() - 5);
+		
 		
 		//travel to sandyfields via the tranquil expanse
 		try {
@@ -670,8 +677,6 @@ class GameEnvironmentTest {
 			//time has passed
 			assert(GameEnvironment.getHoursSinceStart() != 0);
 			
-			//roll back time for other tests
-			GameEnvironment.reverseTime(GameEnvironment.getHoursSinceStart());
 			
 		} catch (InsufficientGoldException | IllegalArgumentException e) {
 			fail("Valid test shouldn't throw exception here");
@@ -698,6 +703,9 @@ class GameEnvironmentTest {
 		} catch (IllegalArgumentException e) {
 			fail("Wrong exception thrown");
 		}
+		
+		//roll back time for other tests
+		GameEnvironment.reverseTime(GameEnvironment.getHoursSinceStart());
 	}
 	
 	@Test

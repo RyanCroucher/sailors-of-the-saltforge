@@ -524,20 +524,20 @@ public class Console {
 	 */
 	public static void travelToIsland(Island destinationIsland, Route chosenRoute) throws IllegalArgumentException, InsufficientGoldException {
 		
+		int modifiedDuration = GameEnvironment.getModifiedTravelTime(chosenRoute.getDistance());
+		int totalCostToTravel = Player.getShip().totalCostToLeaveIsland(modifiedDuration);
+		
 		//Check validity, pay gold, pass time etc
 		GameEnvironment.initiateTravel(destinationIsland, chosenRoute);
 		
 		boolean eventOccurs = GameEnvironment.doesEventOccur(chosenRoute);
-		
-		int modifiedDuration = GameEnvironment.getModifiedTravelTime(chosenRoute.getDistance());
-		int totalCostToTravel = Player.getShip().totalCostToLeaveIsland(modifiedDuration);
 		
 		//Show the description of the journey
 		logMessage("");
 		logMessage(chosenRoute.getDescription());
 		logMessage("");
 		logMessage(modifiedDuration + " hours have passed.");
-		logMessage("You spent " + totalCostToTravel + " " + Constants.NAME_CURRENCY + " on crew wages.");
+		logMessage("You spent " + totalCostToTravel + " " + Constants.NAME_CURRENCY + " on repairs, crew hire and wages.");
 		
 		if (eventOccurs) {
 			logMessage("");

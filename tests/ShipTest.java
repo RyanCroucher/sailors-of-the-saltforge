@@ -362,11 +362,11 @@ class ShipTest {
 		
 		//blue sky
 		int duration = 10;
-		int expectedWageCost = (int) (ship.getMaxCrew() * 10 * (duration / 24f));
+		int expectedWageCost = (int) (ship.getMaxCrew() * 5 * (duration / 24f));
 		assertEquals(ship.getWageCost(duration), expectedWageCost);
 		
 		duration = 32;
-		expectedWageCost = (int) (ship.getMaxCrew() * 10 * (duration / 24f));
+		expectedWageCost = (int) (ship.getMaxCrew() * 5 * (duration / 24f));
 		assertEquals(ship.getWageCost(duration), expectedWageCost);
 		
 		//edge case
@@ -423,7 +423,7 @@ class ShipTest {
 		int duration = 12;
 		int expectedCrewRefillCost = (ship.getMaxCrew() - ship.getCrew()) * 20;
 		int expectedRepairCost = (ship.getMaxHull() - ship.getHull()) * 20;
-		int expectedWageCost = (int) (ship.getMaxCrew() * 10 * (duration / 24f));
+		int expectedWageCost = (int) (ship.getMaxCrew() * 5 * (duration / 24f));
 		
 		assertEquals(ship.totalCostToLeaveIsland(duration), expectedCrewRefillCost + expectedRepairCost + expectedWageCost);
 		
@@ -434,7 +434,7 @@ class ShipTest {
 		duration = 30;
 		expectedCrewRefillCost = 0;
 		expectedRepairCost = 0;
-		expectedWageCost = (int) (ship.getMaxCrew() * 10 * (duration / 24f));
+		expectedWageCost = (int) (ship.getMaxCrew() * 5 * (duration / 24f));
 		
 		assertEquals(ship.totalCostToLeaveIsland(duration), expectedCrewRefillCost + expectedRepairCost + expectedWageCost);
 		

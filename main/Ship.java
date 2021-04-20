@@ -388,7 +388,7 @@ public class Ship {
 			throw new IllegalArgumentException("Hours must be at least 0 to calculate wage cost");
 		
 		//cost per crew member per day
-		int wageCost = (int) (maxCrew * 10 * (hours / 24f));
+		int wageCost = (int) (maxCrew * 5 * (hours / 24f));
 		return wageCost;
 		
 	}
