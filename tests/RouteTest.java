@@ -6,8 +6,12 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
+import main.Constants.ShipModel;
+import main.GameEnvironment;
 import main.Island;
+import main.Player;
 import main.Route;
+import main.Ship;
 
 class RouteTest {
 
@@ -18,8 +22,6 @@ class RouteTest {
 		Island island_a = new Island("A", "this is a test island", null);
 		Island island_b = new Island("B", "this is a test island", null);
 		Island island_c = new Island("C", "this is a test island", null);
-		Island island_d = new Island("D", "this is a test island", null);
-		Island island_e = new Island("E", "this is a test island", null);
 		
 		//good pairs
 		Island[] pair_one = {island_a, island_b};
@@ -129,6 +131,42 @@ class RouteTest {
 		assertTrue(route_a.includesIsland(island_b));
 		assertFalse(route_a.includesIsland(island_c));
 		
+	}
+	
+	@Test
+	void getRouteInfoString() {
+		
+		GameEnvironment.setupGame();
+		
+		Player.setShip(new Ship(ShipModel.BARGE));
+		
+		//player is at saltforge
+		//get information about each route from here
+		Route[] routes = GameEnvironment.getRoutes();
+		
+		Route tranquilExpanse = GameEnvironment.getRoutes()[0];
+		Route basaltSpires = GameEnvironment.getRoutes()[1];
+		Route aroundBasaltSpires = GameEnvironment.getRoutes()[2];
+		Route jackalSea = GameEnvironment.getRoutes()[5];
+		
+		assertEquals(tranquilExpanse.getRouteInfoString(), "(28 miles, Encounter Chance: 20%, Travel Time: 1 days 4 hours, Crew and Repairs Cost: 116)");
+		assertEquals(basaltSpires.getRouteInfoString(), "(10 miles, Encounter Chance: 40%, Travel Time: 0 days 10 hours, Crew and Repairs Cost: 41)");
+		assertEquals(aroundBasaltSpires.getRouteInfoString(), "(16 miles, Encounter Chance: 20%, Travel Time: 0 days 16 hours, Crew and Repairs Cost: 66)");
+		assertEquals(jackalSea.getRouteInfoString(), "(12 miles, Encounter Chance: 60%, Travel Time: 0 days 12 hours, Crew and Repairs Cost: 50)");
+		
+		//Faster ship has less travel time
+		Player.setShip(new Ship(ShipModel.CUTTER));
+		assertEquals(tranquilExpanse.getRouteInfoString(), "(28 miles, Encounter Chance: 20%, Travel Time: 0 days 16 hours, Crew and Repairs Cost: 133)");
+
+		//Damaged ship costs more
+		Player.getShip().setHull(5);
+		assertEquals(tranquilExpanse.getRouteInfoString(), "(28 miles, Encounter Chance: 20%, Travel Time: 0 days 16 hours, Crew and Repairs Cost: 833)");
+		Player.getShip().setHull(Player.getShip().getMaxHull());
+		
+		//Hiring crew costs more
+		Player.getShip().setCrew(1);
+		assertEquals(tranquilExpanse.getRouteInfoString(), "(28 miles, Encounter Chance: 20%, Travel Time: 0 days 16 hours, Crew and Repairs Cost: 513)");
+
 	}
 
 }
