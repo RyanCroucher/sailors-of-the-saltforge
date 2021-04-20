@@ -73,6 +73,10 @@ public class Player {
 		}
 	}
 	
+	/**
+	 * Calculates the net worth of the player, based on gold and the owned items.
+	 * @return Net worth of the player
+	 */
 	public static int getNetWorth() {
 		int netWorth = gold;
 		
