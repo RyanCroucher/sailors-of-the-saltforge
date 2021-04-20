@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 
+import events.PirateEvent;
 import events.RandomEvent;
 import events.RescueEvent;
 import events.WeatherEvent;
@@ -267,7 +268,7 @@ public class GameEnvironment {
 	
 	public static int calculateScore(int endGameCode) {
 		
-		if (endGameCode < 0 || endGameCode > 2)
+		if (endGameCode < 0 || endGameCode > 3)
 			throw new IllegalArgumentException("Invalid endgame code");
 		
 		int score = 10;
@@ -466,13 +467,24 @@ public class GameEnvironment {
 			int prize = (int) (Math.random() * 100 + 100);
 			event = new RescueEvent("Dead in the Water", Constants.EVENT_RESCUE_TWO_DESCRIPTION, prize);
 		}
-		else if (eventType <= 10) {
+		else if (eventType == 2) {
 			
 			int hullDamage = (int) (Math.random() * 20 + 5);
 			int crewLoss = (int) (Math.random() * 10 + 1);
 			int hoursLoss = 12;
 			
 			event = new WeatherEvent("Sudden Storm", Constants.EVENT_STORM_DESCRIPTION, hullDamage, crewLoss, hoursLoss);
+		}
+		
+		else if (eventType <= 10) {
+			int prizeIfWin = (int) (Math.random() * 500f + 200f);
+			
+			Ship[] shipOptions = new Ship[] {new Ship(ShipModel.BARGE), new Ship(ShipModel.SLOOP), new Ship(ShipModel.MERCHANTMAN), new Ship(ShipModel.CUTTER)};
+			Ship pirateShip = shipOptions[(int) (Math.random() * 4)];
+			
+			String shipDescription = "\nThe pirate ship appears to be a " + pirateShip.getModelName() + ".";
+			
+			event = new PirateEvent("Pirate Attack", Constants.EVENT_PIRATE_ATTACK_DESCRIPTION + shipDescription, pirateShip, prizeIfWin);
 		}
 		
 		return event;
@@ -523,15 +535,18 @@ public class GameEnvironment {
 		//default, don't end game
 		int endGameCode = 10;
 		
-		if (hoursSinceStart + minHoursToLeaveIsland() >= gameDuration * 24) {
+		if (Player.getKilledByEvent())
+			endGameCode = 3;
+		
+		else if (Player.getGold() > 10000)
+			endGameCode = 1;
+		
+		else if (hoursSinceStart + minHoursToLeaveIsland() >= gameDuration * 24) {
 			endGameCode = 0;
 		}
 		
-		if (Player.getNetWorth() < minCostToLeaveIsland())
+		else if (Player.getNetWorth() < minCostToLeaveIsland())
 			endGameCode = 2;
-		
-		if (Player.getGold() > 10000)
-			endGameCode = 1;
 		
 		if (!GUIMode && endGameCode != 10)
 			Console.endGame(endGameCode);

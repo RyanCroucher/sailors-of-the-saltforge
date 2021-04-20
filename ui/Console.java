@@ -537,7 +537,7 @@ public class Console {
 		logMessage(chosenRoute.getDescription());
 		logMessage("");
 		logMessage(modifiedDuration + " hours have passed.");
-		logMessage("You spent " + totalCostToTravel + " " + Constants.NAME_CURRENCY + " on crew hire, wages and repairs.");
+		logMessage("You spent " + totalCostToTravel + " " + Constants.NAME_CURRENCY + " on crew wages.");
 		
 		if (eventOccurs) {
 			logMessage("");

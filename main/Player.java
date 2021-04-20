@@ -23,6 +23,11 @@ public class Player {
 	private static int gold;
 	
 	/**
+	 * A flag that will be set to true if some type of event kills the player
+	 */
+	private static boolean killedByEvent = false;
+	
+	/**
 	 * 
 	 * @return the name of the player character.
 	 */
@@ -91,6 +96,21 @@ public class Player {
 		}
 		
 		return netWorth;
+	}
+	
+	/**
+	 * 
+	 * @return whether or not the player has been killed by an event
+	 */
+	public static boolean getKilledByEvent() {
+		return killedByEvent;
+	}
+	
+	/**
+	 * Sets the killedByEvent flag to true, for instance when killed by pirates
+	 */
+	public static void setKilledByEvent() {
+		killedByEvent = true;
 	}
 	
 }

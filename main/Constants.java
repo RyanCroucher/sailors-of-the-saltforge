@@ -183,55 +183,45 @@ public class Constants {
 															  + "\nSomething from the depths attacked you.";
 
 	//Pirate attack
-	public final static String EVENT_PIRATE_ATTACK_DESCRIPTION = "It has been a peaceful trip thus far; you have been checking your ledger with Olard trying to figure"
-															   + "\nout what best to sell at the next port. You are startled at the sound of the horn in the crow's nest."
-															   + "\nYou exit onto the deck to hear Sugnar yelling down from the crow's nest, “Ship approaching fast,"
-															   + "\nno colours and black sails. I think it’s pirates, Captain.” The ship is abuzz as the crew scurry to"
-															   + "\npositions awaiting your orders. "
+	public final static String EVENT_PIRATE_ATTACK_DESCRIPTION = "It has been a peaceful trip thus far; you have been checking your ledger with Olard trying to figure out what best to sell at the next port."
+															   + "\n\nYou are startled at the sound of the horn in the crow's nest."
+															   + "\nYou exit onto the deck to hear Sugnar yelling down from the crow's nest, “Ship approaching fast, no colours and black sails. I think it’s pirates, Captain.”"
+															   + "\n\nThe ship is abuzz as the crew scurry to positions awaiting your orders. "
 															   + "\n"
 															   + "\nAvast ye!!! We have been set upon by Pirates. We must make a decison Captain. ";
 	
-	public final static String EVENT_PIRATE_ATTACK_FIGHT_SUCCESS = "We fight!!"
-			+ ""
-			+ "Your men man the guns and you unleash devastating volleys against your attackers whilst you"
-		    + "\nskilfully manoeuvre the ship to avoid crippling damage to the ship."
-		    + "\nThe enemy limp away with their tails beneath their legs."
-		    + "\n"
-		    + "\nYou Win";
+	public final static String EVENT_PIRATE_ATTACK_FIGHT_SUCCESS = "Your men man the guns and you unleash devastating volleys against your attackers whilst you skilfully manoeuvre the ship to avoid crippling damage to the ship."
+		    + "\nThe enemy limp away with their tails beneath their legs.";
 	
-	public final static String EVENT_PIRATE_ATTACK_FIGHT_FAIL = "We fight!!"
-			+ "\n"
-			+ "Your men man the guns and prepare for battle. They fight well but they are out matched, and you"
-			+ "\nhave had to surrender to save the remaining mens lives. The pirates hook their ship to yours and"
-			+ "\ncome aboard, ready to judge if your goods are enough to satisfy their greed."
-			+ "\n"
-			+ "\nYou lose";
+	public final static String EVENT_PIRATE_ATTACK_FIGHT_FAIL = "Your men man the guns and prepare for battle. They fight well but they are out matched, and you have had to surrender to save the remaining mens lives."
+			+ "\nThe pirates hook their ship to yours and come aboard, ready to judge if your goods are enough to satisfy their greed.";
 	
-	public final static String EVENT_PIRATE_ATTACK_RUN_SUCCESS = "We have got to outrun them!!"
-			+ "\n"
-			+ "\nYour crew jump to action to loose the sails and as if the gods themselves were watching you, a"
-			+ "\nlucky gust of wind fills the sails, allowing you to surge ahead in the water leaving the pirates in"
-			+ "\nyour wake."
+	public final static String EVENT_PIRATE_ATTACK_RUN_SUCCESS = "Your crew jump to action to loose the sails."
+			+ "\nAs if the gods themselves were watching you, a lucky gust of wind fills the sails, allowing you to surge ahead in the water and leaving the pirates in your wake."
 			+ "\n"
 			+ "\nYou Escaped!";
 	
-	public final static String EVENT_PIRATE_ATTACK_RUN_FAIL = "We have got to outrun them!!"
-			+ "\n"
-			+ "Your crew jump to action to loose the sails, the sails catch a big gust of wind and just as you feel"
-			+ "\nthe ship roll forward with speed the worst happens - your main sail has torn! You are now dead in"
-			+ "\nthe water."
-			+ "\nThe pirates approach and hook their ship to yours and board ready to judge if your goods are"
-			+ "\nenough to satisfy their greed."
+	public final static String EVENT_PIRATE_ATTACK_RUN_FAIL = "Your crew jump to action to loose the sails, the sails catch a big gust of wind and just as you feel"
+			+ "\nthe ship roll forward with speed the worst happens - your main sail has torn!"
+			+ "\nYou are now dead in the water."
+			+ "\nThe pirates approach and hook their ship to yours and board ready to judge if your goods are enough to satisfy their greed."
 			+ "\n"
 			+ "\nThey caught you.";
 	
 	public final static String EVENT_PIRATE_ATTACK_SURRENDER = "We cannot beat them boys, we must surrender!!"
 			+ "\n"
-			+ "\nReluctantly the crew agree that surrender is the only way to survive the encounter, you just hope"
-			+ "\nthey take it easy on you because you gave them what they wanted."
+			+ "\nReluctantly the crew agree that surrender is the only way to survive the encounter, you just hope they take it easy on you because you gave them what they wanted."
 			+ "\n"
 			+ "\nYou have Surrendered.";
 	
+	public final static String EVENT_PIRATE_ATTACK_SURRENDER_FAIL = "The pirates board the ship, sneering at your defeated crew."
+		 	+ "\n\nAfter looting all of your merchandise, the pirates seem angry at the pitiful haul."
+		 	+ "\n\nTheir anger builds into a rage, and before you know it, you and your crew are surrounded by a hooting cacophony of pirates with drawn cutlasses."
+		 	+ "\n\nWith shrieks of glee, they force your men one by one to walk the plank."
+		 	+ "\nYour last thought before you sink into the icy depths is about your home, the Saltforge, and how it will now be doomed to ruin.\n";
+	
+	public final static String EVENT_PIRATE_ATTACK_SURRENDER_SUCCESS = "The pirates board the ship, sneering at your defeated crew."
+			 + "\n\nAfter looting all of your merchandise, they seem content to leave you and your men alive, perhaps to prey upon another day.";
 	
 	//
 	// Game Settings
