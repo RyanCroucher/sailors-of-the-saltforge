@@ -9,6 +9,11 @@ import main.Item;
 import main.Player;
 import main.Ship;
 
+/**
+ * The random event to handle pirate attacks, can end the game in some cases.
+ * @author Ryan Croucher rcr69
+ *
+ */
 public class PirateEvent extends RandomEvent {
 	
 	/**
