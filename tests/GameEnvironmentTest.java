@@ -140,7 +140,7 @@ class GameEnvironmentTest {
 			assert(true);
 		} 
 		try {
-			GameEnvironment.calculateScore(3);
+			GameEnvironment.calculateScore(4);
 			fail("Invalid endgameCode should throw exception");
 		} catch (IllegalArgumentException e) {
 			assert(true);
@@ -703,7 +703,7 @@ class GameEnvironmentTest {
 	@Test
 	void rollRandomEvent() {
 		
-		int numEvents = 3;
+		int numEvents = 4;
 		
 		HashSet<String> eventSet = new HashSet<String>();
 		
