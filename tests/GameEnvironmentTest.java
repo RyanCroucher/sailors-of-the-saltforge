@@ -9,6 +9,7 @@ import java.util.HashSet;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import events.RandomEvent;
 import exceptions.InsufficientCargoCapacityException;
 import exceptions.InsufficientGoldException;
 import exceptions.InsufficientItemQuantityException;
@@ -631,6 +632,88 @@ class GameEnvironmentTest {
 		} catch (IllegalArgumentException e) {
 			assert(true);
 		}
+		
+	}
+	
+	@Test
+	void initiateTravelTest() {
+		
+		Player.setShip(new Ship(ShipModel.BARGE));
+		Player.setGold(5000);
+		
+		Island saltForge = GameEnvironment.getIslands()[0];
+		
+		//start at the saltforge
+		GameEnvironment.setCurrentIsland(saltForge);
+		
+		Island sandyFields = GameEnvironment.getIslands()[2];
+		Route tranquilExpanse = GameEnvironment.getRoutes()[0];
+		
+		//start damaged
+		Player.getShip().setHull(Player.getShip().getHull() - 5);
+		Player.getShip().setCrew(Player.getShip().getCrew() - 5);
+		
+		//travel to sandyfields via the tranquil expanse
+		try {
+			
+			GameEnvironment.initiateTravel(sandyFields, tranquilExpanse);
+			
+			//gold was deducted
+			assert(Player.getGold() < 5000);
+			
+			//hull was repaired
+			assert(Player.getShip().getHull() == Player.getShip().getMaxHull());
+			
+			//crew were hired
+			assert(Player.getShip().getCrew() == Player.getShip().getMaxCrew());
+			
+			//time has passed
+			assert(GameEnvironment.getHoursSinceStart() != 0);
+			
+			//roll back time for other tests
+			GameEnvironment.reverseTime(GameEnvironment.getHoursSinceStart());
+			
+		} catch (InsufficientGoldException | IllegalArgumentException e) {
+			fail("Valid test shouldn't throw exception here");
+		}
+		
+		//travel via a route to an island not in that route
+		Island tunia = GameEnvironment.getIslands()[1];
+		try {
+			GameEnvironment.initiateTravel(tunia, tranquilExpanse);
+			fail("Should throw IllegalArgumentException");
+		} catch (IllegalArgumentException e) {
+			assert(true);
+		} catch (InsufficientGoldException e) {
+			fail("Wrong exception thrown");
+		}
+		
+		//not enough gold to travel
+		Player.setGold(0);
+		try {
+			GameEnvironment.initiateTravel(sandyFields, tranquilExpanse);
+			fail("Should throw InsufficientGoldException");
+		} catch (InsufficientGoldException e) {
+			assert(true);
+		} catch (IllegalArgumentException e) {
+			fail("Wrong exception thrown");
+		}
+	}
+	
+	@Test
+	void rollRandomEvent() {
+		
+		int numEvents = 3;
+		
+		HashSet<String> eventSet = new HashSet<String>();
+		
+		for (int i = 0; i < 100; i++) {
+			RandomEvent event = GameEnvironment.rollRandomEvent();
+			
+			eventSet.add(event.getName());
+		}
+		
+		assertEquals(eventSet.size(), numEvents);
 		
 	}
 	

@@ -762,9 +762,6 @@ public class Console {
 		
 		GameEnvironment.arriveAtIsland(island);
 		
-		//if we hit an endgame condition, end the game
-		GameEnvironment.checkEndgameConditions();
-		
 		islandWelcome(island);
 		presentIslandOptions(island);
 		

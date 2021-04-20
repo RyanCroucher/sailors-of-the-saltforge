@@ -543,8 +543,11 @@ public class GameEnvironment {
 	 */
 	public static void arriveAtIsland(Island island) {
 
-		GameEnvironment.setCurrentIsland(island);
+		curIsland = island;
 		
+		//if we hit an endgame condition, end the game
+		GameEnvironment.checkEndgameConditions();
+
 	}
 	
 	
