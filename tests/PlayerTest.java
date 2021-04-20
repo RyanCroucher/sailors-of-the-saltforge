@@ -18,7 +18,7 @@ import main.Store;
 class PlayerTest {
 
 	@Test
-	void testGetNetWorth() {
+	void getNetWorthTest() {
 		
 		GameEnvironment.setupGame();
 		Player.setGold(1000);
