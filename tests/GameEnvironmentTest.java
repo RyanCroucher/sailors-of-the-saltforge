@@ -711,7 +711,7 @@ class GameEnvironmentTest {
 	@Test
 	void rollRandomEvent() {
 		
-		int numEvents = 4;
+		int numEvents = 5;
 		
 		HashSet<String> eventSet = new HashSet<String>();
 		
