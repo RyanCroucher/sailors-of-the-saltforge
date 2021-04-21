@@ -21,29 +21,29 @@ public class IslandPanel extends JPanel {
 		setBounds(0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		setLayout(null);
 		
-		JLabel labelRouteName = new JLabel("The Saltforge");
-		labelRouteName.setHorizontalAlignment(SwingConstants.CENTER);
-		labelRouteName.setBounds(535, 12, 289, 66);
-		add(labelRouteName);
+		JLabel labelIslandName = new JLabel("The Saltforge");
+		labelIslandName.setHorizontalAlignment(SwingConstants.CENTER);
+		labelIslandName.setBounds(535, 12, 289, 66);
+		add(labelIslandName);
 		
-		JButton buttonToIsland = new JButton("Travel via the Tranquil Expanse");
-		buttonToIsland.setBounds(561, 216, 263, 25);
-		add(buttonToIsland);
-		buttonToIsland.addActionListener(new ActionListener() {
+		JButton buttonToRoute = new JButton("Travel via the Tranquil Expanse");
+		buttonToRoute.setBounds(561, 216, 263, 25);
+		add(buttonToRoute);
+		buttonToRoute.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				PanelManager.setPanel(PanelManager.routePanel);
 			}
 		});
 		
-		buttonToIsland.setOpaque(false);
-		buttonToIsland.setBackground(new Color(200,200,0,0));
-		buttonToIsland.setFocusPainted(false);
-		buttonToIsland.setForeground(new Color(255,0,0,255));
+		buttonToRoute.setOpaque(false);
+		buttonToRoute.setBackground(new Color(200,200,0,0));
+		buttonToRoute.setFocusPainted(false);
+		buttonToRoute.setForeground(new Color(255,0,0,255));
 		
 		
-		JLabel labelRouteDescription = new JLabel("The salt forge is where the dwarves live.");
-		labelRouteDescription.setBounds(588, 139, 298, 15);
-		add(labelRouteDescription);
+		JLabel labelIslandDescription = new JLabel("The salt forge is where the dwarves live.");
+		labelIslandDescription.setBounds(588, 139, 298, 15);
+		add(labelIslandDescription);
 		
 	}
 
