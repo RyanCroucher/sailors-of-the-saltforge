@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import main.Constants;
+
 public class IslandPanel extends JPanel {
 
 	/**
@@ -16,7 +18,7 @@ public class IslandPanel extends JPanel {
 	 */
 	public IslandPanel() {
 
-		setBounds(0, 0, 1280, 720);
+		setBounds(0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		setLayout(null);
 		
 		JLabel labelRouteName = new JLabel("The Saltforge");

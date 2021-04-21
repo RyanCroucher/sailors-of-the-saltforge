@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import main.Constants;
+
 public class PanelManager {
 
 	private static JFrame frame;
@@ -40,7 +42,7 @@ public class PanelManager {
 	private static void initialize() {
 		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1280, 720);
+		frame.setBounds(0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		//frame.getContentPane().setLayout(null);

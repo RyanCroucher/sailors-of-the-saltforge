@@ -295,4 +295,10 @@ public class Constants {
 	public final static int ITEM_BASE_PRICE_ALCOHOL = 50;
 	public final static int ITEM_BASE_PRICE_RAW_MATERIALS = 50;
 	public final static int ITEM_BASE_PRICE_FOOD = 20;
+	
+	
+	
+	//GUI settings
+	public final static int WINDOW_WIDTH = 1920;
+	public final static int WINDOW_HEIGHT = 1080;
 }
