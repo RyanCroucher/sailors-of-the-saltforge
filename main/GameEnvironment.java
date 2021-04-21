@@ -453,13 +453,38 @@ public class GameEnvironment {
 		
 	}
 	
+	/**
+	 * Generates a random event, with random event parameters.
+	 * Pirate events have a 40% chance to occur, or less if player has the correct upgrade.
+	 * @return the generated Event object
+	 */
 	public static RandomEvent rollRandomEvent() {
 		
-		//random number between 0 and 10
-		int eventType = (int) (Math.random() * 11);
+		int numEvents = 3;
+		
+		//random number between 0 and numEvents-1
+		int eventType = (int) (Math.random() * numEvents);
 		RandomEvent event = null;
 		
-		if (eventType == 0) {
+		//40% it's a pirate event, or 20% if player has jolly roger upgrade
+		float chanceOfPirates = 0.4f;
+		if (Player.getShip().getUpgrades().contains(Constants.UPGRADE_FLAG))
+			chanceOfPirates = 0.2f;
+		
+		if (Math.random() <= chanceOfPirates) {
+			
+			int prizeIfWin = (int) (Math.random() * 500f + 200f);
+			
+			Ship[] shipOptions = new Ship[] {new Ship(ShipModel.BARGE), new Ship(ShipModel.SLOOP), new Ship(ShipModel.MERCHANTMAN), new Ship(ShipModel.CUTTER)};
+			Ship pirateShip = shipOptions[(int) (Math.random() * 4)];
+			
+			String shipDescription = "\nThe pirate ship appears to be a " + pirateShip.getModelName() + ".";
+			
+			event = new PirateEvent("Pirate Attack", Constants.EVENT_PIRATE_ATTACK_DESCRIPTION + shipDescription, pirateShip, prizeIfWin);
+		}
+		
+		//if not a pirate event, even chance of any other event
+		else if (eventType == 0) {
 			int prize = (int) (Math.random() * 75 + 25);
 			event = new RescueEvent("Drowning Sailors", Constants.EVENT_RESCUE_DESCRIPTION, prize);
 		}
@@ -474,17 +499,6 @@ public class GameEnvironment {
 			int hoursLoss = 12;
 			
 			event = new WeatherEvent("Sudden Storm", Constants.EVENT_STORM_DESCRIPTION, hullDamage, crewLoss, hoursLoss);
-		}
-		
-		else if (eventType <= 10) {
-			int prizeIfWin = (int) (Math.random() * 500f + 200f);
-			
-			Ship[] shipOptions = new Ship[] {new Ship(ShipModel.BARGE), new Ship(ShipModel.SLOOP), new Ship(ShipModel.MERCHANTMAN), new Ship(ShipModel.CUTTER)};
-			Ship pirateShip = shipOptions[(int) (Math.random() * 4)];
-			
-			String shipDescription = "\nThe pirate ship appears to be a " + pirateShip.getModelName() + ".";
-			
-			event = new PirateEvent("Pirate Attack", Constants.EVENT_PIRATE_ATTACK_DESCRIPTION + shipDescription, pirateShip, prizeIfWin);
 		}
 		
 		return event;

@@ -400,17 +400,13 @@ public class Console {
 		logMessage(importString);
 		logMessage(exportString);
 		
-		//instructions
-		logMessage("");
-		logMessage("To buy or sell an item, type the choice number and then the quantity to trade, seperated by a space.");
-		logMessage("I.e. to buy the first good, type 1 10, to sell the first good, type 2 3");
 		logMessage("");
 		
 		String playerInventoryString = "You have: ";
 		
 		//list what the player has in inventory
 		for (Item ownedItem : GameEnvironment.getItems()) {
-			playerInventoryString += ownedItem.getName() + "- " + Player.getShip().getInventory().getItemQuantity(ownedItem) + " ";
+			playerInventoryString += "[" + Player.getShip().getInventory().getItemQuantity(ownedItem) + " " + ownedItem.getName() + "] ";
 		}
 		
 		logMessage(playerInventoryString);
@@ -437,6 +433,10 @@ public class Console {
 		logMessage(consoleOptionNumber + ". Return to your " + Player.getShip().getModelName() + ".");
 		
 		logMessage("");
+		
+		//instructions
+		logMessage("To buy or sell an item, type the choice number and then the quantity to trade, seperated by a space.");
+		logMessage("I.e. to buy the first good, type 1 10, to sell the first good, type 2 3");
 		
 		return transactionOptions;
 		
