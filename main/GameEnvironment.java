@@ -24,7 +24,6 @@ import ui.Console;
  */
 public class GameEnvironment {
 	
-	//String curScreen;
 	/**
 	 * an arraylist of all item instances in the game (one for each item type)
 	 */
@@ -240,6 +239,9 @@ public class GameEnvironment {
 		curIsland = saltForge;
 	}
 	
+	/**
+	 * Construct all of the item instances to be used in the game.
+	 */
 	public static void setupItems() {
 		Item luxuryGoods = new Item("Luxury Goods", Constants.ITEM_BASE_PRICE_LUXURY, "Silks, jewellery and spices", 1);
 		Item alcohol = new Item("Alcohol", Constants.ITEM_BASE_PRICE_ALCOHOL, "Barrels and bottles of strong liquor", 1);
@@ -266,6 +268,11 @@ public class GameEnvironment {
 		
 	}
 	
+	/**
+	 * Calculates the endgame score based on factors such as gold and days passed
+	 * @param endGameCode the reason the game ended. 0 duration reached. 1 gold reached. 2 out of gold. 3 killed by event.
+	 * @return
+	 */
 	public static int calculateScore(int endGameCode) {
 		
 		if (endGameCode < 0 || endGameCode > 3)
@@ -344,7 +351,16 @@ public class GameEnvironment {
 		return travelOptions;
 	}
 	
-	
+	/**
+	 * Buys items from a store, into the player ship's cargo
+	 * @param item the item to buy
+	 * @param store the store the player is buying from
+	 * @param quantity the quantity of the item to buy
+	 * @throws IllegalArgumentException
+	 * @throws InsufficientGoldException
+	 * @throws InsufficientCargoCapacityException
+	 * @throws InsufficientItemQuantityException
+	 */
 	public static void buyItem(Item item, Store store, int quantity) throws IllegalArgumentException, InsufficientGoldException, InsufficientCargoCapacityException, InsufficientItemQuantityException {
 		
 		//validate input
@@ -377,6 +393,14 @@ public class GameEnvironment {
 		
 	}
 	
+	/**
+	 * Sells items from Player ship cargo to the store
+	 * @param item the item type to sell
+	 * @param store the store where the player is selling the item
+	 * @param quantity the quantity of the item to sell
+	 * @throws IllegalArgumentException
+	 * @throws InsufficientItemQuantityException
+	 */
 	public static void sellItem(Item item, Store store, int quantity) throws IllegalArgumentException, InsufficientItemQuantityException {
 		
 		//validate input
@@ -400,6 +424,13 @@ public class GameEnvironment {
 		
 	}
 	
+	/**
+	 * Buys an upgrade for the ship, applies effect to one island if contract upgrade chosen.
+	 * @param upgrade the upgrade to be purchased
+	 * @param upgradeCost the cost of the upgrade
+	 * @throws InsufficientGoldException
+	 * @throws IllegalArgumentException
+	 */
 	public static void buyIslandUpgrade(String upgrade, int upgradeCost) throws InsufficientGoldException, IllegalArgumentException {
 		
 		if (Player.getGold() < upgradeCost)
@@ -420,10 +451,23 @@ public class GameEnvironment {
 		
 	}
 	
+	/**
+	 * Calculates whether a random event will occur, based on route properties
+	 * @param chosenRoute the route the player is traveling by
+	 * @return true if random roll < route risk level, else false
+	 */
 	public static boolean doesEventOccur(Route chosenRoute) {
 		return Math.random() * 100 < chosenRoute.getRiskLevel();
 	}
 	
+	/**
+	 * Performs actions necessary when moving between islands.
+	 * Deducts gold from player, repair ship and hire crew, pass time and randomize stores.
+	 * @param destinationIsland the island the player is traveling to
+	 * @param chosenRoute the chosen route the player is traveling by
+	 * @throws IllegalArgumentException
+	 * @throws InsufficientGoldException
+	 */
 	public static void initiateTravel(Island destinationIsland, Route chosenRoute) throws IllegalArgumentException, InsufficientGoldException {
 		
 		if (!chosenRoute.includesIsland(destinationIsland))
@@ -627,6 +671,10 @@ public class GameEnvironment {
 		return items;
 	}
 	
+	/**
+	 * Calculates the cheapest cost to leave the current island (via any route)
+	 * @return the min cost to leave the current island
+	 */
 	public static int minCostToLeaveIsland() {
 		
 		int cost = 10000;
@@ -641,6 +689,10 @@ public class GameEnvironment {
 		
 	}
 	
+	/**
+	 * Calculates the minimum time to any destination from current island
+	 * @return the time in hours
+	 */
 	public static int minHoursToLeaveIsland() {
 		
 		int hours = 10000;
