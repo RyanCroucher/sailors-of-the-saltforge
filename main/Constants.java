@@ -171,14 +171,12 @@ public class Constants {
 			+ "\nYou sell the object for " + NAME_CURRENCY + "!";
 	
 	//Something from beneath
-	public final static String EVENT_FROM_BENEATH_DESCRIPTION = "In the dead of night, you lie sleeping in your cabin. Suddenly you are tossed from your bed by an"
-															  + "\nimpact of some sort. As you stand up, something seems wrong. You hear commotion on the deck of"
-															  + "\nthe ship. You emerge to find many of your crew looking over the edge of the ship waving lanterns"
-															  + "\nat the water. You hear them talking about the crew on patrol seeing something large emerge from"
-															  + "\nthe water before the impact. Some of them seem terrified, adamant that it wasn’t a whale but maybe"
-															  + "\nsomething ancient from the depths below."
-															  + "\nYou don’t have time for the conspiracies, all you can do is assess the damage and do a head count"
-															  + "\nof the crew and make sure you can get to port."
+	public final static String EVENT_FROM_BENEATH_DESCRIPTION = "In the dead of night, you lie sleeping in your cabin. Suddenly you are tossed from your bed by an impact of some sort."
+															  + "\nAs you stand up, something seems wrong. You hear commotion on the deck of the ship."
+															  + "\nYou emerge to find many of your crew looking over the edge of the ship waving lanterns at the water."
+															  + "\nYou hear them talking about the crew on patrol seeing something large emerge from the water before the impact."
+															  + "\nSome of them seem terrified, adamant that it wasn’t a whale but maybe something ancient from the depths below."
+															  + "\nYou don’t have time for the conspiracies, all you can do is assess the damage and do a head count of the crew and make sure you can get to port."
 															  + "\n"
 															  + "\nSomething from the depths attacked you.";
 

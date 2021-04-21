@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 import events.PirateEvent;
 import events.RandomEvent;
 import events.RescueEvent;
+import events.ShipDamageEvent;
 import events.WeatherEvent;
 import exceptions.InsufficientCargoCapacityException;
 import exceptions.InsufficientGoldException;
@@ -504,7 +505,7 @@ public class GameEnvironment {
 	 */
 	public static RandomEvent rollRandomEvent() {
 		
-		int numEvents = 3;
+		int numEvents = 4;
 		
 		//random number between 0 and numEvents-1
 		int eventType = (int) (Math.random() * numEvents);
@@ -543,6 +544,13 @@ public class GameEnvironment {
 			int hoursLoss = 12;
 			
 			event = new WeatherEvent("Sudden Storm", Constants.EVENT_STORM_DESCRIPTION, hullDamage, crewLoss, hoursLoss);
+		}
+		else if (eventType == 3) {
+			
+			int hullDamage = (int) (Math.random() * 10 + 1);
+			int crewLoss = (int) (Math.random() * 2 + 1);
+			
+			event = new ShipDamageEvent("Something From Beneath", Constants.EVENT_FROM_BENEATH_DESCRIPTION, hullDamage, crewLoss);
 		}
 		
 		return event;
