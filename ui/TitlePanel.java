@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import main.Constants;
+import javax.swing.ImageIcon;
+import java.awt.Font;
 
 public class TitlePanel extends JPanel {
 
@@ -21,13 +23,9 @@ public class TitlePanel extends JPanel {
 		setBounds(0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		setLayout(null);
 		
-		JLabel labelRouteName = new JLabel("Sailors of the Saltforge");
-		labelRouteName.setHorizontalAlignment(SwingConstants.CENTER);
-		labelRouteName.setBounds(535, 12, 289, 66);
-		add(labelRouteName);
-		
 		JButton buttonPlayGame = new JButton("Play");
-		buttonPlayGame.setBounds(561, 216, 263, 25);
+		buttonPlayGame.setFont(new Font("Lato Black", Font.BOLD, 18));
+		buttonPlayGame.setBounds(910, 216, 100, 50);
 		add(buttonPlayGame);
 		buttonPlayGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -40,6 +38,10 @@ public class TitlePanel extends JPanel {
 		buttonPlayGame.setFocusPainted(false);
 		buttonPlayGame.setForeground(new Color(255,0,0,255));
 		
-	}
+		JLabel labelBackgroundImage = new JLabel("");
+		labelBackgroundImage.setIcon(new ImageIcon(TitlePanel.class.getResource("/ui/images/title.png")));
+		labelBackgroundImage.setBounds(0, 0, 1920, 1080);
+		add(labelBackgroundImage);
 
+	}
 }
