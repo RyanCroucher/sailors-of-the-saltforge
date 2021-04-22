@@ -6,32 +6,33 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import main.Constants;
+import main.GameEnvironment;
 
 public class PanelManager {
 
 	private static JFrame frame;
 	
-	public static JPanel titlePanel;
-	public static JPanel characterCreationPanel;
-	public static JPanel islandPanel;
-	public static JPanel routePanel;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
+	public static TitlePanel titlePanel;
+	public static CharacterCreatePanel characterCreationPanel;
+	public static IslandPanel islandPanel;
+	public static RoutePanel routePanel;
+	
+	public static void startGUIGame() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 		
 					initialize();
+					
+					//arrive at the saltforge
+					//GameEnvironment.arriveAtIsland(GameEnvironment.getIslands()[0]);
 			
 					titlePanel = new TitlePanel();
 					characterCreationPanel = new CharacterCreatePanel();
 					islandPanel = new IslandPanel();
 					routePanel = new RoutePanel();
 					
-					setPanel(titlePanel);
+					setPanel("TitlePanel");
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -53,9 +54,28 @@ public class PanelManager {
 		
 	}
 	
-	public static void setPanel(JPanel panel) {
+	public static void setPanel(String panel) {
 		
-		frame.setContentPane(panel);
+		switch(panel) {
+			case "IslandPanel":
+				islandPanel.populateFieldsWithData();
+				frame.setContentPane(islandPanel);
+				break;
+			case "TitlePanel":
+				frame.setContentPane(titlePanel);
+				break;
+			case "CharacterCreatePanel":
+				frame.setContentPane(characterCreationPanel);
+				break;
+			case "RoutePanel":
+				frame.setContentPane(routePanel);
+				break;
+			default:
+				System.err.println("No such panel");
+				break;
+		}
+
+
 		frame.revalidate();
 			
 	}

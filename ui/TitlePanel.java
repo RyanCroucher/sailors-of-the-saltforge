@@ -30,7 +30,7 @@ public class TitlePanel extends JPanel {
 		add(buttonPlayGame);
 		buttonPlayGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				PanelManager.setPanel(PanelManager.characterCreationPanel);
+				PanelManager.setPanel("CharacterCreatePanel");
 			}
 		});
 		

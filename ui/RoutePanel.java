@@ -31,7 +31,7 @@ public class RoutePanel extends JPanel {
 		add(buttonToIsland);
 		buttonToIsland.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				PanelManager.setPanel(PanelManager.islandPanel);
+				PanelManager.setPanel("IslandPanel");
 			}
 		});
 		

@@ -26,77 +26,47 @@ public class Constants {
 	/**
 	 * The description text for the Salt Forge
 	 */
-	public final static String ISLAND_SALTFORGE_DESCRIPTION = "Welcome to The Salt Forge, the home to the salt dwarves ruled by the great Old Saltbeard, the"
-						+ "\nsaltiest of them all."
-						+ "\n\nAs you pull into port on the mountainous island, you can see that the fortress-city is in a state of"
-						+ "\ndisrepair, buildings and roads need upkeep, and parts of the cliff are eroding, occassionally falling"
-						+ "\ninto areas of the city. When you arrive at the market however you are overwhelmed by the sound of"
-						+ "\nsmithys working in their forges and the sight of stacks of iron and other materials."
-						+ "\n\nI’m sure you won’t find it hard to to buy raw materials to take with you here, it’s also said that the"
-						+ "\ndwarves will pay big coin for beers and ales, I hope you have some on board.";
+	public final static String ISLAND_SALTFORGE_DESCRIPTION = "Welcome to The Salt Forge, the home to the salt dwarves ruled by the great Old Saltbeard, the saltiest of them all."
+						+ "\n\nAs you pull into port on the mountainous island, you can see that the fortress-city is in a state of disrepair, buildings and roads need upkeep, and parts of the cliff are eroding, occassionally falling into areas of the city."
+						+ "\n\nWhen you arrive at the market however you are overwhelmed by the sound of smithies working in their forges and the sight of stacks of iron and other materials."
+						+ "\nI’m sure you won’t find it hard to to buy raw materials to take with you here, it’s also said that the dwarves will pay big coin for beers and ales, I hope you have some on board.";
 	
 	public final static String ISLAND_TUNIA = "The Grand Duchy of Tunia";
 	/**
 	 * The description text for the Grand Duchy of Tunia
 	 */
-	public final static String ISLAND_TUNIA_DESCRIPTION = "Welcome to the Grand Duchy of Tunia. It is ruled by the Grand Duke Frederick Von Kraus, and is"
-						+ "\nhome to the richest and greediest people along the coasts."
-						+ "\n\nAfter you manage to deal with the bureaucracy of coming into port, you see a grand city ahead of"
-						+ "\nyou filled with all the expected pomp and circumstance you have heard about. It boasts arguably the"
-						+ "\nlargest and busiest of marketplaces you’ve ever witnessed, with people trying to flog their wares to"
-						+ "\nyou from every angle. A large number of these are brewers and vinters telling you they have the"
-						+ "\nbest beers and wines you’ll ever have tasted."
-						+ "\n\nWith the number of people around here hawking alcohols of various varieties you should be able to"
-						+ "\nhaggle some good prices for them, that being said if you have anything aboard that might help"
-						+ "\nsomeone flaunt their wealth you might be able to make a fair bit of coin here.";
+	public final static String ISLAND_TUNIA_DESCRIPTION = "Welcome to the Grand Duchy of Tunia. It is ruled by the Grand Duke Frederick Von Kraus, and is home to the richest and greediest people along the coasts."
+						+ "\n\nAfter you manage to deal with the bureaucracy of coming into port, you see a grand city ahead of you filled with all the expected pomp and circumstance you have heard about."
+						+ "\nIt boasts arguably the largest and busiest of marketplaces you’ve ever witnessed, with people trying to flog their wares to you from every angle."
+						+ "\n\nA large number of these are brewers and vinters telling you they have the best beers and wines you’ll ever have tasted."
+						+ "\nWith the number of people around here hawking alcohols of various varieties you should be able to haggle some good prices for them, that being said if you have anything aboard that might help someone flaunt their wealth you might be able to make a fair bit of coin here.";
 	
 	public final static String ISLAND_SANDYFIELDS= "Sandy Fields";
 	/**
 	 *  The description text for Sandy Fields
 	 */
-	public final static String ISLAND_SANDYFIELDS_DESCRIPTION = "Welcome to Sandy Fields. A town led by a peasant syndicate, it is the home to some of the hardest"
-						+ "\nworking and humblest farmers this side of the continent."
-						+ "\n\nYou dock at their pier and take in the sights of this humble town. There are no major defensive"
-						+ "\nwalls or castles in sight. For as far as your eyes can see there are fields of every variety you can"
-						+ "\nimagine, with farmhouses dotted amongst them. Just down from the pier you find the marketplace a"
-						+ "\nfairly busy place yet no one seems to be forcing their wares upon you. Most of the people selling"
-						+ "\ngoods have wagons filled with many different foodstuffs, wheat, pumpkins, fruits and meats. Each"
-						+ "\nmerchant happy to sell you whatever you need."
-						+ "\n\nThese people have ample food to go around and have no need of high prices; all foodstuffs seem to"
-						+ "\nbe incredibly cheap here. However, you have heard a few people mention they need more materials"
-						+ "\nsuch as wood for more barns and metals for their tools. Perhaps you could oblige these needs?";
+	public final static String ISLAND_SANDYFIELDS_DESCRIPTION = "Welcome to Sandy Fields. A town led by a peasant syndicate, it is the home to some of the hardest working and humblest farmers this side of the continent."
+						+ "\nYou dock at their pier and take in the sights of this humble town. There are no major defensive walls or castles in sight. For as far as your eyes can see there are fields of every variety you can imagine, with farmhouses dotted amongst them."
+						+ "\n\nJust down from the pier you find the marketplace a fairly busy place yet no one seems to be forcing their wares upon you. Most of the people selling goods have wagons filled with many different foodstuffs, wheat, pumpkins, fruits and meats. Each merchant is happy to sell you whatever you need."
+						+ "\n\nThese people have ample food to go around and have no need of high prices; all foodstuffs seem to be incredibly cheap here. However, you have heard a few people mention they need more materials such as wood for more barns and metals for their tools. Perhaps you could oblige these needs?";
 						
 	public final static String ISLAND_SKULLHAVEN = "Skull Haven";
 	/**
 	 * The description text for Skull Haven
 	 */
-	public final static String ISLAND_SKULLHAVEN_DESCRIPTION = "YARRR!!! Welcome to Skull Haven. The hidden island home of the worst and most dangerous"
-						+ "\npeople around. This place doesn’t seem to have a stable leader but someone new appears to take the"
-						+ "\ntitle by force once a week or so."
-						+ "\n\nYou are able to navigate your way to the island from clues and maps given to you by Old Saltbeard."
-						+ "\nThe port is unkempt and riddled with ships flying a variety of colours, you can see in the city that"
-						+ "\nfights break out at the slightest of arguments and drunkards can be found littering the streets."
-						+ "\n\nWhat they pass as a marketplace has seen better days and doesn’t have a lot to offer you, however"
-						+ "\nthey are very eager to purchase food and alcohol from you if you have it and are more than happy to"
-						+ "\nuse their ill gotten gains to get it. If you’re brave enough and think you can handle them, you may"
-						+ "\nalso be able to aquire some cheap labour to help top up your crew here. ";
+	public final static String ISLAND_SKULLHAVEN_DESCRIPTION = "YARRR!!! Welcome to Skull Haven. The hidden island home of the worst and most dangerous people around."
+						+ "\n\nThis place doesn’t seem to have a stable leader but someone new appears to take the title by force once a week or so. The port is unkempt and riddled with ships flying a variety of colours, you can see in the city that fights break out at the slightest of arguments and drunkards can be found littering the streets."
+						+ "\n\nWhat they pass as a marketplace has seen better days and doesn’t have a lot to offer you, however they are very eager to purchase food and alcohol from you if you have it and are more than happy to use their ill gotten gains to get it. If you’re brave enough and think you can handle them, you may also be able to aquire some cheap labour to help top up your crew here.";
 						
 	public final static String ISLAND_SEANOMADS = "The Nomad Flotilla";
 	/**
 	 * The description text for The Sea Nomad Flotilla
 	 */		
-	public final static String ISLAND_SEANOMADS_DESCRIPTION = "Welcome to the flotilla of the Sea Nomads. This is an artificial island made of connected ships and"		
-						+"\nis ruled by “The Mother”, a particularly old and wise woman among the nomads."
-						+"\n\nUsually quite hard to find as they go where the currents take them, they have of late found"
-						+"\nthemselves staying a bit more sedentary so they can trade for the things they need more easily."
-						+"\n\nWhen you pull alongside the island and attach your ship you can see that it appears to function as"
-						+"\nany town would; on the deck you see tents that the people work and socialise in during the day"
-						+"\nwhile they go below deck at night to their homes."
-						+"\n\nTheir marketplace is filled with fancy items, hand-made by the Nomad artisans. A lot of which are"
-						+"\nmade using pearls found in the oysters that are a staple of the Nomad’s diets."
-						+"\n\nWith the lack of natural resources here we should be able to sell them wood and metals to make"
-						+"\nrepairs to the ships and foods to supplement their seafood heavy diet. In return, perhaps we can"
-						+"\nnegotiate better deals for these hand-made goods to sell on in other ports.";
+	public final static String ISLAND_SEANOMADS_DESCRIPTION = "Welcome to the flotilla of the Sea Nomads. This is an artificial island made of connected ships and is ruled by “The Mother”, a particularly old and wise woman among the nomads."
+						+"\n\nUsually quite hard to find as they go where the currents take them, they have of late found themselves staying a bit more sedentary so they can trade for the things they need more easily."
+						+"\nWhen you pull alongside the island and attach your ship you can see that it appears to function as any town would; on the deck you see tents that the people work and socialise in during the day while they go below deck at night to their homes."
+						+"\n\nTheir marketplace is filled with fancy items, hand-made by the Nomad artisans. A lot of which are made using pearls found in the oysters that are a staple of the Nomad’s diets."
+						+"\nWith the lack of natural resources here we should be able to sell them wood and metals to make repairs to the ships and foods to supplement their seafood heavy diet. In return, perhaps we can negotiate better deals for these hand-made goods to sell on in other ports.";
 	
 	// Route blurbs
 	

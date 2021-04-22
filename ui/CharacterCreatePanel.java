@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
 import java.awt.Font;
+import java.awt.Insets;
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JSlider;
@@ -48,9 +49,11 @@ public class CharacterCreatePanel extends JPanel {
 		textAreaPrimer.setLineWrap(true);
 		textAreaPrimer.setEditable(false);
 		textAreaPrimer.setBounds(100, 200, 500, 300);
+		textAreaPrimer.setBackground(new Color(255,255,255,175));
+		textAreaPrimer.setMargin(new Insets(15,15,15,15));
 		add(textAreaPrimer);
 		
-		textAreaPrimer.setOpaque(false);
+		textAreaPrimer.setOpaque(true);
 		
 		//The title at the top middle
 		JLabel labelPanelTitle = new JLabel("Create your character");
@@ -178,7 +181,6 @@ public class CharacterCreatePanel extends JPanel {
 						break;
 
 					}
-					//no radio button selected, display an error
 					
 				}
 				validateChoicesAndStartGame(textFieldChooseName.getText(), sliderGameDuration.getValue(), selectedShip);
@@ -204,7 +206,7 @@ public class CharacterCreatePanel extends JPanel {
 		JLabel labelBackgroundImage = new JLabel("");
 		labelBackgroundImage.setVerticalAlignment(SwingConstants.TOP);
 		labelBackgroundImage.setHorizontalAlignment(SwingConstants.LEFT);
-		labelBackgroundImage.setIcon(new ImageIcon(CharacterCreatePanel.class.getResource("/ui/images/charactercreate.png")));
+		labelBackgroundImage.setIcon(new ImageIcon(CharacterCreatePanel.class.getResource("/ui/images/characterCreate.png")));
 		labelBackgroundImage.setBounds(0, 0, 1920, 1080);
 		add(labelBackgroundImage);
 
@@ -219,7 +221,9 @@ public class CharacterCreatePanel extends JPanel {
 				Player.setName(name);
 				GameEnvironment.setGameDuration(gameDuration);
 				Player.setShip(new Ship(ship));
-				PanelManager.setPanel(PanelManager.islandPanel);
+				
+				
+				PanelManager.setPanel("IslandPanel");
 				
 			}
 			

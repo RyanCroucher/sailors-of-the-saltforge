@@ -13,6 +13,7 @@ import exceptions.InsufficientGoldException;
 import exceptions.InsufficientItemQuantityException;
 import main.Constants.ShipModel;
 import ui.Console;
+import ui.PanelManager;
 
 /**
  * The GameEnvironment class implements most of the logic flow of the game
@@ -57,7 +58,7 @@ public class GameEnvironment {
 	/**
 	 * When GUIMode is turned on, the console no longer expects input.
 	 */
-	private static Boolean GUIMode = false;
+	private static Boolean GUIMode = true;
 	
 	
 	
@@ -729,6 +730,9 @@ public class GameEnvironment {
 		}
 		
 		else {
+			
+			PanelManager.startGUIGame();
+			//curIsland = islands[0];
 			//startGUI();
 		}
 		
