@@ -199,10 +199,10 @@ public class Console {
 		
 		ArrayList<String> shipOptions = new ArrayList<String>();
 		
-		String merchantman = "Merchantman      (Cargo capacity: Medium, hull: Medium, speed: Medium, weapons: Medium, wages: Medium)";
-		String cutter      = "Elven Cutter     (Cargo capacity: Medium, hull: Medium, speed: Fast,   weapons: Low,    wages: Medium)";
-		String sloop       = "Tunian War-Sloop (Cargo capacity: Medium, hull: High,   speed: Medium, weapons: High,   wages: High)";
-		String barge       = "Dwarven Barge    (Cargo capacity: High,   hull: High,   speed: Slow,   weapons: Low,    wages: Low)";
+		String merchantman = Constants.MERCHANTMAN_INFO_STRING;
+		String cutter = Constants.CUTTER_INFO_STRING;
+		String sloop = Constants.SLOOP_INFO_STRING;
+		String barge = Constants.BARGE_INFO_STRING;
 		
 		shipOptions.add(merchantman);
 		shipOptions.add(cutter);

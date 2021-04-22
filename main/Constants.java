@@ -16,9 +16,9 @@ public class Constants {
 	 * The character creation greeting text
 	 */
 	public final static String PRIMER = "You are a proud dwarf from The Saltforge, but the mountain-island is in decline." 
-						+ "\nThe costs to repair the decaying mountainside are rising ever higher."
-						+ "\nOld Saltbeard himself has tasked you to set forth and acquire 10,000 " + NAME_CURRENCY + " to return to your home."
-						+ "\nIt would be unwise to disobey him.\n";
+						+ "\n\nThe costs to repair the decaying mountainside are rising ever higher."
+						+ "\n\nOld Saltbeard himself has tasked you to set forth and acquire 10,000 " + NAME_CURRENCY + " to return to your home."
+						+ "\n\nIt would be unwise to disobey him.\n";
 	
 	
 	// Location blurbs
@@ -251,12 +251,16 @@ public class Constants {
 	public final static int MERCHANTMAN_WEAPONS = 4;
 	public final static int MERCHANTMAN_MAX_CREW = 20;
 	
+	public final static String MERCHANTMAN_INFO_STRING = "Merchantman      (Cargo capacity: Medium, hull: Medium, speed: Medium, weapons: Medium, wages: Medium)";
+	
 	// Elven Cutter
 	public final static int CUTTER_CARGO_CAPACITY = 50;
 	public final static int CUTTER_MAX_HULL = 40;
 	public final static int CUTTER_SPEED = 40;
 	public final static int CUTTER_WEAPONS = 2;
 	public final static int CUTTER_MAX_CREW = 20;
+	
+	public final static String CUTTER_INFO_STRING = "Elven Cutter     (Cargo capacity: Medium, hull: Medium, speed: Fast,   weapons: Low,    wages: Medium)";
 	
 	// Tunian War-Sloop
 	public final static int SLOOP_CARGO_CAPACITY = 50;
@@ -265,12 +269,16 @@ public class Constants {
 	public final static int SLOOP_WEAPONS = 6;
 	public final static int SLOOP_MAX_CREW = 30;
 	
+	public final static String SLOOP_INFO_STRING = "Tunian War-Sloop (Cargo capacity: Medium, hull: High,   speed: Medium, weapons: High,   wages: High)";
+	
 	// Dwarven Barge
 	public final static int BARGE_CARGO_CAPACITY = 80;
 	public final static int BARGE_MAX_HULL = 60;
 	public final static int BARGE_SPEED = 0;
 	public final static int BARGE_WEAPONS = 2;
 	public final static int BARGE_MAX_CREW = 10;
+	
+	public final static String BARGE_INFO_STRING = "Dwarven Barge    (Cargo capacity: High,   hull: High,   speed: Slow,   weapons: Low,    wages: Low)";
 	
 	// Absolute Bounds (Ship values must be between these)
 	public final static int SHIP_MIN_MAX_HULL = 20;

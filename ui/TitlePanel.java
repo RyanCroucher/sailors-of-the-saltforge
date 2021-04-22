@@ -23,13 +23,14 @@ public class TitlePanel extends JPanel {
 		setBounds(0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		setLayout(null);
 		
-		JButton buttonPlayGame = new JButton("Play");
-		buttonPlayGame.setFont(new Font("Lato Black", Font.BOLD, 18));
-		buttonPlayGame.setBounds(910, 216, 100, 50);
+		JButton buttonPlayGame = new JButton("PLAY");
+		buttonPlayGame.setVerticalAlignment(SwingConstants.BOTTOM);
+		buttonPlayGame.setFont(new Font("Lato Black", Font.PLAIN, 60));
+		buttonPlayGame.setBounds(810, 200, 300, 100);
 		add(buttonPlayGame);
 		buttonPlayGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				PanelManager.setPanel(PanelManager.islandPanel);
+				PanelManager.setPanel(PanelManager.characterCreationPanel);
 			}
 		});
 		
@@ -37,6 +38,13 @@ public class TitlePanel extends JPanel {
 		buttonPlayGame.setBackground(new Color(200,200,0,0));
 		buttonPlayGame.setFocusPainted(false);
 		buttonPlayGame.setForeground(new Color(255,0,0,255));
+		
+		JLabel labelCreatedBy = new JLabel("Created by Ryan Croucher and Steven Johnson");
+		labelCreatedBy.setForeground(Color.RED);
+		labelCreatedBy.setHorizontalAlignment(SwingConstants.CENTER);
+		labelCreatedBy.setFont(new Font("Lato Black", Font.PLAIN, 20));
+		labelCreatedBy.setBounds(660, 120, 600, 100);
+		add(labelCreatedBy);
 		
 		JLabel labelBackgroundImage = new JLabel("");
 		labelBackgroundImage.setIcon(new ImageIcon(TitlePanel.class.getResource("/ui/images/title.png")));

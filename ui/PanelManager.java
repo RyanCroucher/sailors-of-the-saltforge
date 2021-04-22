@@ -12,6 +12,7 @@ public class PanelManager {
 	private static JFrame frame;
 	
 	public static JPanel titlePanel;
+	public static JPanel characterCreationPanel;
 	public static JPanel islandPanel;
 	public static JPanel routePanel;
 
@@ -26,6 +27,7 @@ public class PanelManager {
 					initialize();
 			
 					titlePanel = new TitlePanel();
+					characterCreationPanel = new CharacterCreatePanel();
 					islandPanel = new IslandPanel();
 					routePanel = new RoutePanel();
 					

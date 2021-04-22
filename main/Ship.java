@@ -96,6 +96,10 @@ public class Ship {
 	 * @throws IllegalArgumentException
 	 */
 	public Ship(ShipModel model) throws IllegalArgumentException {
+		
+		if (model == null)
+			throw new IllegalArgumentException("Selected ship model is invalid.");
+		
 		switch (model) {
 			case MERCHANTMAN:
 				initializeShip(model, 
@@ -144,7 +148,6 @@ public class Ship {
 	 * @param weaponRating the firepower of the ship.
 	 */
 	private void initializeShip(ShipModel model, int maxHull, int maxCrew, int cargoCapacity, int speed, int weaponRating) {
-		this.model = model;
 		
 		switch(model) {
 			case MERCHANTMAN:
@@ -160,6 +163,8 @@ public class Ship {
 				modelName = "Dwarven Barge";
 				break;
 		}
+		
+		this.model = model;
 		
 		this.maxHull = maxHull;
 		this.setHull(maxHull);
