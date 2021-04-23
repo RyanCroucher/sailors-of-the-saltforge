@@ -16,6 +16,7 @@ public class PanelManager {
 	public static CharacterCreatePanel characterCreationPanel;
 	public static IslandPanel islandPanel;
 	public static RoutePanel routePanel;
+	public static LedgerStatsUpgradesPanel ledgerStatsUpgradePanel;
 	
 	public static void startGUIGame() {
 		EventQueue.invokeLater(new Runnable() {
@@ -31,6 +32,7 @@ public class PanelManager {
 					characterCreationPanel = new CharacterCreatePanel();
 					islandPanel = new IslandPanel();
 					routePanel = new RoutePanel();
+					ledgerStatsUpgradePanel = new LedgerStatsUpgradesPanel();
 					
 					setPanel("TitlePanel");
 
@@ -69,6 +71,10 @@ public class PanelManager {
 				break;
 			case "RoutePanel":
 				frame.setContentPane(routePanel);
+				break;
+			case "LedgerStatsUpgradesPanel":
+				ledgerStatsUpgradePanel.updatePanel();
+				frame.setContentPane(ledgerStatsUpgradePanel);
 				break;
 			default:
 				System.err.println("No such panel");

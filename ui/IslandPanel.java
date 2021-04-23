@@ -832,6 +832,11 @@ public class IslandPanel extends JPanel {
 		add(textAreaTransactionResult);
 		
 		buttonLedgerAndInfo = new JButton("View ledger, ship details and island upgrades");
+		buttonLedgerAndInfo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				PanelManager.setPanel("LedgerStatsUpgradesPanel");
+			}
+		});
 		buttonLedgerAndInfo.setBounds(1210, 500, 610, 50);
 		add(buttonLedgerAndInfo);
 		

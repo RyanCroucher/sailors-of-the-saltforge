@@ -589,35 +589,7 @@ public class Console {
 	 */
 	public static void showShipDetails() {
 		
-		Ship ship = Player.getShip();
-		
-		logMessage("You find Lothar where he is mumbling to himself in the corner, and demand to know the state of your ship.");
-		logMessage("He tells you:");
-		logMessage("");
-		logMessage("You are Captain " + Player.getName() + ", a dwarven merchant from the Salt Forge.");
-		logMessage("Your ship is a " + ship.getModelName() + ".");
-		
-		String refillCrewString = "You do not need to hire more crew.";
-		if (ship.getCrew() < ship.getMaxCrew()) {
-			int costToRefill = ship.getRefillCrewCost(GameEnvironment.getCurrentIsland().getIslandName() == Constants.ISLAND_SKULLHAVEN);
-			refillCrewString = "It will cost you " + costToRefill + " " + Constants.NAME_CURRENCY + " to hire more crew.";
-		}
-		logMessage("Your ship has " + ship.getCrew() + " crew out of a maximum of " + ship.getMaxCrew() + ". " + refillCrewString);
-		
-		logMessage("You must pay your crew a total wage of " + ship.getWageCost(24) + " " + Constants.NAME_CURRENCY + " per day.");
-		logMessage("The " + ship.getModelName() + " is carrying " + ship.getCargo() + " items out of a maximum of " + ship.getCargoCapacity() + ".");
-		
-		String upgradeString = "You have not yet purchased any upgrades for your ship.";
-		if (ship.getUpgrades().size() > 0)
-			upgradeString = "You have wisely purchased these upgrades: " + String.join(", ", ship.getUpgrades());
-		logMessage(upgradeString);
-		
-		String hullRepairString = "Your hull has not sustained any damage.";
-		if (ship.getHull() < ship.getMaxHull()) {
-			int costToRepair = ship.getRepairCost(GameEnvironment.getCurrentIsland().getIslandName() == Constants.ISLAND_SKULLHAVEN);
-			hullRepairString = "Your ship has taken damage and is at " + ship.getHull() + " out of a maximum of " + ship.getMaxHull() + " hull points. It will cost " + costToRepair + " " + Constants.NAME_CURRENCY + " to repair.";
-		}
-		logMessage(hullRepairString);
+		logMessage(GameEnvironment.getShipDetailsString());
 		
 		logMessage("");
 		getInput("<<Press enter to continue>>", true);
@@ -630,10 +602,9 @@ public class Console {
 	 */
 	public static void viewLedger() {
 		
-		logMessage("As you enter Olard's cabin, you inquire about the ship's ledger, but he motions his hand to shush you. He appears to kneeling before a great book, deep in prayer.");
-		logMessage("After an awkward few minutes, he stands up and gestures to a small book on a nearby table. 'Oh, the ledger is over there.'");
-		logMessage("");
-		logMessage("Up to 20 previous transactions:");
+		logMessage(Constants.OLARD_LEDGER);
+		
+		logMessage("\nUp to 20 previous transactions:\n");
 		
 		ArrayList<Transaction> transactions;
 		
@@ -661,8 +632,11 @@ public class Console {
 	public static void viewIslandUpgrade() throws IllegalArgumentException {
 		
 		String upgrade = "";
-		int upgradeCost = 1000;
+		int upgradeCost = Constants.UPGRADE_COST;
 		Island curIsland = GameEnvironment.getCurrentIsland();
+		
+		logMessage(Constants.CRAGNUS_UPGRADE);
+		logMessage("");
 		
 		switch (curIsland.getIslandName()) {
 			case (Constants.ISLAND_SALTFORGE):

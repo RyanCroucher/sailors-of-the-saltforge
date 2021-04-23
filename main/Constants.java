@@ -1,5 +1,6 @@
 package main;
 
+
 public class Constants {
 	//
 	// Constant Strings
@@ -107,6 +108,8 @@ public class Constants {
 	public final static String UPGRADE_CONTRACT = "Exclusive Trading Contract";
 	public final static String UPGRADE_SAILS = "Artisinal Sails";
 	
+	public final static int UPGRADE_COST = 1000;
+	
 	// Event Descriptions
 	
 	//Storm
@@ -190,6 +193,19 @@ public class Constants {
 	
 	public final static String EVENT_PIRATE_ATTACK_SURRENDER_SUCCESS = "The pirates board the ship, sneering at your defeated crew."
 			 + "\n\nAfter looting all of your merchandise, they seem content to leave you and your men alive, perhaps to prey upon another day.";
+	
+	
+	//other flavour text
+	public final static String LOTHAR_MUMBLES = "You find your Bosun Lothar where he is mumbling to himself in the corner, and demand to know the state of your ship.\nHe tells you:";
+	
+	public final static String OLARD_LEDGER = "As you enter the cabin of the Quartermaster, Olard, you inquire about the ship's ledger, but he motions his hand to shush you. He appears to kneeling before a great book, deep in prayer."
+			+ "\n\nAfter an awkward few minutes, he stands up and gestures to a small book on a nearby table. 'Oh, the ledger is over there.'";
+	
+	public final static String CRAGNUS_UPGRADE = "As though anticipating your need, your Navigator Cragnus appears behind you right as you went to find him. Smelling faintly of brimstone, he grins at you from behind a particularly wide and flat nose."
+											+ "\n\n'Aye, cap'n?' he smirks at you as though leery of your authority."
+											+ "\n'You're the Navigator, Cragnus, so I need you to find something for me. Go see what this island might offer for our ship.'"
+											+ "\n\nSome time later, he finds you on the ship, though you didn't see him coming.";
+	
 	
 	//
 	// Game Settings

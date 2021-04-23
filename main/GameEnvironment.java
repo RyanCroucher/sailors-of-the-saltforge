@@ -759,6 +759,48 @@ public class GameEnvironment {
 		
 	}
 	
+	/**
+	 * Builds a string to represent the current state of the player's ship
+	 * @return a multiline string representing the state of the player's ship
+	 */
+	public static String getShipDetailsString() {
+		
+		String shipDetailsString = Constants.LOTHAR_MUMBLES;
+		
+		Ship ship = Player.getShip();
+		
+		shipDetailsString += "\n\nYou are Captain " + Player.getName() + ", a dwarven merchant from the Salt Forge.";
+		shipDetailsString += "\n\nYour ship is a " + ship.getModelName() + ".";
+		
+		String refillCrewString = "You do not need to hire more crew.";
+		if (ship.getCrew() < ship.getMaxCrew()) {
+			int costToRefill = ship.getRefillCrewCost(GameEnvironment.getCurrentIsland().getIslandName() == Constants.ISLAND_SKULLHAVEN);
+			refillCrewString = "It will cost you " + costToRefill + " " + Constants.NAME_CURRENCY + " to hire more crew.";
+		}
+		
+		shipDetailsString += "\n\nYour ship has " + ship.getCrew() + " crew out of a maximum of " + ship.getMaxCrew() + ". " + refillCrewString;
+		
+		shipDetailsString += "\n\nYou must pay your crew a total wage of " + ship.getWageCost(24) + " " + Constants.NAME_CURRENCY + " per day.";
+		shipDetailsString += "\n\nThe " + ship.getModelName() + " is carrying " + ship.getCargo() + " items out of a maximum of " + ship.getCargoCapacity() + ".";
+		
+		String upgradeString = "You have not yet purchased any upgrades for your ship.";
+		if (ship.getUpgrades().size() > 0)
+			upgradeString = "You have wisely purchased these upgrades: " + String.join(", ", ship.getUpgrades());
+		
+		shipDetailsString += "\n\n" + upgradeString;
+		
+		String hullRepairString = "Your hull has not sustained any damage.";
+		if (ship.getHull() < ship.getMaxHull()) {
+			int costToRepair = ship.getRepairCost(GameEnvironment.getCurrentIsland().getIslandName() == Constants.ISLAND_SKULLHAVEN);
+			hullRepairString = "Your ship has taken damage and is at " + ship.getHull() + " out of a maximum of " + ship.getMaxHull() + " hull points. It will cost " + costToRepair + " " + Constants.NAME_CURRENCY + " to repair.";
+		}
+		
+		shipDetailsString += "\n\n" + hullRepairString;
+		
+		return shipDetailsString;
+		
+	}
+	
 	
 	/**
 	 * Initializes the game and walks the player through character creation.
