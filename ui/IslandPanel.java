@@ -1084,6 +1084,7 @@ public class IslandPanel extends JPanel {
 				imagePath = "/ui/images/dullSandyFields.png";
 				break;
 			case Constants.ISLAND_TUNIA:
+				imagePath = "/ui/images/dullTunia.png";
 				break;
 			case Constants.ISLAND_SKULLHAVEN:
 				break;
