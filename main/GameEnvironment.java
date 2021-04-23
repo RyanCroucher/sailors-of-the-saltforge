@@ -715,6 +715,50 @@ public class GameEnvironment {
 		
 	}
 	
+	/**
+	 * Builds a string representing all imports at a location
+	 * @param store an island store
+	 * @return a string of comma-separated imports
+	 */
+	public static String getImportsString(Store store) {
+		
+		String importString = "";
+		
+		ArrayList<Item> imports = store.getImports();
+		ArrayList<String> importStrings = new ArrayList<String>();
+		
+		for (Item importItem : imports) {
+			importStrings.add(importItem.getName());
+		}
+		
+		importString += String.join(", ", importStrings);
+		
+		return importString;
+		
+	}
+	
+	/**
+	 * Builds a string representing all exports from a location
+	 * @param store an island store
+	 * @return a string of comma-separated exports
+	 */
+	public static String getExportsString(Store store) {
+		
+		String exportString = "";
+		
+		ArrayList<Item> exports = store.getExports();
+		ArrayList<String> exportStrings = new ArrayList<String>();
+		
+		for (Item exportItem : exports) {
+			exportStrings.add(exportItem.getName());
+		}
+		
+		exportString += String.join(", ", exportStrings);
+		
+		return exportString;
+		
+	}
+	
 	
 	/**
 	 * Initializes the game and walks the player through character creation.

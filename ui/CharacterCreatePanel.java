@@ -51,6 +51,8 @@ public class CharacterCreatePanel extends JPanel {
 		textAreaPrimer.setBounds(100, 200, 500, 300);
 		textAreaPrimer.setBackground(new Color(255,255,255,175));
 		textAreaPrimer.setMargin(new Insets(15,15,15,15));
+		//fixes selected text highlighting bug
+		textAreaPrimer.getCaret().deinstall(textAreaPrimer);
 		add(textAreaPrimer);
 		
 		textAreaPrimer.setOpaque(true);

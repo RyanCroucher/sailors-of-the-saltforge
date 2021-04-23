@@ -377,37 +377,17 @@ public class Console {
 		Store store = island.getIslandStore();
 		
 		//imports and exports
-		String importString = "Main imports (Will buy and sell for up to double the price): ";
-		ArrayList<Item> imports = store.getImports();
-		ArrayList<String> importStrings = new ArrayList<String>();
+		String importString = "Main imports (Will buy and sell for up to double the price): " + GameEnvironment.getImportsString(store);
+
 		
-		for (Item importItem : imports) {
-			importStrings.add(importItem.getName());
-		}
-		
-		importString += String.join(", ", importStrings);
-		
-		String exportString = "Main exports (Will buy and sell for down to half the price): ";
-		ArrayList<Item> exports = store.getExports();
-		ArrayList<String> exportStrings = new ArrayList<String>();
-		
-		for (Item exportItem : exports) {
-			exportStrings.add(exportItem.getName());
-		}
-		
-		exportString += String.join(", ", exportStrings);
+		String exportString = "Main exports (Will buy and sell for down to half the price): " + GameEnvironment.getExportsString(store);
 		
 		logMessage(importString);
 		logMessage(exportString);
 		
 		logMessage("");
 		
-		String playerInventoryString = "You have: ";
-		
-		//list what the player has in inventory
-		for (Item ownedItem : GameEnvironment.getItems()) {
-			playerInventoryString += "[" + Player.getShip().getInventory().getItemQuantity(ownedItem) + " " + ownedItem.getName() + "] ";
-		}
+		String playerInventoryString = "You have: " + Player.getShip().getInventoryString();
 		
 		logMessage(playerInventoryString);
 		

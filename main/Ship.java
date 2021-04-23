@@ -433,5 +433,18 @@ public class Ship {
 		return totalCostToLeaveIsland;
 	}
 	
+	public String getInventoryString() {
+		
+		String shipInventoryString = "";
+		
+		//list what the player has in inventory
+		for (Item ownedItem : GameEnvironment.getItems()) {
+			shipInventoryString += "[" + inventory.getItemQuantity(ownedItem) + " " + ownedItem.getName() + "] ";
+		}
+		
+		return shipInventoryString;
+		
+	}
+	
 	
 }
