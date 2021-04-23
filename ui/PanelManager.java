@@ -79,5 +79,13 @@ public class PanelManager {
 		frame.revalidate();
 			
 	}
+	
+	public static void refreshFrame() {
+		
+		frame.invalidate();
+		frame.validate();
+		frame.repaint();
+
+	}
 
 }

@@ -11,6 +11,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import exceptions.InsufficientCargoCapacityException;
 import exceptions.InsufficientGoldException;
@@ -29,6 +31,8 @@ import java.awt.Insets;
 import javax.swing.JTextArea;
 import java.awt.Component;
 import javax.swing.JTextField;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 public class IslandPanel extends JPanel {
 	
@@ -54,15 +58,14 @@ public class IslandPanel extends JPanel {
 	private JLabel labelCargo;
 	
 	private JLabel labelItemStockQuantityAlcohol;
-	private JLabel labelItemStockQuantityRawMaterials;
 	private JTextArea textAreaItemNameAlcohol;
-	private JTextArea textAreaItemNameRawMaterials;
-	
-	
 	private JTextField textFieldAlcoholQuantity;
 	private JButton buttonBuyAlcohol;
 	private JButton buttonSellAlcohol;
 	private JLabel labelAlcoholPrice;
+	
+	private JLabel labelItemStockQuantityRawMaterials;
+	private JTextArea textAreaItemNameRawMaterials;
 	private JLabel labelRawMaterialsPrice;
 	private JButton buttonRawMaterialsIncreaseQuantity;
 	private JButton buttonRawMaterialsDecreaseQuantity;
@@ -70,6 +73,8 @@ public class IslandPanel extends JPanel {
 	private JTextArea textAreaItemDescriptionRawMaterials;
 	private JButton buttonBuyRawMaterials;
 	private JButton buttonSellRawMaterials;
+	
+	
 	private JTextArea textAreaItemNameFood;
 	private JLabel labelItemImageFood;
 	private JLabel labelFoodPrice;
@@ -80,6 +85,8 @@ public class IslandPanel extends JPanel {
 	private JButton buttonBuyFood;
 	private JButton buttonSellFood;
 	private JTextArea textAreaItemDescriptionFood;
+	
+	
 	private JTextArea textAreaItemNameLuxuryGoods;
 	private JLabel labelLuxuryGoodsPrice;
 	private JLabel labelItemStockQuantityLuxuryGoods;
@@ -90,6 +97,10 @@ public class IslandPanel extends JPanel {
 	private JButton buttonSellLuxuryGoods;
 	private JButton buttonLuxuryGoodsDecreaseQuantity;
 	private JTextArea textAreaItemDescriptionLuxuryGoods;
+	
+	
+	private JTextArea textAreaTransactionResult;
+	private JButton buttonLedgerAndInfo;
 
 	/**
 	 * Create the panel.
@@ -165,7 +176,7 @@ public class IslandPanel extends JPanel {
 		add(labelDay);
 		
 		labelWealth = new JLabel("You have 1000 Gold Crowns.");
-		labelWealth.setForeground(Color.ORANGE);
+		labelWealth.setForeground(new Color(0, 0, 0));
 		labelWealth.setFont(new Font("Lato Black", Font.PLAIN, 18));
 		labelWealth.setBounds(110, 356, 250, 25);
 		add(labelWealth);
@@ -222,6 +233,7 @@ public class IslandPanel extends JPanel {
 				
 				try {
 					newText = (Math.min(100, Integer.parseInt(curText) + 1)) + "";
+					
 				} catch (NumberFormatException e) {
 					//default back to 0
 					newText = "0";
@@ -231,12 +243,47 @@ public class IslandPanel extends JPanel {
 				
 			}
 		});
+		
+		labelAlcoholPrice = new JLabel("0");
+		labelAlcoholPrice.setHorizontalAlignment(SwingConstants.LEFT);
+		labelAlcoholPrice.setBackground(new Color(255, 255, 255));
+		labelAlcoholPrice.setForeground(new Color(0, 0, 0));
+		labelAlcoholPrice.setFont(new Font("Lato Black", Font.PLAIN, 26));
+		labelAlcoholPrice.setBounds(103, 605, 80, 30);
+		add(labelAlcoholPrice);
 		buttonAlcoholIncreaseQuantity.setVerticalAlignment(SwingConstants.TOP);
 		buttonAlcoholIncreaseQuantity.setFont(new Font("Lato Black", Font.BOLD, 18));
 		buttonAlcoholIncreaseQuantity.setBounds(230, 600, 45, 25);
 		add(buttonAlcoholIncreaseQuantity);
 		
 		textFieldAlcoholQuantity = new JTextField();
+		textFieldAlcoholQuantity.getDocument().addDocumentListener(new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+				updatePrice();
+			}
+			
+			public void removeUpdate(DocumentEvent e) {
+				if (!textFieldAlcoholQuantity.getText().isEmpty())
+					updatePrice();
+			}
+			
+			public void insertUpdate(DocumentEvent e) {
+				updatePrice();
+			}
+			
+			public void updatePrice() {
+				try {
+					int quantity = Integer.parseInt(textFieldAlcoholQuantity.getText());
+					Item alcohol = GameEnvironment.getItems().get(1);
+					Store store = GameEnvironment.getCurrentIsland().getIslandStore();
+					int updatedPrice = Math.max(1, quantity) * store.getItemPrice(alcohol);
+					labelAlcoholPrice.setText(updatedPrice + "¢");
+				} catch (NumberFormatException | NullPointerException exception) {
+					System.err.println(exception.getMessage());
+				}
+			}
+			
+		});
 		textFieldAlcoholQuantity.setText("0");
 		textFieldAlcoholQuantity.setHorizontalAlignment(SwingConstants.CENTER);
 		textFieldAlcoholQuantity.setFont(new Font("Lato Black", Font.PLAIN, 18));
@@ -273,12 +320,6 @@ public class IslandPanel extends JPanel {
 		labelItemStockQuantityAlcohol.setFont(new Font("Lato Black", Font.PLAIN, 26));
 		labelItemStockQuantityAlcohol.setBounds(165, 605, 50, 30);
 		add(labelItemStockQuantityAlcohol);
-		
-		labelAlcoholPrice = new JLabel("");
-		labelAlcoholPrice.setForeground(Color.ORANGE);
-		labelAlcoholPrice.setFont(new Font("Lato Black", Font.PLAIN, 26));
-		labelAlcoholPrice.setBounds(103, 605, 50, 30);
-		add(labelAlcoholPrice);
 		
 		JLabel labelItemImageAlcohol = new JLabel("");
 		labelItemImageAlcohol.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -340,10 +381,11 @@ public class IslandPanel extends JPanel {
 		labelItemStockQuantityRawMaterials.setBounds(165, 805, 50, 30);
 		add(labelItemStockQuantityRawMaterials);
 		
-		labelRawMaterialsPrice = new JLabel("");
-		labelRawMaterialsPrice.setForeground(Color.ORANGE);
+		labelRawMaterialsPrice = new JLabel("0");
+		labelRawMaterialsPrice.setHorizontalAlignment(SwingConstants.LEFT);
+		labelRawMaterialsPrice.setForeground(new Color(0, 0, 0));
 		labelRawMaterialsPrice.setFont(new Font("Lato Black", Font.PLAIN, 26));
-		labelRawMaterialsPrice.setBounds(103, 805, 50, 30);
+		labelRawMaterialsPrice.setBounds(103, 805, 80, 30);
 		add(labelRawMaterialsPrice);
 		
 		JLabel labelItemImageRawMaterials = new JLabel("");
@@ -413,6 +455,33 @@ public class IslandPanel extends JPanel {
 		add(buttonRawMaterialsDecreaseQuantity);
 		
 		textFieldRawMaterialsQuantity = new JTextField();
+		textFieldRawMaterialsQuantity.getDocument().addDocumentListener(new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+				updatePrice();
+			}
+			
+			public void removeUpdate(DocumentEvent e) {
+				if (!textFieldRawMaterialsQuantity.getText().isEmpty())
+					updatePrice();
+			}
+			
+			public void insertUpdate(DocumentEvent e) {
+				updatePrice();
+			}
+			
+			public void updatePrice() {
+				try {
+					int quantity = Integer.parseInt(textFieldRawMaterialsQuantity.getText());
+					Item rawMaterials = GameEnvironment.getItems().get(2);
+					Store store = GameEnvironment.getCurrentIsland().getIslandStore();
+					int updatedPrice = Math.max(1, quantity) * store.getItemPrice(rawMaterials);
+					labelRawMaterialsPrice.setText(updatedPrice + "¢");
+				} catch (NumberFormatException | NullPointerException exception) {
+					System.err.println(exception.getMessage());
+				}
+			}
+			
+		});
 		textFieldRawMaterialsQuantity.setText("0");
 		textFieldRawMaterialsQuantity.setHorizontalAlignment(SwingConstants.CENTER);
 		textFieldRawMaterialsQuantity.setFont(new Font("Lato Black", Font.PLAIN, 18));
@@ -466,10 +535,11 @@ public class IslandPanel extends JPanel {
 		textAreaItemNameFood.getCaret().deinstall(textAreaItemNameFood);
 		add(textAreaItemNameFood);
 		
-		labelFoodPrice = new JLabel("");
-		labelFoodPrice.setForeground(Color.ORANGE);
+		labelFoodPrice = new JLabel("0");
+		labelFoodPrice.setHorizontalAlignment(SwingConstants.LEFT);
+		labelFoodPrice.setForeground(new Color(0, 0, 0));
 		labelFoodPrice.setFont(new Font("Lato Black", Font.PLAIN, 26));
-		labelFoodPrice.setBounds(398, 605, 50, 30);
+		labelFoodPrice.setBounds(398, 605, 80, 30);
 		add(labelFoodPrice);
 		
 		labelItemStockQuantityFood = new JLabel("");
@@ -510,6 +580,33 @@ public class IslandPanel extends JPanel {
 		add(buttonFoodIncreaseQuantity);
 		
 		textFieldFoodQuantity = new JTextField();
+		textFieldFoodQuantity.getDocument().addDocumentListener(new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+				updatePrice();
+			}
+			
+			public void removeUpdate(DocumentEvent e) {
+				if (!textFieldFoodQuantity.getText().isEmpty())
+					updatePrice();
+			}
+			
+			public void insertUpdate(DocumentEvent e) {
+				updatePrice();
+			}
+			
+			public void updatePrice() {
+				try {
+					int quantity = Integer.parseInt(textFieldFoodQuantity.getText());
+					Item food = GameEnvironment.getItems().get(3);
+					Store store = GameEnvironment.getCurrentIsland().getIslandStore();
+					int updatedPrice = Math.max(1, quantity) * store.getItemPrice(food);
+					labelFoodPrice.setText(updatedPrice + "¢");
+				} catch (NumberFormatException | NullPointerException exception) {
+					System.err.println(exception.getMessage());
+				}
+			}
+			
+		});
 		textFieldFoodQuantity.setText("0");
 		textFieldFoodQuantity.setHorizontalAlignment(SwingConstants.CENTER);
 		textFieldFoodQuantity.setFont(new Font("Lato Black", Font.PLAIN, 18));
@@ -586,10 +683,11 @@ public class IslandPanel extends JPanel {
 		textAreaItemNameLuxuryGoods.getCaret().deinstall(textAreaItemNameLuxuryGoods);
 		add(textAreaItemNameLuxuryGoods);
 		
-		labelLuxuryGoodsPrice = new JLabel("");
-		labelLuxuryGoodsPrice.setForeground(Color.ORANGE);
+		labelLuxuryGoodsPrice = new JLabel("0");
+		labelLuxuryGoodsPrice.setHorizontalAlignment(SwingConstants.LEFT);
+		labelLuxuryGoodsPrice.setForeground(new Color(0, 0, 0));
 		labelLuxuryGoodsPrice.setFont(new Font("Lato Black", Font.PLAIN, 26));
-		labelLuxuryGoodsPrice.setBounds(398, 805, 75, 30);
+		labelLuxuryGoodsPrice.setBounds(398, 805, 80, 30);
 		add(labelLuxuryGoodsPrice);
 		
 		labelItemStockQuantityLuxuryGoods = new JLabel("");
@@ -630,6 +728,33 @@ public class IslandPanel extends JPanel {
 		add(buttonLuxuryGoodsIncreaseQuantity);
 		
 		textFieldLuxuryGoodsQuantity = new JTextField();
+		textFieldLuxuryGoodsQuantity.getDocument().addDocumentListener(new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+				updatePrice();
+			}
+			
+			public void removeUpdate(DocumentEvent e) {
+				if (!textFieldLuxuryGoodsQuantity.getText().isEmpty())
+					updatePrice();
+			}
+			
+			public void insertUpdate(DocumentEvent e) {
+				updatePrice();
+			}
+			
+			public void updatePrice() {
+				try {
+					int quantity = Integer.parseInt(textFieldLuxuryGoodsQuantity.getText());
+					Item luxuryGoods = GameEnvironment.getItems().get(0);
+					Store store = GameEnvironment.getCurrentIsland().getIslandStore();
+					int updatedPrice = Math.max(1, quantity) * store.getItemPrice(luxuryGoods);
+					labelLuxuryGoodsPrice.setText(updatedPrice + "¢");
+				} catch (NumberFormatException | NullPointerException exception) {
+					System.err.println(exception.getMessage());
+				}
+			}
+			
+		});
 		textFieldLuxuryGoodsQuantity.setText("0");
 		textFieldLuxuryGoodsQuantity.setHorizontalAlignment(SwingConstants.CENTER);
 		textFieldLuxuryGoodsQuantity.setFont(new Font("Lato Black", Font.PLAIN, 18));
@@ -693,6 +818,23 @@ public class IslandPanel extends JPanel {
 		textAreaItemDescriptionLuxuryGoods.getCaret().deinstall(textAreaItemDescriptionLuxuryGoods);
 		add(textAreaItemDescriptionLuxuryGoods);
 		
+		textAreaTransactionResult = new JTextArea("");
+		textAreaTransactionResult.setWrapStyleWord(true);
+		textAreaTransactionResult.setOpaque(true);
+		textAreaTransactionResult.setMargin(new Insets(5, 15, 15, 15));
+		textAreaTransactionResult.setLineWrap(true);
+		textAreaTransactionResult.setFont(new Font("Lato Black", Font.PLAIN, 16));
+		textAreaTransactionResult.setEditable(false);
+		textAreaTransactionResult.setBackground(new Color(255, 255, 255, 175));
+		textAreaTransactionResult.setBounds(100, 965, 800, 50);
+		//fixes selected text highlighting bug
+		textAreaTransactionResult.getCaret().deinstall(textAreaTransactionResult);
+		add(textAreaTransactionResult);
+		
+		buttonLedgerAndInfo = new JButton("View ledger, ship details and island upgrades");
+		buttonLedgerAndInfo.setBounds(1210, 500, 610, 50);
+		add(buttonLedgerAndInfo);
+		
 		labelBackgroundImage = new JLabel("");
 		labelBackgroundImage.setBounds(0, 0, 1920, 1080);
 		
@@ -728,7 +870,7 @@ public class IslandPanel extends JPanel {
 	}
 	
 	private void buyItem(Item item) {
-		
+
 		Store store = GameEnvironment.getCurrentIsland().getIslandStore();
 		
 		String quantityText = "";
@@ -743,15 +885,26 @@ public class IslandPanel extends JPanel {
 			quantityText = textFieldFoodQuantity.getText();
 		
 		try {
+			
 			int quantity = Integer.parseInt(quantityText);
 			GameEnvironment.buyItem(item, store, quantity);
 			resetItemTextFields();
+			
+			String successMessage = "You purchase " + quantity + " " + item.getName() + " for " + (store.getItemPrice(item) * quantity) + " " + Constants.NAME_CURRENCY;
+			successMessage += "\nBeside you, Olard scribbles a note in the ledger, grumbling about the expense.";
+			
+			textAreaTransactionResult.setForeground(Color.BLACK);
+			textAreaTransactionResult.setText(successMessage);
+			
 		} catch (IllegalArgumentException | InsufficientGoldException | InsufficientItemQuantityException | InsufficientCargoCapacityException e) {
-			//log the message in an error box
+			
+			textAreaTransactionResult.setForeground(Color.RED);
+			textAreaTransactionResult.setText(e.getMessage());
+			
 		}
-		
+
 		populateMarketData();
-		
+
 	}
 	
 	private void sellItem(Item item) {
@@ -769,11 +922,22 @@ public class IslandPanel extends JPanel {
 			quantityText = textFieldFoodQuantity.getText();
 		
 		try {
+			
 			int quantity = Integer.parseInt(quantityText);
 			GameEnvironment.sellItem(item, store, quantity);
 			resetItemTextFields();
+			
+			String successMessage = "You sell " + quantity + " " + item.getName() + " for " + (store.getItemPrice(item) * quantity) + " " + Constants.NAME_CURRENCY;
+			successMessage += "\nOlard grabs the bag of coin as soon as you make the sale, stashing it somewhere under his armour.";
+			
+			textAreaTransactionResult.setForeground(Color.BLACK);
+			textAreaTransactionResult.setText(successMessage);
+			
 		} catch (IllegalArgumentException | InsufficientItemQuantityException e) {
-			//log the message in an error box
+			
+			textAreaTransactionResult.setForeground(Color.RED);
+			textAreaTransactionResult.setText(e.getMessage());
+			
 		}
 		
 		populateMarketData();
@@ -808,6 +972,9 @@ public class IslandPanel extends JPanel {
 		setItemPriceLabels();
 		setCurrentMoneyLabel();
 		
+		//to update the transaction messagebox without overlapping text
+		PanelManager.refreshFrame();
+		
 	}
 	
 	private void setItemPriceLabels() {
@@ -819,10 +986,10 @@ public class IslandPanel extends JPanel {
 		Item rawMaterials = GameEnvironment.getItems().get(2);
 		Item food = GameEnvironment.getItems().get(3);
 		
-		labelLuxuryGoodsPrice.setText(store.getItemPrice(luxuryGoods) + "g");
-		labelAlcoholPrice.setText(store.getItemPrice(alcohol) + "g");
-		labelRawMaterialsPrice.setText(store.getItemPrice(rawMaterials) + "g");
-		labelFoodPrice.setText(store.getItemPrice(food) + "g");
+		labelLuxuryGoodsPrice.setText(store.getItemPrice(luxuryGoods) + "¢");
+		labelAlcoholPrice.setText(store.getItemPrice(alcohol) + "¢");
+		labelRawMaterialsPrice.setText(store.getItemPrice(rawMaterials) + "¢");
+		labelFoodPrice.setText(store.getItemPrice(food) + "¢");
 	}
 	
 	private void setItemStockQuantityLabels() {
