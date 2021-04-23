@@ -329,6 +329,8 @@ public class IslandPanel extends JPanel {
 		textAreaItemDescriptionAlcohol.setEditable(false);
 		textAreaItemDescriptionAlcohol.setBackground(new Color(255, 255, 255, 175));
 		textAreaItemDescriptionAlcohol.setBounds(100, 725, 260, 25);
+		//fixes selected text highlighting bug
+		textAreaItemDescriptionAlcohol.getCaret().deinstall(textAreaItemDescriptionAlcohol);
 		add(textAreaItemDescriptionAlcohol);
 		
 		labelItemStockQuantityRawMaterials = new JLabel("");
@@ -427,6 +429,8 @@ public class IslandPanel extends JPanel {
 		textAreaItemDescriptionRawMaterials.setEditable(false);
 		textAreaItemDescriptionRawMaterials.setBackground(new Color(255, 255, 255, 175));
 		textAreaItemDescriptionRawMaterials.setBounds(100, 925, 260, 25);
+		//fixes selected text highlighting bug
+		textAreaItemDescriptionRawMaterials.getCaret().deinstall(textAreaItemDescriptionRawMaterials);
 		add(textAreaItemDescriptionRawMaterials);
 		
 		buttonBuyRawMaterials = new JButton("Buy");
@@ -458,6 +462,8 @@ public class IslandPanel extends JPanel {
 		textAreaItemNameFood.setEditable(false);
 		textAreaItemNameFood.setBackground(new Color(255, 255, 255, 175));
 		textAreaItemNameFood.setBounds(395, 570, 120, 25);
+		//fixes selected text highlighting bug
+		textAreaItemNameFood.getCaret().deinstall(textAreaItemNameFood);
 		add(textAreaItemNameFood);
 		
 		labelFoodPrice = new JLabel("");
@@ -563,6 +569,8 @@ public class IslandPanel extends JPanel {
 		textAreaItemDescriptionFood.setEditable(false);
 		textAreaItemDescriptionFood.setBackground(new Color(255, 255, 255, 175));
 		textAreaItemDescriptionFood.setBounds(395, 725, 260, 25);
+		//fixes selected text highlighting bug
+		textAreaItemDescriptionFood.getCaret().deinstall(textAreaItemDescriptionFood);
 		add(textAreaItemDescriptionFood);
 		
 		textAreaItemNameLuxuryGoods = new JTextArea("  Luxury Goods");
@@ -574,6 +582,8 @@ public class IslandPanel extends JPanel {
 		textAreaItemNameLuxuryGoods.setEditable(false);
 		textAreaItemNameLuxuryGoods.setBackground(new Color(255, 255, 255, 175));
 		textAreaItemNameLuxuryGoods.setBounds(395, 770, 120, 25);
+		//fixes selected text highlighting bug
+		textAreaItemNameLuxuryGoods.getCaret().deinstall(textAreaItemNameLuxuryGoods);
 		add(textAreaItemNameLuxuryGoods);
 		
 		labelLuxuryGoodsPrice = new JLabel("");
@@ -679,6 +689,8 @@ public class IslandPanel extends JPanel {
 		textAreaItemDescriptionLuxuryGoods.setEditable(false);
 		textAreaItemDescriptionLuxuryGoods.setBackground(new Color(255, 255, 255, 175));
 		textAreaItemDescriptionLuxuryGoods.setBounds(395, 925, 260, 25);
+		//fixes selected text highlighting bug
+		textAreaItemDescriptionLuxuryGoods.getCaret().deinstall(textAreaItemDescriptionLuxuryGoods);
 		add(textAreaItemDescriptionLuxuryGoods);
 		
 		labelBackgroundImage = new JLabel("");
