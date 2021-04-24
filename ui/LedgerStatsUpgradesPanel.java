@@ -12,17 +12,24 @@ import main.Constants;
 import main.GameEnvironment;
 import main.Island;
 import main.Ledger;
+import main.Player;
 import main.Transaction;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+
+import exceptions.InsufficientGoldException;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
 
 public class LedgerStatsUpgradesPanel extends JPanel {
 	
 	private JTextArea textAreaShipInfo;
 	private JTextArea textAreaLedger;
 	private JTextArea textAreaUpgrade;
+	private JLabel labelAlreadyHaveUpgrade;
+	private JButton buttonBuyUpgrade;
 
 	/**
 	 * Create the panel.
@@ -31,6 +38,57 @@ public class LedgerStatsUpgradesPanel extends JPanel {
 			
 		setBounds(0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		setLayout(null);
+		
+		labelAlreadyHaveUpgrade = new JLabel("You already have this upgrade.");
+		labelAlreadyHaveUpgrade.setFont(new Font("Lato Black", Font.PLAIN, 16));
+		labelAlreadyHaveUpgrade.setBounds(729, 864, 250, 25);
+		add(labelAlreadyHaveUpgrade);
+		
+		buttonBuyUpgrade = new JButton("BUY");
+		buttonBuyUpgrade.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				String upgrade = "";
+				Island curIsland = GameEnvironment.getCurrentIsland();
+				int upgradeCost = Constants.UPGRADE_COST;
+				
+				switch (curIsland.getIslandName()) {
+					case (Constants.ISLAND_SALTFORGE):
+						upgrade = Constants.UPGRADE_CANNONS;
+						break;
+					case (Constants.ISLAND_TUNIA):
+						upgrade = Constants.UPGRADE_HULL;
+						break;
+					case (Constants.ISLAND_SKULLHAVEN):
+						upgrade = Constants.UPGRADE_FLAG;
+						break;
+					case (Constants.ISLAND_SANDYFIELDS):
+						upgrade = Constants.UPGRADE_CONTRACT;
+						break;
+					case (Constants.ISLAND_SEANOMADS):
+						upgrade = Constants.UPGRADE_SAILS;
+						break;
+					default:
+						throw new IllegalArgumentException("Can't buy upgrades at this island");
+			}
+				try {
+					GameEnvironment.buyIslandUpgrade(upgrade, upgradeCost);
+				} catch (InsufficientGoldException e) {
+					//can't afford to buy the upgrade
+				}
+				
+				updateUpgradeInfo();
+				PanelManager.refreshFrame();
+			}
+		});
+		buttonBuyUpgrade.setVerticalAlignment(SwingConstants.BOTTOM);
+		buttonBuyUpgrade.setOpaque(false);
+		buttonBuyUpgrade.setForeground(Color.RED);
+		buttonBuyUpgrade.setFont(new Font("Lato Black", Font.PLAIN, 48));
+		buttonBuyUpgrade.setFocusPainted(false);
+		buttonBuyUpgrade.setBackground(new Color(200, 200, 0, 0));
+		buttonBuyUpgrade.setBounds(990, 800, 200, 80);
+		add(buttonBuyUpgrade);
 		
 		//the greeting text on the left
 		textAreaShipInfo = new JTextArea("");
@@ -136,6 +194,15 @@ public class LedgerStatsUpgradesPanel extends JPanel {
 		}
 		
 		textAreaUpgrade.setText(upgradeString);
+		
+		if (Player.getShip().getUpgrades().contains(upgrade)) {
+			labelAlreadyHaveUpgrade.setVisible(true);
+			buttonBuyUpgrade.setVisible(false);
+		}
+		else {
+			labelAlreadyHaveUpgrade.setVisible(false);
+			buttonBuyUpgrade.setVisible(true);
+		}
 		
 	}
 	

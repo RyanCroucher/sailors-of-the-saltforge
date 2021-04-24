@@ -203,7 +203,7 @@ public class IslandPanel extends JPanel {
 		labelExports = new JLabel("");
 		labelExports.setForeground(Color.RED);
 		labelExports.setFont(new Font("Lato Black", Font.PLAIN, 18));
-		labelExports.setBounds(532, 490, 300, 25);
+		labelExports.setBounds(525, 490, 360, 25);
 		add(labelExports);
 		
 		labelCargo = new JLabel("");
@@ -1092,6 +1092,7 @@ public class IslandPanel extends JPanel {
 				imagePath = "/ui/images/dullTunia.png";
 				break;
 			case Constants.ISLAND_SKULLHAVEN:
+				imagePath = "/ui/images/dullSkullHaven.png";
 				break;
 			case Constants.ISLAND_SEANOMADS:
 				imagePath = "/ui/images/dullSeaNomads.png";
