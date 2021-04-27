@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 
 import main.Constants;
 import main.GameEnvironment;
@@ -16,12 +17,15 @@ import main.Player;
 import main.Transaction;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import exceptions.InsufficientGoldException;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 
 public class LedgerStatsUpgradesPanel extends JPanel {
 	
@@ -117,6 +121,7 @@ public class LedgerStatsUpgradesPanel extends JPanel {
 		textAreaUpgrade.getCaret().deinstall(textAreaUpgrade);
 		add(textAreaUpgrade);
 		
+		
 		textAreaLedger = new JTextArea("");
 		textAreaLedger.setWrapStyleWord(true);
 		textAreaLedger.setOpaque(true);
@@ -128,7 +133,26 @@ public class LedgerStatsUpgradesPanel extends JPanel {
 		textAreaLedger.setBounds(1320, 100, 500, 800);
 		//fixes selected text highlighting bug
 		textAreaLedger.getCaret().deinstall(textAreaLedger);
-		add(textAreaLedger);
+		
+		//add scrollbar to text area
+		JScrollPane scrollPaneLedger = new JScrollPane(textAreaLedger);
+		scrollPaneLedger.setSize(500, 800);
+		scrollPaneLedger.setLocation(1320, 100);
+
+		scrollPaneLedger.getViewport().addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e){
+		        PanelManager.refreshFrame();
+		    }
+			
+		});
+		
+		//scrollPaneLedger.setBounds(1820, 100, 10, 800);
+		scrollPaneLedger.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		
+		//textAreaLedger.add(scrollPaneLedger);
+		//add(textAreaLedger);
+		add(scrollPaneLedger);
+
 		
 		JButton buttonBackToMarket = new JButton("BACK TO MARKET");
 		buttonBackToMarket.addActionListener(new ActionListener() {
@@ -209,12 +233,12 @@ public class LedgerStatsUpgradesPanel extends JPanel {
 	private void updateLedger() {
 		
 		String ledgerString = Constants.OLARD_LEDGER + "\n";
-		ledgerString += "\nUp to 10 previous transactions:";
+		ledgerString += "\nAll previous transactions:";
 		
 		ArrayList<Transaction> transactions;
 		
 		try {
-			transactions = Ledger.getTransactions(10);
+			transactions = Ledger.getTransactions();
 			
 			for (Transaction transaction : transactions) {
 				ledgerString += "\n\n" + transaction.toString();
