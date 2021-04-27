@@ -195,7 +195,7 @@ public class CharacterCreatePanel extends JPanel {
 		buttonSetSail.setFont(new Font("Lato Black", Font.PLAIN, 60));
 		buttonSetSail.setFocusPainted(false);
 		buttonSetSail.setBackground(new Color(200, 200, 0, 0));
-		buttonSetSail.setBounds(1493, 916, 400, 100);
+		buttonSetSail.setBounds(1490, 915, 400, 100);
 		add(buttonSetSail);
 		
 		labelErrorMessage = new JLabel("");

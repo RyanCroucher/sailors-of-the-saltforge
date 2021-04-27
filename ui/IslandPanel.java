@@ -869,8 +869,10 @@ public class IslandPanel extends JPanel {
 			return;
 		}
 		
+		//PanelManager.setPanel("IslandPanel");
 		GameEnvironment.arriveAtIsland(destination);
-		PanelManager.setPanel("IslandPanel");
+		RoutePanel.updateDetails(route, destination, eventOccurs);
+		PanelManager.setPanel("RoutePanel");
 		
 	}
 	

@@ -82,7 +82,7 @@ public class Constants {
 																+ "\n\nThese days, pirates and similar miscreants love to hide their ships behind the basalt spires and ambush unsuspecting merchants. ";
 	
 	public final static String ROUTE_AROUND_BASALT_DESCRIPTION = "You direct your helmsman to carefully skirt Around the Basalt Spires – a treacherous region between Tunia and the Salt Forge. "
-																+ "\nThis adds time to the journey, but lowers the risk of being ambushed by any ill-doers lurking amongst and behind the huge rock pillars.";
+																+ "\n\nThis adds time to the journey, but lowers the risk of being ambushed by any ill-doers lurking amongst and behind the huge rock pillars.";
 	
 	public final static String ROUTE_SHIPWRECKER_SHOALS_DESCRIPTION = "You skilfully guide your ship through the Shipwrecker Shoals, a deadly shallow reef that has claimed the lives of countless sailors who dared to navigate through. "
 																	+ "\n\nIt was not by mistake that Old Saltbeard chose you for this job and lent you his old map, you prove your worth as you tersely bark orders at your crew, dodging shipwrecks and hidden shallows alike as you follow the dubious directions. "
