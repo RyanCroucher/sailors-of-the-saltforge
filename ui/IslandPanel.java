@@ -857,9 +857,6 @@ public class IslandPanel extends JPanel {
 		Route route = (Route) routeIslandPair[0];
 		Island destination = (Island) routeIslandPair[1];
 		
-		int modifiedDuration = GameEnvironment.getModifiedTravelTime(route.getDistance());
-		int totalCostToTravel = Player.getShip().totalCostToLeaveIsland(modifiedDuration);
-		
 		boolean eventOccurs = GameEnvironment.doesEventOccur(route);
 		
 		try {

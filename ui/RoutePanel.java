@@ -12,6 +12,7 @@ import javax.swing.SwingConstants;
 import main.Constants;
 import main.GameEnvironment;
 import main.Island;
+import main.Player;
 import main.Route;
 import java.awt.Font;
 import javax.swing.JTextArea;
@@ -43,7 +44,7 @@ public class RoutePanel extends JPanel {
 		add(labelRouteName);
 		
 		labelSomethingHappens = new JLabel("");
-		labelSomethingHappens.setFont(new Font("Lato Black", Font.PLAIN, 18));
+		labelSomethingHappens.setFont(new Font("Lato Black", Font.PLAIN, 20));
 		labelSomethingHappens.setBounds(570, 662, 400, 25);
 		add(labelSomethingHappens);
 		
@@ -81,8 +82,11 @@ public class RoutePanel extends JPanel {
 	
 	public static void updateDetails(Route route, Island destinationIsland, boolean eventOccurs) {
 		
+		int modifiedDuration = GameEnvironment.getModifiedTravelTime(route.getDistance());
+		int totalCostToTravel = Player.getShip().totalCostToLeaveIsland(modifiedDuration);
+		
 		labelRouteName.setText(route.getName());
-		textAreaRouteDescription.setText(route.getDescription());
+		textAreaRouteDescription.setText(route.getDescription() + "\n\n\n\n\n" + "You spend " + totalCostToTravel + " " + Constants.NAME_CURRENCY + " on crew hire, repairs and wages.");
 		
 		destination = destinationIsland;
 		
