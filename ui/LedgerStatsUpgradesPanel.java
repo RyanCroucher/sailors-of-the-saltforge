@@ -15,6 +15,8 @@ import main.Island;
 import main.Ledger;
 import main.Player;
 import main.Transaction;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
@@ -34,6 +36,8 @@ public class LedgerStatsUpgradesPanel extends JPanel {
 	private JTextArea textAreaUpgrade;
 	private JLabel labelAlreadyHaveUpgrade;
 	private JButton buttonBuyUpgrade;
+	
+	private JLabel labelBackgroundImage;
 
 	/**
 	 * Create the panel.
@@ -129,7 +133,7 @@ public class LedgerStatsUpgradesPanel extends JPanel {
 		textAreaLedger.setLineWrap(true);
 		textAreaLedger.setFont(new Font("Lato Black", Font.PLAIN, 16));
 		textAreaLedger.setEditable(false);
-		textAreaLedger.setBackground(new Color(255, 255, 255, 175));
+		textAreaLedger.setBackground(new Color(255, 255, 255, 87));
 		textAreaLedger.setBounds(1320, 100, 500, 800);
 		//fixes selected text highlighting bug
 		textAreaLedger.getCaret().deinstall(textAreaLedger);
@@ -138,6 +142,7 @@ public class LedgerStatsUpgradesPanel extends JPanel {
 		JScrollPane scrollPaneLedger = new JScrollPane(textAreaLedger);
 		scrollPaneLedger.setSize(500, 800);
 		scrollPaneLedger.setLocation(1320, 100);
+		scrollPaneLedger.setBackground(new Color(255, 255, 255, 88));
 
 		scrollPaneLedger.getViewport().addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e){
@@ -168,6 +173,13 @@ public class LedgerStatsUpgradesPanel extends JPanel {
 		buttonBackToMarket.setBackground(new Color(200, 200, 0, 0));
 		buttonBackToMarket.setBounds(1320, 926, 500, 80);
 		add(buttonBackToMarket);
+		
+		
+		
+		labelBackgroundImage = new JLabel("");
+		labelBackgroundImage.setBounds(0, 0, 1920, 1080);
+		labelBackgroundImage.setIcon(new ImageIcon(IslandPanel.class.getResource("/ui/images/dullTrio.png")));
+		add(labelBackgroundImage);
 		
 	}
 	
