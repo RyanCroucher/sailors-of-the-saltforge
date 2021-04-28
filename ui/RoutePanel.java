@@ -3,7 +3,11 @@ package ui;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -16,6 +20,8 @@ import main.Island;
 import main.Player;
 import main.Route;
 import java.awt.Font;
+import java.awt.Graphics;
+
 import javax.swing.JTextArea;
 import java.awt.Insets;
 
@@ -28,6 +34,10 @@ public class RoutePanel extends JPanel {
 	private static JLabel labelSomethingHappens;
 	
 	private static Island destination;
+	private JLabel labelShipImage;
+	//private BufferedImage shipImage;
+	
+	public int shipXPosition = -150;
 
 	/**
 	 * Create the panel.
@@ -78,6 +88,28 @@ public class RoutePanel extends JPanel {
 		buttonNext.setBounds(1490, 915, 400, 100);
 		add(buttonNext);
 		
+		JLabel labelBackgroundFore = new JLabel("");
+		labelBackgroundFore.setIcon(new ImageIcon(RoutePanel.class.getResource("/ui/images/basaltSpiresForeground.png")));
+		labelBackgroundFore.setBounds(0, 0, 1920, 1080);
+		add(labelBackgroundFore);
+		
+		labelShipImage = new JLabel("");
+		labelShipImage.setIcon(new ImageIcon(RoutePanel.class.getResource("/ui/images/basaltSpiresShip.png")));
+		labelShipImage.setBounds(-150, 300, 400, 300);
+		add(labelShipImage);
+		
+		JLabel labelBackgroundRear = new JLabel("");
+		labelBackgroundRear.setIcon(new ImageIcon(RoutePanel.class.getResource("/ui/images/basaltSpiresBackground.png")));
+		labelBackgroundRear.setBounds(0, 0, 1920, 1080);
+		add(labelBackgroundRear);
+		
+//		try {
+//		shipImage = ImageIO.read(new File("/ui/images/basaltSpiresShip"));
+//		} catch (IOException e) {
+//			
+//		}
+		//start moveShip timer
+		moveShip();
 	}
 	
 	
@@ -105,4 +137,23 @@ public class RoutePanel extends JPanel {
 		}
 		
 	}
+	
+//	public void paint(Graphics g) {
+//        g.drawImage(shipImage, shipXPosition, 300, null);
+//    }
+	
+	private void moveShip() {
+		
+		javax.swing.Timer timer = new javax.swing.Timer(30, new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				shipXPosition++;
+				labelShipImage.setBounds(shipXPosition, labelShipImage.getBounds().y, labelShipImage.getBounds().width, labelShipImage.getBounds().height);
+				repaint();
+			}
+		});
+		
+		timer.start();
+		
+	}
+	
 }

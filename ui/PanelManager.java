@@ -71,6 +71,7 @@ public class PanelManager {
 				break;
 			case "RoutePanel":
 				frame.setContentPane(routePanel);
+				routePanel.shipXPosition = -150;
 				break;
 			case "LedgerStatsUpgradesPanel":
 				ledgerStatsUpgradePanel.updatePanel();
