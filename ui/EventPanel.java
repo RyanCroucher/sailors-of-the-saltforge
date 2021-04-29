@@ -31,7 +31,7 @@ public class EventPanel extends JPanel {
 	
 	private static JLabel labelEventName;
 	private static JTextArea textAreaEventDescription;
-	private static JButton buttonArrive;
+	private static JButton buttonNext;
 
 	private static JLabel labelResultEffect;
 	
@@ -57,7 +57,7 @@ public class EventPanel extends JPanel {
 		labelResultEffect = new JLabel("");
 		labelResultEffect.setForeground(Color.RED);
 		labelResultEffect.setFont(new Font("Lato Black", Font.PLAIN, 20));
-		labelResultEffect.setBounds(570, 760, 700, 25);
+		labelResultEffect.setBounds(480, 780, 700, 25);
 		add(labelResultEffect);
 		
 		textAreaEventDescription = new JTextArea("");
@@ -65,28 +65,28 @@ public class EventPanel extends JPanel {
 		textAreaEventDescription.setOpaque(true);
 		textAreaEventDescription.setMargin(new Insets(15, 15, 15, 15));
 		textAreaEventDescription.setLineWrap(true);
-		textAreaEventDescription.setFont(new Font("Lato Black", Font.PLAIN, 18));
+		textAreaEventDescription.setFont(new Font("Lato Black", Font.PLAIN, 16));
 		textAreaEventDescription.setEditable(false);
 		textAreaEventDescription.setBackground(new Color(255, 255, 255, 175));
-		textAreaEventDescription.setBounds(560, 95, 800, 700);
+		textAreaEventDescription.setBounds(460, 95, 1000, 730);
 		//fixes selected text highlighting bug
 		textAreaEventDescription.getCaret().deinstall(textAreaEventDescription);
 		add(textAreaEventDescription);
 		
-		buttonArrive = new JButton("ARRIVE");
-		buttonArrive.addActionListener(new ActionListener() {
+		buttonNext = new JButton("NEXT");
+		buttonNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				PanelManager.setPanel("IslandPanel");
 			}
 		});
-		buttonArrive.setVerticalAlignment(SwingConstants.BOTTOM);
-		buttonArrive.setOpaque(false);
-		buttonArrive.setForeground(Color.RED);
-		buttonArrive.setFont(new Font("Lato Black", Font.PLAIN, 60));
-		buttonArrive.setFocusPainted(false);
-		buttonArrive.setBackground(new Color(200, 200, 0, 0));
-		buttonArrive.setBounds(1490, 915, 400, 100);
-		add(buttonArrive);
+		buttonNext.setVerticalAlignment(SwingConstants.BOTTOM);
+		buttonNext.setOpaque(false);
+		buttonNext.setForeground(Color.RED);
+		buttonNext.setFont(new Font("Lato Black", Font.PLAIN, 60));
+		buttonNext.setFocusPainted(false);
+		buttonNext.setBackground(new Color(200, 200, 0, 0));
+		buttonNext.setBounds(1490, 915, 400, 100);
+		add(buttonNext);
 		
 		buttonOptionOne = new JButton("");
 		buttonOptionOne.addActionListener(new ActionListener() {
@@ -94,7 +94,7 @@ public class EventPanel extends JPanel {
 				clickedOption(buttonOptionOne);
 			}
 		});
-		buttonOptionOne.setBounds(560, 825, 800, 50);
+		buttonOptionOne.setBounds(560, 845, 800, 50);
 		add(buttonOptionOne);
 		
 		buttonOptionTwo = new JButton("");
@@ -103,7 +103,7 @@ public class EventPanel extends JPanel {
 				clickedOption(buttonOptionTwo);
 			}
 		});
-		buttonOptionTwo.setBounds(560, 905, 800, 50);
+		buttonOptionTwo.setBounds(560, 915, 800, 50);
 		add(buttonOptionTwo);
 		
 		buttonOptionThree = new JButton("");
@@ -116,7 +116,7 @@ public class EventPanel extends JPanel {
 		add(buttonOptionThree);
 		
 		JLabel labelBackground = new JLabel("");
-		labelBackground.setIcon(null);
+		labelBackground.setIcon(new ImageIcon(EventPanel.class.getResource("/ui/images/pirateBattle.png")));
 		labelBackground.setBounds(0, 0, 1920, 1080);
 		add(labelBackground);
 
@@ -137,12 +137,12 @@ public class EventPanel extends JPanel {
 		textAreaEventDescription.setText(event.getEffect());
 		event.doEffect();
 		
-		buttonArrive.setVisible(true);
+		buttonNext.setVisible(true);
 	}
 	
 	private static void hideButtonsAndEffectLabel() {
 		
-		buttonArrive.setVisible(false);
+		buttonNext.setVisible(false);
 		
 		hideOptionButtons();
 		
@@ -170,7 +170,7 @@ public class EventPanel extends JPanel {
 		if (options.size() == 0) {
 			labelResultEffect.setText(event.getEffect());
 			event.doEffect();
-			buttonArrive.setVisible(true);
+			buttonNext.setVisible(true);
 		}
 		
 		//we need to pick an option

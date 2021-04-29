@@ -74,10 +74,12 @@ public class RoutePanel extends JPanel {
 				GameEnvironment.arriveAtIsland(destination);
 				
 				if (eventOccurs) {
+					EventPanel.updateDetails();
 					PanelManager.setPanel("EventPanel");
 				} else {
 					PanelManager.setPanel("IslandPanel");
 				}
+				
 			}
 		});
 		buttonNext.setVerticalAlignment(SwingConstants.BOTTOM);
@@ -124,8 +126,6 @@ public class RoutePanel extends JPanel {
 			labelSomethingHappens.setText("Something happens on your journey.");
 			
 			buttonNext.setText("Next");
-			
-			EventPanel.updateDetails();
 			
 		} else {
 			labelSomethingHappens.setForeground(Color.BLACK);

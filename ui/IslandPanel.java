@@ -859,6 +859,8 @@ public class IslandPanel extends JPanel {
 		
 		boolean eventOccurs = GameEnvironment.doesEventOccur(route);
 		
+		RoutePanel.updateDetails(route, destination, eventOccurs);
+		
 		try {
 			GameEnvironment.initiateTravel(destination, route);
 		} catch (InsufficientGoldException e) {
@@ -866,9 +868,7 @@ public class IslandPanel extends JPanel {
 			return;
 		}
 		
-		//PanelManager.setPanel("IslandPanel");
 		GameEnvironment.arriveAtIsland(destination);
-		RoutePanel.updateDetails(route, destination, eventOccurs);
 		PanelManager.setPanel("RoutePanel");
 		
 	}

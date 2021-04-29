@@ -181,15 +181,11 @@ public class Constants {
 	
 	public final static String EVENT_PIRATE_ATTACK_SURRENDER = "We cannot beat them boys, we must surrender!!"
 			+ "\n"
-			+ "\nReluctantly the crew agree that surrender is the only way to survive the encounter, you just hope they take it easy on you because you gave them what they wanted."
-			+ "\n"
-			+ "\nYou have Surrendered.";
+			+ "\nReluctantly the crew agree that surrender is the only way to survive the encounter, you just hope they take it easy on you because you gave them what they wanted. You have Surrendered.";
 	
-	public final static String EVENT_PIRATE_ATTACK_SURRENDER_FAIL = "The pirates board the ship, sneering at your defeated crew."
-		 	+ "\n\nAfter looting all of your merchandise, the pirates seem angry at the pitiful haul."
-		 	+ "\n\nTheir anger builds into a rage, and before you know it, you and your crew are surrounded by a hooting cacophony of pirates with drawn cutlasses."
-		 	+ "\n\nWith shrieks of glee, they force your men one by one to walk the plank."
-		 	+ "\nYour last thought before you sink into the icy depths is about your home, the Saltforge, and how it will now be doomed to ruin.\n";
+	public final static String EVENT_PIRATE_ATTACK_SURRENDER_FAIL = "The pirates board the ship, sneering at your defeated crew. After looting all of your merchandise, the pirates seem angry at the pitiful haul. "
+		 	+ "Their anger builds into a rage, and before you know it, you and your crew are surrounded by a hooting cacophony of pirates with drawn cutlasses. With shrieks of glee, they force your men one by one to walk the plank."
+		 	+ "\n\nYour last thought before you sink into the icy depths is about your home, the Saltforge, and how it will now be doomed to ruin.\n";
 	
 	public final static String EVENT_PIRATE_ATTACK_SURRENDER_SUCCESS = "The pirates board the ship, sneering at your defeated crew."
 			 + "\n\nAfter looting all of your merchandise, they seem content to leave you and your men alive, perhaps to prey upon another day.";

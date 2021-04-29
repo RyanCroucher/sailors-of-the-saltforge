@@ -46,7 +46,7 @@ public class ShipDamageEvent extends RandomEvent {
 		
 		Player.getShip().setHull(Player.getShip().getHull() - hullDamage);
 		Player.getShip().setCrew(Player.getShip().getCrew() - crewDamage);
-		
+	
 	}
 	
 	/**
