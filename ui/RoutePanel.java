@@ -3,11 +3,7 @@ package ui;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -20,7 +16,6 @@ import main.Island;
 import main.Player;
 import main.Route;
 import java.awt.Font;
-import java.awt.Graphics;
 
 import javax.swing.JTextArea;
 import java.awt.Insets;
@@ -34,8 +29,8 @@ public class RoutePanel extends JPanel {
 	private static JLabel labelSomethingHappens;
 	
 	private static Island destination;
+	private static boolean eventOccurs;
 	private JLabel labelShipImage;
-	//private BufferedImage shipImage;
 	
 	public int shipXPosition = -150;
 
@@ -75,8 +70,14 @@ public class RoutePanel extends JPanel {
 		buttonNext = new JButton("ARRIVE");
 		buttonNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 				GameEnvironment.arriveAtIsland(destination);
-				PanelManager.setPanel("IslandPanel");
+				
+				if (eventOccurs) {
+					PanelManager.setPanel("EventPanel");
+				} else {
+					PanelManager.setPanel("IslandPanel");
+				}
 			}
 		});
 		buttonNext.setVerticalAlignment(SwingConstants.BOTTOM);
@@ -102,18 +103,12 @@ public class RoutePanel extends JPanel {
 		labelBackgroundRear.setIcon(new ImageIcon(RoutePanel.class.getResource("/ui/images/basaltSpiresBackground.png")));
 		labelBackgroundRear.setBounds(0, 0, 1920, 1080);
 		add(labelBackgroundRear);
-		
-//		try {
-//		shipImage = ImageIO.read(new File("/ui/images/basaltSpiresShip"));
-//		} catch (IOException e) {
-//			
-//		}
-		//start moveShip timer
+
 		moveShip();
 	}
 	
 	
-	public static void updateDetails(Route route, Island destinationIsland, boolean eventOccurs) {
+	public static void updateDetails(Route route, Island destinationIsland, boolean event) {
 		
 		int modifiedDuration = GameEnvironment.getModifiedTravelTime(route.getDistance());
 		int totalCostToTravel = Player.getShip().totalCostToLeaveIsland(modifiedDuration);
@@ -121,6 +116,7 @@ public class RoutePanel extends JPanel {
 		labelRouteName.setText(route.getName());
 		textAreaRouteDescription.setText(route.getDescription() + "\n\n\n\n\n" + "You spend " + totalCostToTravel + " " + Constants.NAME_CURRENCY + " on crew hire, repairs and wages.");
 		
+		eventOccurs = event;
 		destination = destinationIsland;
 		
 		if (eventOccurs) {
@@ -128,6 +124,8 @@ public class RoutePanel extends JPanel {
 			labelSomethingHappens.setText("Something happens on your journey.");
 			
 			buttonNext.setText("Next");
+			
+			EventPanel.updateDetails();
 			
 		} else {
 			labelSomethingHappens.setForeground(Color.BLACK);
@@ -137,10 +135,6 @@ public class RoutePanel extends JPanel {
 		}
 		
 	}
-	
-//	public void paint(Graphics g) {
-//        g.drawImage(shipImage, shipXPosition, 300, null);
-//    }
 	
 	private void moveShip() {
 		

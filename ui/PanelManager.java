@@ -3,10 +3,8 @@ package ui;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import main.Constants;
-import main.GameEnvironment;
 
 public class PanelManager {
 
@@ -16,6 +14,7 @@ public class PanelManager {
 	public static CharacterCreatePanel characterCreationPanel;
 	public static IslandPanel islandPanel;
 	public static RoutePanel routePanel;
+	public static EventPanel eventPanel;
 	public static LedgerStatsUpgradesPanel ledgerStatsUpgradePanel;
 	
 	public static void startGUIGame() {
@@ -24,14 +23,12 @@ public class PanelManager {
 				try {
 		
 					initialize();
-					
-					//arrive at the saltforge
-					//GameEnvironment.arriveAtIsland(GameEnvironment.getIslands()[0]);
 			
 					titlePanel = new TitlePanel();
 					characterCreationPanel = new CharacterCreatePanel();
 					islandPanel = new IslandPanel();
 					routePanel = new RoutePanel();
+					eventPanel = new EventPanel();
 					ledgerStatsUpgradePanel = new LedgerStatsUpgradesPanel();
 					
 					setPanel("TitlePanel");
@@ -52,7 +49,6 @@ public class PanelManager {
 		frame.setBounds(0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		//frame.getContentPane().setLayout(null);
 		
 	}
 	
@@ -76,6 +72,9 @@ public class PanelManager {
 			case "LedgerStatsUpgradesPanel":
 				ledgerStatsUpgradePanel.updatePanel();
 				frame.setContentPane(ledgerStatsUpgradePanel);
+				break;
+			case "EventPanel":
+				frame.setContentPane(eventPanel);
 				break;
 			default:
 				System.err.println("No such panel");
