@@ -95,7 +95,7 @@ public class RoutePanel extends JPanel {
 		
 		labelShipImage = new JLabel("");
 		labelShipImage.setIcon(new ImageIcon(RoutePanel.class.getResource("/ui/images/basaltSpiresShip.png")));
-		labelShipImage.setBounds(-150, 300, 400, 300);
+		labelShipImage.setBounds(-150, 305, 400, 300);
 		add(labelShipImage);
 		
 		JLabel labelBackgroundRear = new JLabel("");
