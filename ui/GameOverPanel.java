@@ -31,7 +31,7 @@ public class GameOverPanel extends JPanel {
 	
 	private static JLabel labelGameOver;
 	private static JTextArea textAreaStatistics;
-	private static JButton buttonNext;
+	private static JButton buttonExit;
 	
 	private static RandomEvent event;
 
@@ -63,20 +63,20 @@ public class GameOverPanel extends JPanel {
 		textAreaStatistics.getCaret().deinstall(textAreaStatistics);
 		add(textAreaStatistics);
 		
-		buttonNext = new JButton("NEXT");
-		buttonNext.addActionListener(new ActionListener() {
+		buttonExit = new JButton("EXIT GAME");
+		buttonExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				PanelManager.setPanel("IslandPanel");
+				System.exit(0);
 			}
 		});
-		buttonNext.setVerticalAlignment(SwingConstants.BOTTOM);
-		buttonNext.setOpaque(false);
-		buttonNext.setForeground(Color.RED);
-		buttonNext.setFont(new Font("Lato Black", Font.PLAIN, 60));
-		buttonNext.setFocusPainted(false);
-		buttonNext.setBackground(new Color(200, 200, 0, 0));
-		buttonNext.setBounds(1490, 915, 400, 100);
-		add(buttonNext);
+		buttonExit.setVerticalAlignment(SwingConstants.BOTTOM);
+		buttonExit.setOpaque(false);
+		buttonExit.setForeground(Color.RED);
+		buttonExit.setFont(new Font("Lato Black", Font.PLAIN, 60));
+		buttonExit.setFocusPainted(false);
+		buttonExit.setBackground(new Color(200, 200, 0, 0));
+		buttonExit.setBounds(1490, 915, 400, 100);
+		add(buttonExit);
 		
 		JLabel labelBackground = new JLabel("");
 		labelBackground.setIcon(new ImageIcon(GameOverPanel.class.getResource("/ui/images/endGame.png")));

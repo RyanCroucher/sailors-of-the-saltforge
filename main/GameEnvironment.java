@@ -665,6 +665,7 @@ public class GameEnvironment {
 			totalTransactions = Ledger.getTransactions().size();
 		
 		statisticsString += "\nTotal number of buy/sell transactions: " + totalTransactions;
+		statisticsString += "\nNumber of upgrades purchased: " + Player.getShip().getUpgrades().size();
 		statisticsString += "\nProfit: " + (Player.getGold() - Constants.PLAYER_START_GOLD) + " (Current gold - starting gold)";
 		
 		statisticsString += "\n\n";

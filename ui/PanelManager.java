@@ -8,7 +8,7 @@ import main.Constants;
 
 public class PanelManager {
 
-	private static JFrame frame;
+	public static JFrame frame;
 	
 	public static TitlePanel titlePanel;
 	public static CharacterCreatePanel characterCreationPanel;
