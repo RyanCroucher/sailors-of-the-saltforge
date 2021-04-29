@@ -8,8 +8,6 @@ import main.Player;
 
 public class WeatherEvent extends RandomEvent {
 	
-	private String name;
-	private String description;
 	private int hullDamage;
 	private int crewLoss;
 	private int hoursLost;

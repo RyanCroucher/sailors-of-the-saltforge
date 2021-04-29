@@ -11,7 +11,7 @@ public class Player {
 	 * The name of the player character
 	 */
 	private static String name;
-	//private static Ledger ledger;
+	
 	/**
 	 * The player character's ship
 	 */

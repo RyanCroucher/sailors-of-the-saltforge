@@ -6,8 +6,7 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import main.Constants;
-import main.GameEnvironment;
+
 import main.Inventory;
 import main.Island;
 import main.Item;

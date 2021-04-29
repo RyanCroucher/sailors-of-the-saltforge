@@ -2,7 +2,6 @@ package events;
 
 import java.util.ArrayList;
 
-import main.Constants;
 import main.Player;
 
 public class ShipDamageEvent extends RandomEvent {

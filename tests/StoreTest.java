@@ -47,14 +47,12 @@ class StoreTest {
 		//Empty Inventory test
 		try {
 			
-			Inventory emptyInventory = new Inventory();
 			Item emptyTestItem1 = new Item("Raw Materials", 40, "", 1);
 			Item emptyTestItem2 = new Item("Food", 20, "", 1);
 			ArrayList<Item> emptyTestImports = new ArrayList<Item>();
 			emptyTestImports.add(emptyTestItem1);
 			ArrayList<Item> emptyTestExports = new ArrayList<Item>();
 			emptyTestExports.add(emptyTestItem2);
-			Store emptyStore = new Store(emptyInventory, emptyTestImports, emptyTestExports);
 			
 			fail("Inventory can't be empty, exception should have been thrown");
 			

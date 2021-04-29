@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import events.RandomEvent;
 import events.RescueEvent;
 import main.GameEnvironment;
 import main.Player;

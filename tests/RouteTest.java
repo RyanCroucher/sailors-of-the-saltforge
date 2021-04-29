@@ -66,8 +66,10 @@ class RouteTest {
 		
 		//invalid risklevel or duration
 		//risk level too low
+		Route route_a;
+		
 		try {
-			Route route_a = new Route("Route A", "this is a test route", -1, 8, pairList_one);
+			route_a = new Route("Route A", "this is a test route", -1, 8, pairList_one);
 			fail("Invalid risk level given, should throw exception");
 			
 		} catch (IllegalArgumentException e) {
@@ -76,7 +78,7 @@ class RouteTest {
 		
 		//risk level too high
 		try {
-			Route route_a = new Route("Route A", "this is a test route", 101, 8, pairList_one);
+			route_a = new Route("Route A", "this is a test route", 101, 8, pairList_one);
 			fail("Invalid risk level given, should throw exception");
 			
 		} catch (IllegalArgumentException e) {
@@ -85,7 +87,7 @@ class RouteTest {
 		
 		//duration too low
 		try {
-			Route route_a = new Route("Route A", "this is a test route", 10, -1, pairList_one);
+			route_a = new Route("Route A", "this is a test route", 10, -1, pairList_one);
 			fail("Invalid risk level given, should throw exception");
 			
 		} catch (IllegalArgumentException e) {
@@ -94,7 +96,7 @@ class RouteTest {
 		
 		//duration too high
 		try {
-			Route route_a = new Route("Route A", "this is a test route", 101, 25, pairList_one);
+			route_a = new Route("Route A", "this is a test route", 101, 25, pairList_one);
 			fail("Invalid risk level given, should throw exception");
 			
 		} catch (IllegalArgumentException e) {
@@ -142,7 +144,6 @@ class RouteTest {
 		
 		//player is at saltforge
 		//get information about each route from here
-		Route[] routes = GameEnvironment.getRoutes();
 		
 		Route tranquilExpanse = GameEnvironment.getRoutes()[0];
 		Route basaltSpires = GameEnvironment.getRoutes()[1];

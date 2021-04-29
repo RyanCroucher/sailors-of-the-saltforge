@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import events.RandomEvent;
+
 import events.WeatherEvent;
 import main.Constants;
 import main.GameEnvironment;

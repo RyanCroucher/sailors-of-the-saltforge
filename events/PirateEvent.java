@@ -15,17 +15,7 @@ import main.Ship;
  *
  */
 public class PirateEvent extends RandomEvent {
-	
-	/**
-	 * The name of the event
-	 */
-	private String name;
-	
-	/**
-	 * The initial description of the event
-	 */
-	private String description;
-	
+		
 	/**
 	 * The ship the pirates are sailing
 	 */
@@ -126,7 +116,6 @@ public class PirateEvent extends RandomEvent {
 	 */
 	public void chooseOption(int option) {
 		
-		String effectString = "";
 		
 		//Fight
 		if (option == 1) {

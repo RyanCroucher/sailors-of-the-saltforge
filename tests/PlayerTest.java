@@ -13,7 +13,6 @@ import main.Island;
 import main.Item;
 import main.Player;
 import main.Ship;
-import main.Store;
 
 class PlayerTest {
 
@@ -26,7 +25,6 @@ class PlayerTest {
 		Island saltForge = GameEnvironment.getIslands()[0];
 		Item luxuryGoods = GameEnvironment.getItems().get(0);
 		Item rawMaterial = GameEnvironment.getItems().get(2);
-		Item food = GameEnvironment.getItems().get(3);
 		saltForge.getIslandStore().randomizeInventory(10, 15);
 		
 		assertEquals(Player.getNetWorth(), 1000);
