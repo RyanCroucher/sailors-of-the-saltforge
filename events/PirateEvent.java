@@ -286,12 +286,12 @@ public class PirateEvent extends RandomEvent {
 	 */
 	private String getItemsLostString() {
 		
-		String itemsLost = "\nYou lose:\n";
+		String itemsLost = "\nYou lose:";
 		
 		Inventory playerInventory = Player.getShip().getInventory();
 		
 		for (Item item: playerInventory.getInventoryItems()) {
-			itemsLost += playerInventory.getItemQuantity(item) + " " + item.getName() + ".";
+			itemsLost += "\n" + playerInventory.getItemQuantity(item) + " " + item.getName() + ".";
 		}
 		
 		return itemsLost + "\n";
