@@ -35,6 +35,9 @@ public class EventPanel extends JPanel {
 
 	private static JLabel labelResultEffect;
 	
+	/**
+	 * Button that represents one of the players available choices.
+	 */
 	private static JButton buttonOptionOne, buttonOptionTwo, buttonOptionThree;
 	
 	private static RandomEvent event;

@@ -580,7 +580,8 @@ public class GameEnvironment {
 	}
 	
 	/**
-	 * Gets the travel duration in hours modified by the speed of your ship
+	 * Gets the travel duration in hours modified by the speed of your ship.
+	 * the duration of time is equal to the distance, reduced by the speed of the ship as a percentage.
 	 * @param distance the distance in miles to travel
 	 * @return the modified travel time in hours
 	 * @throws IllegalArgumentException
@@ -590,7 +591,6 @@ public class GameEnvironment {
 		if (distance < 0)
 			throw new IllegalArgumentException("Distance must be at least 0");
 		
-		//the duration of time is equal to the distance, reduced by the speed of the ship as a percentage
 		return (int) (distance * (100 - Player.getShip().getSpeed()) / 100);
 	}
 	
