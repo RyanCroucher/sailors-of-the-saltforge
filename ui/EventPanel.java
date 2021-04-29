@@ -76,7 +76,9 @@ public class EventPanel extends JPanel {
 		buttonNext = new JButton("NEXT");
 		buttonNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				event.doEffect();
 				PanelManager.setPanel("IslandPanel");
+				GameEnvironment.checkEndgameConditions();
 			}
 		});
 		buttonNext.setVerticalAlignment(SwingConstants.BOTTOM);
@@ -135,7 +137,7 @@ public class EventPanel extends JPanel {
 		
 		
 		textAreaEventDescription.setText(event.getEffect());
-		event.doEffect();
+		//event.doEffect();
 		
 		buttonNext.setVisible(true);
 	}
@@ -169,7 +171,7 @@ public class EventPanel extends JPanel {
 		
 		if (options.size() == 0) {
 			labelResultEffect.setText(event.getEffect());
-			event.doEffect();
+			//event.doEffect();
 			buttonNext.setVisible(true);
 		}
 		

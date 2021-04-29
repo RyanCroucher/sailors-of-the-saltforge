@@ -13,6 +13,7 @@ import exceptions.InsufficientGoldException;
 import exceptions.InsufficientItemQuantityException;
 import main.Constants.ShipModel;
 import ui.Console;
+import ui.GameOverPanel;
 import ui.PanelManager;
 
 /**
@@ -614,8 +615,72 @@ public class GameEnvironment {
 		else if (Player.getNetWorth() < minCostToLeaveIsland())
 			endGameCode = 2;
 		
-		if (!GUIMode && endGameCode != 10)
-			Console.endGame(endGameCode);
+		if (endGameCode != 10) {
+			if (GUIMode) {
+				GameOverPanel.updateDetails(endGameCode);
+				PanelManager.setPanel("GameOverPanel");
+			} else {
+				Console.endGame(endGameCode);
+			}
+		}
+	}
+	
+	public static String endgameStats(int endGameCode) {
+		
+		String statisticsString = "";
+		
+		//code 0, reached maximum number of days
+		if (endGameCode == 0) {
+			statisticsString += "Congratulations, you reached day " + getGameDuration() + " of " + getGameDuration() + ".";
+			statisticsString += "\nYou may have survived the rigors of the ocean, but you failed to acquire the gold to save the Saltforge.";
+		}
+		
+		//code 1, acquired 10,000 gold to save the Salt Forge
+		else if (endGameCode == 1) {
+			statisticsString += "You have acquired the necessary " + Constants.NAME_CURRENCY + " to save the Saltforge from ruin!";
+			statisticsString += "\nOld Saltbeard shakes your hand with salty tears in his eyes, and declares you a hero of the dwarven people.";
+		}
+		
+		//code 2, couldn't afford to travel anywhere
+		else if (endGameCode == 2) {
+			statisticsString += "You have failed to manage your finances, and cannot afford to leave port.";
+			statisticsString += "\nYour crew quickly abandon you, and you're forced to beg passage back to the Saltforge and live in shame.";
+		}
+		
+		//code 3, killed by a random event
+		else if (endGameCode == 3) {
+			statisticsString += "\nThe trials of the open sea have proven too much for you, something happened out there, and you were never seen again.";
+		}
+		
+		statisticsString += "\n\n";
+		
+		statisticsString += "Name: " + Player.getName();
+		statisticsString += "\nGame Duration: " + getGameDuration();
+		statisticsString += "\nActual Duration: " + Math.min((getHoursSinceStart() / 24), getGameDuration());
+		
+		statisticsString += "\n\n";
+		
+		int totalTransactions = 0;
+		if (Ledger.getTransactions() != null)
+			totalTransactions = Ledger.getTransactions().size();
+		
+		statisticsString += "\nTotal number of buy/sell transactions: " + totalTransactions;
+		statisticsString += "\nProfit: " + (Player.getGold() - Constants.PLAYER_START_GOLD) + " (Current gold - starting gold)";
+		
+		statisticsString += "\n\n";
+		
+		int score = calculateScore(endGameCode);
+		
+		statisticsString += "\nYour final merchant score is: " + score + "/" + 10;
+		if (score == 0)
+			statisticsString += "\nWow, that's terrible!";
+		else if (score < 5)
+			statisticsString += "\nAt least you tried!";
+		else if (score < 7)
+			statisticsString += "\nGetting somewhere!";
+		else statisticsString += "\nNailed it!";
+		
+		return statisticsString;
 	}
 	
 	/**

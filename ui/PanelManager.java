@@ -16,6 +16,7 @@ public class PanelManager {
 	public static RoutePanel routePanel;
 	public static EventPanel eventPanel;
 	public static LedgerStatsUpgradesPanel ledgerStatsUpgradePanel;
+	public static GameOverPanel gameOverPanel;
 	
 	public static void startGUIGame() {
 		EventQueue.invokeLater(new Runnable() {
@@ -30,6 +31,7 @@ public class PanelManager {
 					routePanel = new RoutePanel();
 					eventPanel = new EventPanel();
 					ledgerStatsUpgradePanel = new LedgerStatsUpgradesPanel();
+					gameOverPanel = new GameOverPanel();
 					
 					setPanel("TitlePanel");
 
@@ -75,6 +77,9 @@ public class PanelManager {
 				break;
 			case "EventPanel":
 				frame.setContentPane(eventPanel);
+				break;
+			case "GameOverPanel":
+				frame.setContentPane(gameOverPanel);
 				break;
 			default:
 				System.err.println("No such panel");

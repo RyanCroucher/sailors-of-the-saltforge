@@ -730,56 +730,58 @@ public class Console {
 		logMessage(getBanner("GAME OVER"));
 		logMessage("");
 		
-		//code 0, reached maximum number of days
-		if (endGameCode == 0) {
-			logMessage("Congratulations, you reached day " + GameEnvironment.getGameDuration() + " of " + GameEnvironment.getGameDuration() + ".");
-			logMessage("You may have survived the rigors of the ocean, but you failed to acquire the gold to save the Saltforge.");
-		}
+//		//code 0, reached maximum number of days
+//		if (endGameCode == 0) {
+//			logMessage("Congratulations, you reached day " + GameEnvironment.getGameDuration() + " of " + GameEnvironment.getGameDuration() + ".");
+//			logMessage("You may have survived the rigors of the ocean, but you failed to acquire the gold to save the Saltforge.");
+//		}
+//		
+//		//code 1, acquired 10,000 gold to save the Salt Forge
+//		else if (endGameCode == 1) {
+//			logMessage("You have acquired the necessary " + Constants.NAME_CURRENCY + " to save the Saltforge from ruin!");
+//			logMessage("Old Saltbeard shakes your hand with salty tears in his eyes, and declares you a hero of the dwarven people.");
+//		}
+//		
+//		//code 2, couldn't afford to travel anywhere
+//		else if (endGameCode == 2) {
+//			logMessage("You have failed to manage your finances, and cannot afford to leave port.");
+//			logMessage("Your crew quickly abandon you, and you're forced to beg passage back to the Saltforge and live in shame.");
+//		}
+//		
+//		//code 3, killed by a random event
+//		else if (endGameCode == 3) {
+//			logMessage("The trials of the open sea have proven too much for you, something happened out there, and you were never seen again.");
+//		}
+//		
+//		logMessage("");
+//		
+//		logMessage("Name: " + Player.getName());
+//		logMessage("Game Duration: " + GameEnvironment.getGameDuration());
+//		logMessage("Actual Duration: " + Math.min((GameEnvironment.getHoursSinceStart() / 24), GameEnvironment.getGameDuration()));
+//		
+//		logMessage("");
+//		
+//		int totalTransactions = 0;
+//		if (Ledger.getTransactions() != null)
+//			totalTransactions = Ledger.getTransactions().size();
+//		
+//		logMessage("Total number of buy/sell transactions: " + totalTransactions);
+//		logMessage("Profit: " + (Player.getGold() - Constants.PLAYER_START_GOLD) + " (Current gold - starting gold)");
+//		
+//		logMessage("");
+//		
+//		int score = GameEnvironment.calculateScore(endGameCode);
+//		
+//		logMessage("Your final merchant score is: " + score + "/" + 10);
+//		if (score == 0)
+//			logMessage("Wow, that's terrible!");
+//		else if (score < 5)
+//			logMessage("At least you tried!");
+//		else if (score < 7)
+//			logMessage("Getting somewhere!");
+//		else logMessage("Nailed it!");
 		
-		//code 1, acquired 10,000 gold to save the Salt Forge
-		else if (endGameCode == 1) {
-			logMessage("You have acquired the necessary " + Constants.NAME_CURRENCY + " to save the Saltforge from ruin!");
-			logMessage("Old Saltbeard shakes your hand with salty tears in his eyes, and declares you a hero of the dwarven people.");
-		}
-		
-		//code 2, couldn't afford to travel anywhere
-		else if (endGameCode == 2) {
-			logMessage("You have failed to manage your finances, and cannot afford to leave port.");
-			logMessage("Your crew quickly abandon you, and you're forced to beg passage back to the Saltforge and live in shame.");
-		}
-		
-		//code 3, killed by a random event
-		else if (endGameCode == 3) {
-			logMessage("The trials of the open sea have proven too much for you, something happened out there, and you were never seen again.");
-		}
-		
-		logMessage("");
-		
-		logMessage("Name: " + Player.getName());
-		logMessage("Game Duration: " + GameEnvironment.getGameDuration());
-		logMessage("Actual Duration: " + Math.min((GameEnvironment.getHoursSinceStart() / 24), GameEnvironment.getGameDuration()));
-		
-		logMessage("");
-		
-		int totalTransactions = 0;
-		if (Ledger.getTransactions() != null)
-			totalTransactions = Ledger.getTransactions().size();
-		
-		logMessage("Total number of buy/sell transactions: " + totalTransactions);
-		logMessage("Profit: " + (Player.getGold() - Constants.PLAYER_START_GOLD) + " (Current gold - starting gold)");
-		
-		logMessage("");
-		
-		int score = GameEnvironment.calculateScore(endGameCode);
-		
-		logMessage("Your final merchant score is: " + score + "/" + 10);
-		if (score == 0)
-			logMessage("Wow, that's terrible!");
-		else if (score < 5)
-			logMessage("At least you tried!");
-		else if (score < 7)
-			logMessage("Getting somewhere!");
-		else logMessage("Nailed it!");
+		logMessage(GameEnvironment.endgameStats(endGameCode));
 		
 		logMessage("");
 		getInput("<<Press enter to continue>>", true);

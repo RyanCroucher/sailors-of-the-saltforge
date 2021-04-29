@@ -78,6 +78,7 @@ public class RoutePanel extends JPanel {
 					PanelManager.setPanel("EventPanel");
 				} else {
 					PanelManager.setPanel("IslandPanel");
+					GameEnvironment.checkEndgameConditions();
 				}
 				
 			}
