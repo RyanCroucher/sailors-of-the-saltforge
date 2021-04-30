@@ -32,6 +32,8 @@ public class EventPanel extends JPanel {
 	private static JLabel labelEventName;
 	private static JTextArea textAreaEventDescription;
 	private static JButton buttonNext;
+	
+	private static JButton buttonRollDice;
 
 	private static JLabel labelResultEffect;
 	
@@ -62,6 +64,31 @@ public class EventPanel extends JPanel {
 		labelResultEffect.setFont(new Font("Lato Black", Font.PLAIN, 20));
 		labelResultEffect.setBounds(480, 780, 700, 25);
 		add(labelResultEffect);
+		
+		buttonRollDice = new JButton("ROLL DICE");
+		buttonRollDice.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//keep getting chunks of the event effect text until we hit the end (a period)
+				String effectChunk = event.getEffect();
+				
+				textAreaEventDescription.setText(effectChunk);
+				PanelManager.refreshFrame();
+				
+				//we hit the end of the dice game, hide this button and show next button
+				if (effectChunk.endsWith(".") || effectChunk.endsWith("!")) {
+					buttonRollDice.setVisible(false);
+					buttonNext.setVisible(true);
+				}
+			}
+		});
+		buttonRollDice.setVerticalAlignment(SwingConstants.BOTTOM);
+		buttonRollDice.setOpaque(false);
+		buttonRollDice.setForeground(Color.RED);
+		buttonRollDice.setFont(new Font("Lato Black", Font.PLAIN, 48));
+		buttonRollDice.setFocusPainted(false);
+		buttonRollDice.setBackground(new Color(200, 200, 0, 0));
+		buttonRollDice.setBounds(1150, 740, 300, 75);
+		add(buttonRollDice);
 		
 		textAreaEventDescription = new JTextArea("");
 		textAreaEventDescription.setWrapStyleWord(true);
@@ -142,7 +169,14 @@ public class EventPanel extends JPanel {
 		textAreaEventDescription.setText(event.getEffect());
 		//event.doEffect();
 		
-		buttonNext.setVisible(true);
+		//buttonNext.setVisible(true);
+		
+		//we chose to fight or run, show dice roll button
+		if (event.getName().equals("Pirate Attack") && button != buttonOptionThree) {
+			buttonRollDice.setVisible(true);
+		} else { //otherwise, we surrendered, event is over
+			buttonNext.setVisible(true);
+		}
 	}
 	
 	private static void hideButtonsAndEffectLabel() {
@@ -150,6 +184,8 @@ public class EventPanel extends JPanel {
 		buttonNext.setVisible(false);
 		
 		hideOptionButtons();
+		
+		buttonRollDice.setVisible(false);
 		
 		labelResultEffect.setText("");
 	}

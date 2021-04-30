@@ -36,6 +36,11 @@ public class PirateEvent extends RandomEvent {
 	 */
 	private int prize = 0;
 	
+	/**
+	 * Stores the current chunk of text we are up to if we had a round by round dice game
+	 */
+	private int roundChunk = 1;
+	
 	public PirateEvent(String name, String description, Ship pirateShip, int prizeIfWon) {
 		super(name, description);
 		
@@ -148,12 +153,12 @@ public class PirateEvent extends RandomEvent {
 		String fleeString = "We flee!\n";
 		
 		Ship playerShip = Player.getShip();
-		int hour = 1;
+		int round = 1;
 		
 		//starting distance between two ships in metres
 		int shipDistance = 150;
 		
-		while (shipDistance > 0 && hour <= 6) {
+		while (shipDistance > 0 && round <= 6) {
 			
 			int playerSpeed = playerShip.getSpeed();
 			int pirateSpeed = pirateShip.getSpeed();
@@ -163,19 +168,19 @@ public class PirateEvent extends RandomEvent {
 			
 			shipDistance += playerGain - pirateGain;
 			
-			fleeString += "\nHour " + hour + ": " + Player.getName() + "'s " + playerShip.getModelName() + " increases the gap by " + playerGain + " metres.";
-			fleeString += "\nHour " + hour + ": Pirate's " + pirateShip.getModelName() + " closes the gap by " + pirateGain + " metres.";
+			fleeString += "\nRound " + round + ": " + Player.getName() + "'s " + playerShip.getModelName() + " increases the gap by " + playerGain + " metres.";
+			fleeString += "\nRound " + round + ": Pirate's " + pirateShip.getModelName() + " closes the gap by " + pirateGain + " metres.";
 			fleeString += "\nThe two ships are now " + shipDistance + " metres apart.\n";
 			
-			hour++;
+			round++;
 		}
 		
 		fleeString += "\n";
 		
 		//time exceeded, pirate gives up
-		if (hour > 6) {
+		if (round > 6) {
 			
-			fleeString += Constants.EVENT_PIRATE_ATTACK_RUN_SUCCESS + "\n\n";
+			fleeString += Constants.EVENT_PIRATE_ATTACK_RUN_SUCCESS;
 			super.setEffectString(fleeString);
 			super.setStage(4);
 			
@@ -184,7 +189,7 @@ public class PirateEvent extends RandomEvent {
 		//they must have caught up to you
 		else {
 			
-			fleeString += Constants.EVENT_PIRATE_ATTACK_RUN_FAIL + "\n\n";
+			fleeString += Constants.EVENT_PIRATE_ATTACK_RUN_FAIL;
 			
 			super.setEffectString(fleeString);
 			
@@ -218,7 +223,7 @@ public class PirateEvent extends RandomEvent {
 			
 			combatString += "Round " + round + ": " + Player.getName() + "'s " + playerShip.getModelName() + " fires its cannons, dealing " + playerDamage + " to the pirates.\n";
 			combatString += "Round " + round + ": Pirate's " + pirateShip.getModelName() + " fires its cannons, dealing " + pirateDamage + " to your ship.\n\n";
-			round ++;
+			round++;
 
 		}
 		
@@ -233,7 +238,7 @@ public class PirateEvent extends RandomEvent {
 			combatString += "\nYou Lost:\n";
 			combatString += playerHullLost + " hull integrity.";
 			combatString += "\n" + crewDamage + " crew.";
-			combatString += "\n\nThe pirates dumped some goods as they fled. You Gain " + prize + " " + Constants.NAME_CURRENCY + ".\n";
+			combatString += "\n\nThe pirates dumped some goods as they fled. You Gain " + prize + " " + Constants.NAME_CURRENCY + ".";
 			
 			super.setEffectString(combatString);
 			super.setStage(1);
@@ -314,6 +319,33 @@ public class PirateEvent extends RandomEvent {
 		
 		return totalWorth >= 1000;
 		
+	}
+	
+	@Override
+	/**
+	 * Breaks string into chunks if there was a round by round dice game
+	 */
+	public String getEffect() {
+
+		//there was a fight or a flee, break string up into chunks
+		if (super.getEffect().contains("Round")) {
+			
+			int endIndexOfRoundSubstring = super.getEffect().indexOf("Round " + roundChunk);
+			
+			if (endIndexOfRoundSubstring == -1)
+				return super.getEffect();
+			
+			int endIndexOfChunk = super.getEffect().indexOf("\n\n", endIndexOfRoundSubstring);
+			
+			if (endIndexOfChunk == -1)
+				return super.getEffect();
+		
+			roundChunk++;
+			return super.getEffect().substring(0, endIndexOfChunk + 1);
+			
+		} else {
+			return super.getEffect();
+		}
 	}
 
 }
