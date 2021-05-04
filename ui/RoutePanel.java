@@ -26,11 +26,17 @@ public class RoutePanel extends JPanel {
 	private static JTextArea textAreaRouteDescription;
 	private static JButton buttonNext;
 	
-	private static JLabel labelSomethingHappens;
+	private static JLabel labelTravelInfo;
+	
+	private static int travelSeconds;
+	private static int millisecondsElapsed = 0;
+	private static int remainingTravelSeconds;
 	
 	private static Island destination;
 	private static boolean eventOccurs;
 	private JLabel labelShipImage;
+	
+	private static javax.swing.Timer timer;
 	
 	public int shipXPosition = -150;
 
@@ -49,10 +55,10 @@ public class RoutePanel extends JPanel {
 		labelRouteName.setBounds(660, 30, 600, 50);
 		add(labelRouteName);
 		
-		labelSomethingHappens = new JLabel("");
-		labelSomethingHappens.setFont(new Font("Lato Black", Font.PLAIN, 20));
-		labelSomethingHappens.setBounds(570, 662, 400, 25);
-		add(labelSomethingHappens);
+		labelTravelInfo = new JLabel("");
+		labelTravelInfo.setFont(new Font("Lato Black", Font.PLAIN, 20));
+		labelTravelInfo.setBounds(570, 662, 400, 25);
+		add(labelTravelInfo);
 		
 		textAreaRouteDescription = new JTextArea("");
 		textAreaRouteDescription.setWrapStyleWord(true);
@@ -107,13 +113,17 @@ public class RoutePanel extends JPanel {
 		labelBackgroundRear.setBounds(0, 0, 1920, 1080);
 		add(labelBackgroundRear);
 
-		moveShip();
 	}
 	
 	
-	public static void updateDetails(Route route, Island destinationIsland, boolean event) {
+	public void updateDetails(Route route, Island destinationIsland, boolean event) {
 		
 		int modifiedDuration = GameEnvironment.getModifiedTravelTime(route.getDistance());
+		
+		//set real world travel time to ingame travel time in hours, divided by 2
+		travelSeconds = modifiedDuration / 2;
+		remainingTravelSeconds = travelSeconds;
+		
 		int totalCostToTravel = Player.getShip().totalCostToLeaveIsland(modifiedDuration);
 		
 		labelRouteName.setText(route.getName());
@@ -122,27 +132,67 @@ public class RoutePanel extends JPanel {
 		eventOccurs = event;
 		destination = destinationIsland;
 		
-		if (eventOccurs) {
-			labelSomethingHappens.setForeground(Color.RED);
-			labelSomethingHappens.setText("Something happens on your journey.");
-			
-			buttonNext.setText("Next");
-			
-		} else {
-			labelSomethingHappens.setForeground(Color.BLACK);
-			labelSomethingHappens.setText("Your journey was uneventful.");
-			
-			buttonNext.setText("Arrive");
-		}
+		labelTravelInfo.setForeground(Color.BLACK);
+		
+//		if (eventOccurs) {
+//			labelTravelInfo.setForeground(Color.RED);
+//			labelTravelInfo.setText("Something happens on your journey.");
+//			
+//			buttonNext.setText("Next");
+//			
+//		} else {
+//			labelTravelInfo.setForeground(Color.BLACK);
+//			labelTravelInfo.setText("Your journey was uneventful.");
+//			
+//			buttonNext.setText("Arrive");
+//		}
+		
+		stopTimerAndStartNewTimer();
 		
 	}
 	
-	private void moveShip() {
+	private void stopTimerAndStartNewTimer() {
+		if (timer != null)
+			timer.stop();
+		moveShipAndUpdateTimer();
+	}
+	
+	private void moveShipAndUpdateTimer() {
 		
-		javax.swing.Timer timer = new javax.swing.Timer(30, new ActionListener() {
+		int distanceToMove = 2000;
+		int tickRate = (int) (1000 * travelSeconds / distanceToMove);
+		millisecondsElapsed = 0;
+
+		
+		timer = new javax.swing.Timer(tickRate, new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				shipXPosition++;
 				labelShipImage.setBounds(shipXPosition, labelShipImage.getBounds().y, labelShipImage.getBounds().width, labelShipImage.getBounds().height);
+				
+				millisecondsElapsed += tickRate;
+				remainingTravelSeconds = Math.max(0, travelSeconds - millisecondsElapsed / 1000);
+				
+				if (remainingTravelSeconds > 0) {
+					labelTravelInfo.setText("You'll arrive in " + remainingTravelSeconds + " seconds.");
+					
+					//hide button if we haven't arrived yet
+					buttonNext.setVisible(false);
+				}
+				else {
+					
+					if (eventOccurs) {
+						labelTravelInfo.setForeground(Color.RED);
+						labelTravelInfo.setText("Something happens on your journey!");
+						buttonNext.setText("Next");
+					} else {
+						labelTravelInfo.setText("Your journey was uneventful.");
+						buttonNext.setText("Arrive");
+					}
+					
+					//show button after we arrived
+					buttonNext.setVisible(true);
+				}
+				
 				repaint();
 			}
 		});
@@ -150,5 +200,4 @@ public class RoutePanel extends JPanel {
 		timer.start();
 		
 	}
-	
 }

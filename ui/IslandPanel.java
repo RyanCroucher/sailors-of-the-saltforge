@@ -859,7 +859,8 @@ public class IslandPanel extends JPanel {
 		
 		boolean eventOccurs = GameEnvironment.doesEventOccur(route);
 		
-		RoutePanel.updateDetails(route, destination, eventOccurs);
+		//RoutePanel.updateDetails(route, destination, eventOccurs);
+		PanelManager.routePanel.updateDetails(route, destination, eventOccurs);
 		
 		try {
 			GameEnvironment.initiateTravel(destination, route);

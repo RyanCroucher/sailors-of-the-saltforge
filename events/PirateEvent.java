@@ -189,7 +189,7 @@ public class PirateEvent extends RandomEvent {
 		//they must have caught up to you
 		else {
 			
-			fleeString += Constants.EVENT_PIRATE_ATTACK_RUN_FAIL;
+			fleeString += Constants.EVENT_PIRATE_ATTACK_RUN_FAIL ;
 			
 			super.setEffectString(fleeString);
 			
