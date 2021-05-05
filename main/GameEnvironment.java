@@ -72,7 +72,6 @@ public class GameEnvironment {
 	public static Boolean isValidName(String name) throws IllegalArgumentException {
 		Boolean valid = true;
 		
-		//remove leading and trailing whitespace
 		name = name.strip();
 		
 		if (name.length() < 3 || name.length() > 15) {
@@ -97,99 +96,71 @@ public class GameEnvironment {
 		return valid;
 	}
 	
-	
+	/**
+	 * Construct all of the item instances to be used in the game.
+	 */
+	public static void setupItems() {
+		Item luxuryGoods = new Item("Luxury Goods", Constants.ITEM_BASE_PRICE_LUXURY, "Silks, jewellery and spices", 1);
+		Item alcohol = new Item("Alcohol", Constants.ITEM_BASE_PRICE_ALCOHOL, "Barrels and bottles of strong liquor", 1);
+		Item rawMaterials = new Item("Raw Materials", Constants.ITEM_BASE_PRICE_RAW_MATERIALS, "Lumber, ores and coal [takes 2 cargo space]", 2);
+		Item food = new Item("Food", Constants.ITEM_BASE_PRICE_FOOD, "Crops, fruits and meats", 1);
+		
+		items = new ArrayList<Item>();
+		items.add(luxuryGoods);
+		items.add(alcohol);
+		items.add(rawMaterials);
+		items.add(food);
+	}
 
 	/**
-	 * Creates island objects and uses them to populate routes with island-pairs.
+	 * Creates island instances and uses them to populate routes with island-pairs.
 	 */
-	private static void setupIslandsAndRoutes() {
+	private static void setupIslands() {
 		
-		//TODO clean this up
+		Item luxuryGoods = items.get(0);
+		Item alcohol = items.get(1);
+		Item rawMaterials = items.get(2);
+		Item food = items.get(3);
 		
+		Island saltForge = new Island(Constants.ISLAND_SALTFORGE, Constants.ISLAND_SALTFORGE_DESCRIPTION, 
+				constructStore(new Item[] {luxuryGoods, alcohol, rawMaterials, food}, 
+						new Item[] {alcohol}, 
+						new Item[] {rawMaterials}));
 		
-		//initialize saltForge inventory and store
-		Inventory saltForgeInventory = new Inventory();
-		saltForgeInventory.addItem(items.get(0), 1);
-		saltForgeInventory.addItem(items.get(1), 1);
-		saltForgeInventory.addItem(items.get(2), 1);
-		saltForgeInventory.addItem(items.get(3), 1);
+		Island tunia = new Island(Constants.ISLAND_TUNIA, Constants.ISLAND_TUNIA_DESCRIPTION, 
+				constructStore(new Item[] {luxuryGoods, alcohol, rawMaterials, food}, 
+						new Item[] {luxuryGoods}, 
+						new Item[] {alcohol}));
 		
-		ArrayList<Item> imports = new ArrayList<Item>();
-		ArrayList<Item> exports = new ArrayList<Item>();
-		imports.add(items.get(1));
-		exports.add(items.get(2));
+		Island sandyFields = new Island(Constants.ISLAND_SANDYFIELDS, Constants.ISLAND_SANDYFIELDS_DESCRIPTION, 
+				constructStore(new Item[] {luxuryGoods, alcohol, rawMaterials, food}, 
+						new Item[] {rawMaterials}, 
+						new Item[] {food}));
 		
-		Store saltForgeStore = new Store(saltForgeInventory, imports, exports);
-		saltForgeStore.randomizeInventory(0, 100);
+		Island skullHaven = new Island(Constants.ISLAND_SKULLHAVEN, Constants.ISLAND_SKULLHAVEN_DESCRIPTION, 
+				constructStore(new Item[] {luxuryGoods, alcohol, rawMaterials, food}, 
+						new Item[] {alcohol, food}, 
+						new Item[] {}));
 		
-		//initialize tunia inventory and store
-		Inventory tuniaInventory = new Inventory();
-		tuniaInventory.addItem(items.get(0), 1);
-		tuniaInventory.addItem(items.get(1), 1);
-		tuniaInventory.addItem(items.get(2), 1);
-		tuniaInventory.addItem(items.get(3), 1);
-		
-		imports = new ArrayList<Item>();
-		exports = new ArrayList<Item>();
-		imports.add(items.get(0));
-		exports.add(items.get(1));
-		
-		Store tuniaStore = new Store(tuniaInventory, imports, exports);
-		tuniaStore.randomizeInventory(0, 100);
-		
-		//initialize sandyFields inventory and store
-		Inventory sandyFieldsInventory = new Inventory();
-		sandyFieldsInventory.addItem(items.get(0), 1);
-		sandyFieldsInventory.addItem(items.get(1), 1);
-		sandyFieldsInventory.addItem(items.get(2), 1);
-		sandyFieldsInventory.addItem(items.get(3), 1);
-		
-		imports = new ArrayList<Item>();
-		exports = new ArrayList<Item>();
-		imports.add(items.get(2));
-		exports.add(items.get(3));
-		
-		Store sandyFieldsStore = new Store(sandyFieldsInventory, imports, exports);
-		sandyFieldsStore.randomizeInventory(0, 100);
-		
-		//initialize skullHaven inventory and store
-		Inventory skullHavenInventory = new Inventory();
-		skullHavenInventory.addItem(items.get(0), 1);
-		skullHavenInventory.addItem(items.get(1), 1);
-		skullHavenInventory.addItem(items.get(2), 1);
-		skullHavenInventory.addItem(items.get(3), 1);
-		
-		imports = new ArrayList<Item>();
-		exports = new ArrayList<Item>();
-		imports.add(items.get(3));
-		imports.add(items.get(1));
-		
-		Store skullHavenStore = new Store(skullHavenInventory, imports, exports);
-		skullHavenStore.randomizeInventory(0, 100);
-		
-		//initialize skullHaven inventory and store
-		Inventory seaNomadsInventory = new Inventory();
-		seaNomadsInventory.addItem(items.get(0), 1);
-		seaNomadsInventory.addItem(items.get(1), 1);
-		seaNomadsInventory.addItem(items.get(2), 1);
-		seaNomadsInventory.addItem(items.get(3), 1);
-		
-		imports = new ArrayList<Item>();
-		exports = new ArrayList<Item>();
-		imports.add(items.get(2));
-		imports.add(items.get(3));
-		exports.add(items.get(0));
-		
-		Store seaNomadsStore = new Store(seaNomadsInventory, imports, exports);
-		seaNomadsStore.randomizeInventory(0, 100);
-		
-		Island saltForge = new Island(Constants.ISLAND_SALTFORGE, Constants.ISLAND_SALTFORGE_DESCRIPTION, saltForgeStore);
-		Island tunia = new Island(Constants.ISLAND_TUNIA, Constants.ISLAND_TUNIA_DESCRIPTION, tuniaStore);
-		Island sandyFields = new Island(Constants.ISLAND_SANDYFIELDS, Constants.ISLAND_SANDYFIELDS_DESCRIPTION, sandyFieldsStore);
-		Island skullHaven = new Island(Constants.ISLAND_SKULLHAVEN, Constants.ISLAND_SKULLHAVEN_DESCRIPTION, skullHavenStore);
-		Island seaNomads = new Island(Constants.ISLAND_SEANOMADS, Constants.ISLAND_SEANOMADS_DESCRIPTION, seaNomadsStore);
+		Island seaNomads = new Island(Constants.ISLAND_SEANOMADS, Constants.ISLAND_SEANOMADS_DESCRIPTION, 
+				constructStore(new Item[] {luxuryGoods, alcohol, rawMaterials, food}, 
+						new Item[] {rawMaterials, food}, 
+						new Item[] {luxuryGoods}));
 		
 		islands = new Island[] {saltForge, tunia, sandyFields, skullHaven, seaNomads};
+
+	}
+	
+	/**
+	 * Constructs all Route instances to allow travel between islands
+	 */
+	private static void setupRoutes() {
+
+		Island saltForge = islands[0];
+		Island tunia = islands[1];
+		Island sandyFields = islands[2];
+		Island skullHaven = islands[3];
+		Island seaNomads = islands[4];
 		
 		Island[] tranquilExpansePair = {saltForge, sandyFields};
 		Island[] basaltSpiresPair = {saltForge, tunia};
@@ -236,25 +207,39 @@ public class GameEnvironment {
 		Route jackalSea = new Route("The Sea of Jackals", Constants.ROUTE_JACKAL_SEA_DESCRIPTION, 60, 28, jackalSeaPairList);
 		
 		routes = new Route[] {tranquilExpanse, basaltSpires, aroundBasaltSpires, shipwreckerShoals, oysterBay, jackalSea};
-	
-		
-		curIsland = saltForge;
 	}
 	
 	/**
-	 * Construct all of the item instances to be used in the game.
+	 * Constructs a store, to be assigned to an island when the island is initialized
+	 * @param items the items that the store will buy and sell
+	 * @param importItems the items that the store will pay extra for
+	 * @param exportItems the items that the store will sell at a lower price
+	 * @return the new store object
 	 */
-	public static void setupItems() {
-		Item luxuryGoods = new Item("Luxury Goods", Constants.ITEM_BASE_PRICE_LUXURY, "Silks, jewellery and spices", 1);
-		Item alcohol = new Item("Alcohol", Constants.ITEM_BASE_PRICE_ALCOHOL, "Barrels and bottles of strong liquor", 1);
-		Item rawMaterials = new Item("Raw Materials", Constants.ITEM_BASE_PRICE_RAW_MATERIALS, "Lumber, ores and coal [takes 2 cargo space]", 2);
-		Item food = new Item("Food", Constants.ITEM_BASE_PRICE_FOOD, "Crops, fruits and meats", 1);
+	private static Store constructStore(Item[] items, Item[] importItems, Item[] exportItems) {
 		
-		items = new ArrayList<Item>();
-		items.add(luxuryGoods);
-		items.add(alcohol);
-		items.add(rawMaterials);
-		items.add(food);
+		Inventory inventory = new Inventory();
+		
+		for (int i = 0; i < items.length; i++) {
+			inventory.addItem(items[i], 1);
+		}
+		
+		ArrayList<Item> imports = new ArrayList<Item>();
+		
+		for (int i = 0; i < importItems.length; i++) {
+			imports.add(importItems[i]);
+		}
+		
+		ArrayList<Item> exports = new ArrayList<Item>();
+		
+		for (int i = 0; i < exportItems.length; i++) {
+			exports.add(exportItems[i]);
+		}
+		
+		Store store = new Store(inventory, imports, exports);
+		store.randomizeInventory(0, 100);
+		
+		return store;
 	}
 	
 	/**
@@ -263,7 +248,11 @@ public class GameEnvironment {
 	public static void setupGame() {
 		
 		setupItems();
-		setupIslandsAndRoutes();
+		setupIslands();
+		setupRoutes();
+		
+		//player starts at the Saltforge
+		curIsland = islands[0];
 		
 		//start with some gold
 		Player.setGold(Constants.PLAYER_START_GOLD);
@@ -335,6 +324,7 @@ public class GameEnvironment {
 	 * @return a hashmap mapping a choice number to a Route, Island pair
 	 */
 	public static HashMap<Integer, Object[]> getTravelOptions(int curOptionNumber, Island island) {
+		
 		//maps console option to object array of {Route, destination Island}
 		HashMap<Integer, Object[]> travelOptions = new HashMap<Integer, Object[]>();
 		
@@ -482,19 +472,15 @@ public class GameEnvironment {
 		if (totalCostToTravel > Player.getGold())
 			throw new InsufficientGoldException("Not enough money to leave port!");
 		
-		//deduct gold from the player
 		Player.setGold(Player.getGold() - totalCostToTravel);
 		
-		//restore hull and crew
 		Player.getShip().setHull(Player.getShip().getMaxHull());
 		Player.getShip().setCrew(Player.getShip().getMaxCrew());
 		
-		//pass time given route duration and speed of your ship
 		passTime(modifiedDuration);
 		
-		//Set the random price modifier for imports and exports
+		//Set the random item quantities and random price modifier for imports and exports
 		destinationIsland.getIslandStore().setFactor(1 + Math.random());
-		//set random item quantities
 		destinationIsland.getIslandStore().randomizeInventory(0, 100);
 		
 	}
@@ -512,7 +498,6 @@ public class GameEnvironment {
 		int eventType = (int) (Math.random() * numEvents);
 		RandomEvent event = null;
 		
-		//40% it's a pirate event, or 20% if player has jolly roger upgrade
 		float chanceOfPirates = 0.4f;
 		if (Player.getShip().getUpgrades().contains(Constants.UPGRADE_FLAG))
 			chanceOfPirates = 0.2f;
@@ -563,12 +548,13 @@ public class GameEnvironment {
 	 * @throws IllegalArgumentException
 	 */
 	public static void passTime(int duration) throws IllegalArgumentException {
-		//validate duration
+
 		if (duration < 0)
 			throw new IllegalArgumentException("Time passed must be at least 0");
 		
 		hoursSinceStart += duration;
 		checkEndgameConditions();
+		
 	}
 	
 	/**
@@ -625,6 +611,11 @@ public class GameEnvironment {
 		}
 	}
 	
+	/**
+	 * Generates a string for the end-game screen representing some statistics about the achievements of the player.
+	 * @param endGameCode the reason the game ended
+	 * @return the generated statistics string
+	 */
 	public static String endgameStats(int endGameCode) {
 		
 		String statisticsString = "";
@@ -876,19 +867,11 @@ public class GameEnvironment {
 		
 		setupGame();
 		
-		if (!GUIMode) {
-			
-			Console.startConsoleGame();
-		}
-		
-		else {
-			
+		if (GUIMode)
 			PanelManager.startGUIGame();
-			//curIsland = islands[0];
-			//startGUI();
-		}
+		else
+			Console.startConsoleGame();
 		
-
 	}
 
 }
