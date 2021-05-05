@@ -46,8 +46,8 @@ public class IslandPanel extends JPanel {
 	private JButton buttonTravelRouteFour;
 	private JButton buttonTravelRouteFive;
 	
-	ArrayList<JButton> buttons;
-	HashMap<Integer, Object[]> travelOptions;
+	private ArrayList<JButton> buttons;
+	private HashMap<Integer, Object[]> travelOptions;
 	
 	
 	private JLabel labelWealth;
@@ -864,8 +864,10 @@ public class IslandPanel extends JPanel {
 		
 		try {
 			GameEnvironment.initiateTravel(destination, route);
-		} catch (InsufficientGoldException e) {
-			System.err.println(e.getMessage());
+		} catch (InsufficientGoldException e) {	
+			textAreaTransactionResult.setForeground(Color.RED);
+			textAreaTransactionResult.setText(e.getMessage());
+			PanelManager.refreshFrame();
 			return;
 		}
 		
