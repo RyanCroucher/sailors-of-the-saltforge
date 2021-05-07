@@ -433,6 +433,10 @@ public class Ship {
 		return totalCostToLeaveIsland;
 	}
 	
+	/**
+	 * Builds a string representing all of the items (and quantities) in an inventory
+	 * @return the inventory string
+	 */
 	public String getInventoryString() {
 		
 		String shipInventoryString = "";

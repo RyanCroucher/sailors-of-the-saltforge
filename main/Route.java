@@ -57,7 +57,7 @@ public class Route {
 	}
 	
 	/**
-	 * Check vaild Route parameters
+	 * Check valid Route parameters
 	 * @param riskLevel Return false if risklevel is less than 0 or greater than 100
 	 * @param distance Return false if distance is less tha 0
 	 * @param locationPairs Return false if there are no routes available

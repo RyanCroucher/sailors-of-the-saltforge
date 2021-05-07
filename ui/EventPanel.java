@@ -3,12 +3,8 @@ package ui;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -18,11 +14,7 @@ import javax.swing.SwingConstants;
 import events.RandomEvent;
 import main.Constants;
 import main.GameEnvironment;
-import main.Island;
-import main.Player;
-import main.Route;
 import java.awt.Font;
-import java.awt.Graphics;
 
 import javax.swing.JTextArea;
 import java.awt.Insets;
@@ -30,16 +22,12 @@ import java.awt.Insets;
 public class EventPanel extends JPanel {
 	
 	private static JLabel labelEventName;
+	private static JLabel labelResultEffect;
 	private static JTextArea textAreaEventDescription;
-	private static JButton buttonNext;
 	
+	private static JButton buttonNext;
 	private static JButton buttonRollDice;
 
-	private static JLabel labelResultEffect;
-	
-	/**
-	 * Button that represents one of the players available choices.
-	 */
 	private static JButton buttonOptionOne, buttonOptionTwo, buttonOptionThree;
 	
 	private static RandomEvent event;
@@ -51,6 +39,19 @@ public class EventPanel extends JPanel {
 		
 		setBounds(0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		setLayout(null);
+		
+		constructTexts();
+		
+		constructButtons();
+		
+		setBackgroundImage();
+
+	}
+	
+	/**
+	 * Creates all labels and text areas used in the panel
+	 */
+	private void constructTexts() {
 		
 		labelEventName = new JLabel("");
 		labelEventName.setForeground(Color.RED);
@@ -65,6 +66,27 @@ public class EventPanel extends JPanel {
 		labelResultEffect.setBounds(480, 780, 700, 25);
 		add(labelResultEffect);
 		
+		textAreaEventDescription = new JTextArea("");
+		textAreaEventDescription.setWrapStyleWord(true);
+		textAreaEventDescription.setOpaque(true);
+		textAreaEventDescription.setMargin(new Insets(15, 15, 15, 15));
+		textAreaEventDescription.setLineWrap(true);
+		textAreaEventDescription.setFont(new Font("Lato Black", Font.PLAIN, 16));
+		textAreaEventDescription.setEditable(false);
+		textAreaEventDescription.setBackground(new Color(255, 255, 255, 175));
+		textAreaEventDescription.setBounds(460, 95, 1000, 730);
+		//fixes selected text highlighting bug
+		textAreaEventDescription.getCaret().deinstall(textAreaEventDescription);
+		add(textAreaEventDescription);
+		
+	}
+	
+	/**
+	 * Creates all buttons used in the panel
+	 */
+	private void constructButtons() {
+		
+		//used to play either of the two pirate dice games
 		buttonRollDice = new JButton("ROLL DICE");
 		buttonRollDice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -90,19 +112,7 @@ public class EventPanel extends JPanel {
 		buttonRollDice.setBounds(1150, 740, 300, 75);
 		add(buttonRollDice);
 		
-		textAreaEventDescription = new JTextArea("");
-		textAreaEventDescription.setWrapStyleWord(true);
-		textAreaEventDescription.setOpaque(true);
-		textAreaEventDescription.setMargin(new Insets(15, 15, 15, 15));
-		textAreaEventDescription.setLineWrap(true);
-		textAreaEventDescription.setFont(new Font("Lato Black", Font.PLAIN, 16));
-		textAreaEventDescription.setEditable(false);
-		textAreaEventDescription.setBackground(new Color(255, 255, 255, 175));
-		textAreaEventDescription.setBounds(460, 95, 1000, 730);
-		//fixes selected text highlighting bug
-		textAreaEventDescription.getCaret().deinstall(textAreaEventDescription);
-		add(textAreaEventDescription);
-		
+		//used to proceed to the next island
 		buttonNext = new JButton("NEXT");
 		buttonNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -120,6 +130,7 @@ public class EventPanel extends JPanel {
 		buttonNext.setBounds(1490, 915, 400, 100);
 		add(buttonNext);
 		
+		//the three options buttons are used to make event choices
 		buttonOptionOne = new JButton("");
 		buttonOptionOne.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -147,13 +158,24 @@ public class EventPanel extends JPanel {
 		buttonOptionThree.setBounds(560, 985, 800, 50);
 		add(buttonOptionThree);
 		
+	}
+	
+	/**
+	 * Sets the panel's background picture
+	 */
+	private void setBackgroundImage() {
+		
 		JLabel labelBackground = new JLabel("");
 		labelBackground.setIcon(new ImageIcon(EventPanel.class.getResource("/ui/images/pirateBattle.png")));
 		labelBackground.setBounds(0, 0, 1920, 1080);
 		add(labelBackground);
-
+		
 	}
 	
+	/**
+	 * Handles executing the effect of a choice during an event
+	 * @param button the option button that was clicked on
+	 */
 	private static void clickedOption(JButton button) {
 		
 		hideOptionButtons();
@@ -167,18 +189,19 @@ public class EventPanel extends JPanel {
 		
 		
 		textAreaEventDescription.setText(event.getEffect());
-		//event.doEffect();
-		
-		//buttonNext.setVisible(true);
 		
 		//we chose to fight or run, show dice roll button
 		if (event.getName().equals("Pirate Attack") && button != buttonOptionThree) {
 			buttonRollDice.setVisible(true);
-		} else { //otherwise, we surrendered, event is over
+		} else { 
+			//otherwise, we surrendered, event is over
 			buttonNext.setVisible(true);
 		}
 	}
 	
+	/**
+	 * Hides all conditional elements, so that we can selectively enable them
+	 */
 	private static void hideButtonsAndEffectLabel() {
 		
 		buttonNext.setVisible(false);
@@ -190,12 +213,18 @@ public class EventPanel extends JPanel {
 		labelResultEffect.setText("");
 	}
 	
+	/**
+	 * Hides all of the event choice buttons, so that we can selectively enable them
+	 */
 	private static void hideOptionButtons() {
 		buttonOptionOne.setVisible(false);
 		buttonOptionTwo.setVisible(false);
 		buttonOptionThree.setVisible(false);
 	}
 	
+	/**
+	 * Updates the relevant fields on the panel with information pertaining to the particular event generated
+	 */
 	public static void updateDetails() {
 		
 		//generate a random event

@@ -3,26 +3,17 @@ package ui;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import events.RandomEvent;
 import main.Constants;
 import main.GameEnvironment;
-import main.Island;
-import main.Player;
-import main.Route;
+
 import java.awt.Font;
-import java.awt.Graphics;
 
 import javax.swing.JTextArea;
 import java.awt.Insets;
@@ -32,8 +23,6 @@ public class GameOverPanel extends JPanel {
 	private static JLabel labelGameOver;
 	private static JTextArea textAreaStatistics;
 	private static JButton buttonExit;
-	
-	private static RandomEvent event;
 
 	/**
 	 * Create the panel.
@@ -42,6 +31,19 @@ public class GameOverPanel extends JPanel {
 		
 		setBounds(0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		setLayout(null);
+		
+		constructTexts();
+		
+		constructExitButton();
+		
+		setBackgroundImage();
+
+	}
+	
+	/**
+	 * Build all labels and text areas
+	 */
+	private void constructTexts() {
 		
 		labelGameOver = new JLabel("GAME OVER");
 		labelGameOver.setForeground(Color.RED);
@@ -63,6 +65,13 @@ public class GameOverPanel extends JPanel {
 		textAreaStatistics.getCaret().deinstall(textAreaStatistics);
 		add(textAreaStatistics);
 		
+	}
+	
+	/**
+	 * Creates the button to exit the game
+	 */
+	private void constructExitButton() {
+		
 		buttonExit = new JButton("EXIT GAME");
 		buttonExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -78,18 +87,25 @@ public class GameOverPanel extends JPanel {
 		buttonExit.setBounds(1490, 915, 400, 100);
 		add(buttonExit);
 		
+	}
+	
+	/**
+	 * Sets the panel's background picture
+	 */
+	private void setBackgroundImage() {
+		
 		JLabel labelBackground = new JLabel("");
 		labelBackground.setIcon(new ImageIcon(GameOverPanel.class.getResource("/ui/images/endGame.png")));
 		labelBackground.setBounds(0, 0, 1920, 1080);
 		add(labelBackground);
-
+		
 	}
 	
-
-	
+	/**
+	 * Sets the end-game description to match the reason the game ended
+	 * @param endGameCode the type of game over that occurred
+	 */
 	public static void updateDetails(int endGameCode) {
-
 		textAreaStatistics.setText(GameEnvironment.endgameStats(endGameCode));
-		
 	}
 }

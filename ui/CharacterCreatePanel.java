@@ -22,8 +22,6 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.JRadioButton;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JMenu;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
@@ -33,6 +31,8 @@ public class CharacterCreatePanel extends JPanel {
 	
 	private JTextField textFieldChooseName;
 	private JLabel labelErrorMessage;
+	
+	private JSlider sliderGameDuration;
 
 	/**
 	 * Create the panel.
@@ -41,6 +41,36 @@ public class CharacterCreatePanel extends JPanel {
 		
 		setBounds(0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		setLayout(null);
+		
+		constructStaticTexts();
+		
+		//text field to type a name
+		textFieldChooseName = new JTextField();
+		textFieldChooseName.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldChooseName.setFont(new Font("Lato Black", Font.PLAIN, 20));
+		textFieldChooseName.setBounds(1340, 240, 250, 40);
+		add(textFieldChooseName);
+		textFieldChooseName.setColumns(10);
+		
+		constructDurationPromptAndSlider();
+		
+		constructButtonAndRadioButtons();
+		
+		//label to display error messages
+		labelErrorMessage = new JLabel("");
+		labelErrorMessage.setForeground(Color.RED);
+		labelErrorMessage.setBackground(Color.WHITE);
+		labelErrorMessage.setFont(new Font("Lato Black", Font.PLAIN, 16));
+		labelErrorMessage.setBounds(1493, 866, 400, 35);
+		add(labelErrorMessage);
+		
+		setBackgroundImage();
+	}
+	
+	/**
+	 * Builds all of the unchanging labels and text fields
+	 */
+	private void constructStaticTexts() {
 		
 		//the greeting text on the left
 		JTextArea textAreaPrimer = new JTextArea(Constants.PRIMER);
@@ -54,7 +84,6 @@ public class CharacterCreatePanel extends JPanel {
 		//fixes selected text highlighting bug
 		textAreaPrimer.getCaret().deinstall(textAreaPrimer);
 		add(textAreaPrimer);
-		
 		textAreaPrimer.setOpaque(true);
 		
 		//The title at the top middle
@@ -70,14 +99,21 @@ public class CharacterCreatePanel extends JPanel {
 		labelChooseName.setBounds(1340, 200, 500, 30);
 		add(labelChooseName);
 		
-		//text field to type a name
-		textFieldChooseName = new JTextField();
-		textFieldChooseName.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldChooseName.setFont(new Font("Lato Black", Font.PLAIN, 20));
-		textFieldChooseName.setBounds(1340, 240, 250, 40);
-		add(textFieldChooseName);
-		textFieldChooseName.setColumns(10);
+		JTextArea textAreaGrantShip = new JTextArea();
+		textAreaGrantShip.setFont(new Font("Lato Black", Font.PLAIN, 20));
+		textAreaGrantShip.setLineWrap(true);
+		textAreaGrantShip.setWrapStyleWord(true);
+		textAreaGrantShip.setBounds(1340, 430, 500, 50);
+		add(textAreaGrantShip);
+		textAreaGrantShip.setText("Old Saltbeard will grant you " + Constants.PLAYER_START_GOLD + " " + Constants.NAME_CURRENCY + " and one ship of your choosing:");
+		textAreaGrantShip.setOpaque(false);
 		
+	}
+	
+	/**
+	 * Builds the slider bar and label to allow setting game duration
+	 */
+	private void constructDurationPromptAndSlider() {
 		
 		//The prompt to choose a duration
 		JLabel labelChooseDuration = new JLabel("I will need 20 days to save the Saltforge.");
@@ -85,8 +121,7 @@ public class CharacterCreatePanel extends JPanel {
 		labelChooseDuration.setBounds(1340, 320, 500, 25);
 		add(labelChooseDuration);
 		
-		//the slider to choose number of days
-		JSlider sliderGameDuration = new JSlider();
+		sliderGameDuration = new JSlider();
 		sliderGameDuration.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
 				labelChooseDuration.setText("I will need " + sliderGameDuration.getValue() + " days to save the Saltforge.");
@@ -102,8 +137,14 @@ public class CharacterCreatePanel extends JPanel {
 		sliderGameDuration.setMaximum(50);
 		sliderGameDuration.setBounds(1340, 350, 480, 50);
 		add(sliderGameDuration);
-		
 		sliderGameDuration.setOpaque(false);
+		
+	}
+	
+	/**
+	 * Builds radio buttons to allow selecting a ship, and also the button to start the game
+	 */
+	private void constructButtonAndRadioButtons() {
 		
 		//groups radio buttons together (so you select one at a time)
 		ButtonGroup chooseShipButtonGroup = new ButtonGroup();
@@ -144,17 +185,6 @@ public class CharacterCreatePanel extends JPanel {
 		
 		radioButtonChooseBarge.setText("<html>" + Constants.BARGE_INFO_STRING + "</html>");
 		radioButtonChooseBarge.setOpaque(false);
-		
-		JTextArea textAreaGrantShip = new JTextArea();
-		textAreaGrantShip.setFont(new Font("Lato Black", Font.PLAIN, 20));
-		textAreaGrantShip.setLineWrap(true);
-		textAreaGrantShip.setWrapStyleWord(true);
-		textAreaGrantShip.setBounds(1340, 430, 500, 50);
-		add(textAreaGrantShip);
-		
-		textAreaGrantShip.setText("Old Saltbeard will grant you " + Constants.PLAYER_START_GOLD + " " + Constants.NAME_CURRENCY + " and one ship of your choosing:");
-		
-		textAreaGrantShip.setOpaque(false);
 		
 		JButton buttonSetSail = new JButton("SET SAIL");
 		buttonSetSail.addActionListener(new ActionListener() {
@@ -198,22 +228,26 @@ public class CharacterCreatePanel extends JPanel {
 		buttonSetSail.setBounds(1490, 915, 400, 100);
 		add(buttonSetSail);
 		
-		labelErrorMessage = new JLabel("");
-		labelErrorMessage.setForeground(Color.RED);
-		labelErrorMessage.setBackground(Color.WHITE);
-		labelErrorMessage.setFont(new Font("Lato Black", Font.PLAIN, 16));
-		labelErrorMessage.setBounds(1493, 866, 400, 35);
-		add(labelErrorMessage);
+	}
+	
+	/**
+	 * Sets an image to be the background of the panel
+	 */
+	private void setBackgroundImage() {
 		
 		JLabel labelBackgroundImage = new JLabel("");
-		labelBackgroundImage.setVerticalAlignment(SwingConstants.TOP);
-		labelBackgroundImage.setHorizontalAlignment(SwingConstants.LEFT);
 		labelBackgroundImage.setIcon(new ImageIcon(CharacterCreatePanel.class.getResource("/ui/images/characterCreate.png")));
 		labelBackgroundImage.setBounds(0, 0, 1920, 1080);
 		add(labelBackgroundImage);
-
+		
 	}
 	
+	/**
+	 * Checks that the selected options are all valid choices before starting the game
+	 * @param name the typed character's name
+	 * @param gameDuration the selected duration of the game
+	 * @param ship the selected ship
+	 */
 	private void validateChoicesAndStartGame(String name, int gameDuration, ShipModel ship) {
 		
 		try {
@@ -223,7 +257,6 @@ public class CharacterCreatePanel extends JPanel {
 				Player.setName(name);
 				GameEnvironment.setGameDuration(gameDuration);
 				Player.setShip(new Ship(ship));
-				
 				
 				PanelManager.setPanel("IslandPanel");
 				

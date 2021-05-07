@@ -29,17 +29,23 @@ import java.awt.Font;
 import java.awt.Insets;
 
 import javax.swing.JTextArea;
-import java.awt.Component;
 import javax.swing.JTextField;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
 
 public class IslandPanel extends JPanel {
 	
+	//basic island information labels
 	private JLabel labelBackgroundImage;
 	private JLabel labelIslandName;
 	private JTextArea textAreaIslandDescription;
 	
+	private JLabel labelWealth;
+	private JLabel labelDay;
+	
+	private JLabel labelImports;
+	private JLabel labelExports;
+	private JLabel labelCargo;
+	
+	//buttons to travel to other islands
 	private JButton buttonTravelRouteOne;
 	private JButton buttonTravelRouteTwo;
 	private JButton buttonTravelRouteThree;
@@ -49,14 +55,7 @@ public class IslandPanel extends JPanel {
 	private ArrayList<JButton> buttons;
 	private HashMap<Integer, Object[]> travelOptions;
 	
-	
-	private JLabel labelWealth;
-	private JLabel labelDay;
-	
-	private JLabel labelImports;
-	private JLabel labelExports;
-	private JLabel labelCargo;
-	
+	//Alcohol item GUI elements
 	private JLabel labelItemStockQuantityAlcohol;
 	private JTextArea textAreaItemNameAlcohol;
 	private JTextField textFieldAlcoholQuantity;
@@ -64,6 +63,7 @@ public class IslandPanel extends JPanel {
 	private JButton buttonSellAlcohol;
 	private JLabel labelAlcoholPrice;
 	
+	//Raw Materials item GUI elements
 	private JLabel labelItemStockQuantityRawMaterials;
 	private JTextArea textAreaItemNameRawMaterials;
 	private JLabel labelRawMaterialsPrice;
@@ -74,7 +74,7 @@ public class IslandPanel extends JPanel {
 	private JButton buttonBuyRawMaterials;
 	private JButton buttonSellRawMaterials;
 	
-	
+	//Food item GUI elements
 	private JTextArea textAreaItemNameFood;
 	private JLabel labelItemImageFood;
 	private JLabel labelFoodPrice;
@@ -86,7 +86,7 @@ public class IslandPanel extends JPanel {
 	private JButton buttonSellFood;
 	private JTextArea textAreaItemDescriptionFood;
 	
-	
+	//Luxury Goods item GUI elements
 	private JTextArea textAreaItemNameLuxuryGoods;
 	private JLabel labelLuxuryGoodsPrice;
 	private JLabel labelItemStockQuantityLuxuryGoods;
@@ -110,119 +110,11 @@ public class IslandPanel extends JPanel {
 		setBounds(0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		setLayout(null);
 		
-		labelIslandName = new JLabel("");
-		labelIslandName.setHorizontalAlignment(SwingConstants.CENTER);
-		labelIslandName.setForeground(Color.RED);
-		labelIslandName.setFont(new Font("Lato Black", Font.PLAIN, 48));
-		labelIslandName.setBounds(670, 30, 580, 50);
-		add(labelIslandName);
+		constructIslandInformation();
 		
-		buttonTravelRouteOne = new JButton("");
-		buttonTravelRouteOne.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				buttonPressedTravel(buttonTravelRouteOne);
-			}
-		});
-		buttonTravelRouteOne.setBounds(1210, 715, 610, 50);
-		add(buttonTravelRouteOne);
+		constructTravelButtons();
 		
-		buttonTravelRouteTwo = new JButton("");
-		buttonTravelRouteTwo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				buttonPressedTravel(buttonTravelRouteTwo);
-			}
-		});
-		buttonTravelRouteTwo.setBounds(1210, 775, 610, 50);
-		add(buttonTravelRouteTwo);
-		
-		buttonTravelRouteThree = new JButton("");
-		buttonTravelRouteThree.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				buttonPressedTravel(buttonTravelRouteThree);
-			}
-		});
-		buttonTravelRouteThree.setBounds(1210, 835, 610, 50);
-		add(buttonTravelRouteThree);
-		
-		buttonTravelRouteFour = new JButton("");
-		buttonTravelRouteFour.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				buttonPressedTravel(buttonTravelRouteFour);
-			}
-		});
-		buttonTravelRouteFour.setBounds(1210, 895, 610, 50);
-		add(buttonTravelRouteFour);
-		
-		buttonTravelRouteFive = new JButton("");
-		buttonTravelRouteFive.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				buttonPressedTravel(buttonTravelRouteFive);
-			}
-		});
-		buttonTravelRouteFive.setBounds(1210, 955, 610, 50);
-		add(buttonTravelRouteFive);
-		
-		buttons = new ArrayList<JButton>();
-		buttons.add(buttonTravelRouteOne);
-		buttons.add(buttonTravelRouteTwo);
-		buttons.add(buttonTravelRouteThree);
-		buttons.add(buttonTravelRouteFour);
-		buttons.add(buttonTravelRouteFive);
-		
-		labelDay = new JLabel("It is day 29 of 50.");
-		labelDay.setForeground(Color.RED);
-		labelDay.setFont(new Font("Lato Black", Font.PLAIN, 18));
-		labelDay.setBounds(370, 356, 150, 25);
-		add(labelDay);
-		
-		labelWealth = new JLabel("You have 1000 Gold Crowns.");
-		labelWealth.setForeground(new Color(0, 0, 0));
-		labelWealth.setFont(new Font("Lato Black", Font.PLAIN, 18));
-		labelWealth.setBounds(110, 356, 250, 25);
-		add(labelWealth);
-		
-		textAreaIslandDescription = new JTextArea("");
-		textAreaIslandDescription.setWrapStyleWord(true);
-		textAreaIslandDescription.setOpaque(true);
-		textAreaIslandDescription.setLineWrap(true);
-		textAreaIslandDescription.setFont(new Font("Lato Black", Font.PLAIN, 20));
-		textAreaIslandDescription.setEditable(false);
-		textAreaIslandDescription.setBounds(100, 95, 1720, 290);
-		textAreaIslandDescription.setBackground(new Color(255,255,255,175));
-		textAreaIslandDescription.setMargin(new Insets(15,15,15,15));
-		//fixes selected text highlighting bug
-		textAreaIslandDescription.getCaret().deinstall(textAreaIslandDescription);
-		add(textAreaIslandDescription);
-		
-		labelImports = new JLabel("");
-		labelImports.setForeground(Color.RED);
-		labelImports.setFont(new Font("Lato Black", Font.PLAIN, 18));
-		labelImports.setBounds(532, 466, 300, 25);
-		add(labelImports);
-		
-		labelExports = new JLabel("");
-		labelExports.setForeground(Color.RED);
-		labelExports.setFont(new Font("Lato Black", Font.PLAIN, 18));
-		labelExports.setBounds(525, 490, 360, 25);
-		add(labelExports);
-		
-		labelCargo = new JLabel("");
-		labelCargo.setFont(new Font("Lato Black", Font.PLAIN, 18));
-		labelCargo.setBounds(245, 516, 650, 25);
-		add(labelCargo);
-		
-		JTextArea textAreaImportsExports = new JTextArea("You quickly discover the main imports and exports of this market.\nMain Imports (will buy/sell at a higher price):\nMain Exports (will buy/sell at a lower  price):\nYour cargo is:");
-		textAreaImportsExports.setWrapStyleWord(true);
-		textAreaImportsExports.setOpaque(true);
-		textAreaImportsExports.setMargin(new Insets(15, 15, 15, 15));
-		textAreaImportsExports.setLineWrap(true);
-		textAreaImportsExports.setFont(new Font("Lato Black", Font.PLAIN, 20));
-		textAreaImportsExports.setEditable(false);
-		textAreaImportsExports.setBackground(new Color(255, 255, 255, 175));
-		textAreaImportsExports.setBounds(100, 425, 800, 125);
-		//fixes selected text highlighting bug
-		textAreaImportsExports.getCaret().deinstall(textAreaImportsExports);
-		add(textAreaImportsExports);
+		constructImportExportAndCargoInformation();
 		
 		JButton buttonAlcoholIncreaseQuantity = new JButton("+");
 		buttonAlcoholIncreaseQuantity.addActionListener(new ActionListener() {
@@ -831,6 +723,7 @@ public class IslandPanel extends JPanel {
 		textAreaTransactionResult.getCaret().deinstall(textAreaTransactionResult);
 		add(textAreaTransactionResult);
 		
+		//create button to view ship properties, ledger and upgrades
 		buttonLedgerAndInfo = new JButton("View ledger, ship details and island upgrades");
 		buttonLedgerAndInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -840,14 +733,153 @@ public class IslandPanel extends JPanel {
 		buttonLedgerAndInfo.setBounds(1210, 500, 610, 50);
 		add(buttonLedgerAndInfo);
 		
+		
+		//create background image label
 		labelBackgroundImage = new JLabel("");
 		labelBackgroundImage.setBounds(0, 0, 1920, 1080);
-		
-		
 		add(labelBackgroundImage);
 		
 	}
 	
+	/**
+	 * Creates the basic information labels such as name and description of the island
+	 */
+	public void constructIslandInformation() {
+		
+		labelIslandName = new JLabel("");
+		labelIslandName.setHorizontalAlignment(SwingConstants.CENTER);
+		labelIslandName.setForeground(Color.RED);
+		labelIslandName.setFont(new Font("Lato Black", Font.PLAIN, 48));
+		labelIslandName.setBounds(670, 30, 580, 50);
+		add(labelIslandName);
+		
+		labelDay = new JLabel("It is day 29 of 50.");
+		labelDay.setForeground(Color.RED);
+		labelDay.setFont(new Font("Lato Black", Font.PLAIN, 18));
+		labelDay.setBounds(370, 356, 150, 25);
+		add(labelDay);
+		
+		labelWealth = new JLabel("You have 1000 Gold Crowns.");
+		labelWealth.setForeground(new Color(0, 0, 0));
+		labelWealth.setFont(new Font("Lato Black", Font.PLAIN, 18));
+		labelWealth.setBounds(110, 356, 250, 25);
+		add(labelWealth);
+		
+		textAreaIslandDescription = new JTextArea("");
+		textAreaIslandDescription.setWrapStyleWord(true);
+		textAreaIslandDescription.setOpaque(true);
+		textAreaIslandDescription.setLineWrap(true);
+		textAreaIslandDescription.setFont(new Font("Lato Black", Font.PLAIN, 20));
+		textAreaIslandDescription.setEditable(false);
+		textAreaIslandDescription.setBounds(100, 95, 1720, 290);
+		textAreaIslandDescription.setBackground(new Color(255,255,255,175));
+		textAreaIslandDescription.setMargin(new Insets(15,15,15,15));
+		//fixes selected text highlighting bug
+		textAreaIslandDescription.getCaret().deinstall(textAreaIslandDescription);
+		add(textAreaIslandDescription);
+		
+	}
+	
+	/**
+	 * Creates labels and text area to display the imports and exports of the island, and the player's ship's cargo
+	 */
+	private void constructImportExportAndCargoInformation() {
+		
+		labelImports = new JLabel("");
+		labelImports.setForeground(Color.RED);
+		labelImports.setFont(new Font("Lato Black", Font.PLAIN, 18));
+		labelImports.setBounds(532, 466, 300, 25);
+		add(labelImports);
+		
+		labelExports = new JLabel("");
+		labelExports.setForeground(Color.RED);
+		labelExports.setFont(new Font("Lato Black", Font.PLAIN, 18));
+		labelExports.setBounds(525, 490, 360, 25);
+		add(labelExports);
+		
+		labelCargo = new JLabel("");
+		labelCargo.setFont(new Font("Lato Black", Font.PLAIN, 18));
+		labelCargo.setBounds(245, 516, 650, 25);
+		add(labelCargo);
+		
+		JTextArea textAreaImportsExports = new JTextArea("You quickly discover the main imports and exports of this market.\nMain Imports (will buy/sell at a higher price):\nMain Exports (will buy/sell at a lower  price):\nYour cargo is:");
+		textAreaImportsExports.setWrapStyleWord(true);
+		textAreaImportsExports.setOpaque(true);
+		textAreaImportsExports.setMargin(new Insets(15, 15, 15, 15));
+		textAreaImportsExports.setLineWrap(true);
+		textAreaImportsExports.setFont(new Font("Lato Black", Font.PLAIN, 20));
+		textAreaImportsExports.setEditable(false);
+		textAreaImportsExports.setBackground(new Color(255, 255, 255, 175));
+		textAreaImportsExports.setBounds(100, 425, 800, 125);
+		//fixes selected text highlighting bug
+		textAreaImportsExports.getCaret().deinstall(textAreaImportsExports);
+		add(textAreaImportsExports);
+		
+	}
+	
+	/**
+	 * Creates the buttons used to initiate travel to other islands
+	 */
+	private void constructTravelButtons() {
+		
+		buttonTravelRouteOne = new JButton("");
+		buttonTravelRouteOne.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				buttonPressedTravel(buttonTravelRouteOne);
+			}
+		});
+		buttonTravelRouteOne.setBounds(1210, 715, 610, 50);
+		add(buttonTravelRouteOne);
+		
+		buttonTravelRouteTwo = new JButton("");
+		buttonTravelRouteTwo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				buttonPressedTravel(buttonTravelRouteTwo);
+			}
+		});
+		buttonTravelRouteTwo.setBounds(1210, 775, 610, 50);
+		add(buttonTravelRouteTwo);
+		
+		buttonTravelRouteThree = new JButton("");
+		buttonTravelRouteThree.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				buttonPressedTravel(buttonTravelRouteThree);
+			}
+		});
+		buttonTravelRouteThree.setBounds(1210, 835, 610, 50);
+		add(buttonTravelRouteThree);
+		
+		buttonTravelRouteFour = new JButton("");
+		buttonTravelRouteFour.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				buttonPressedTravel(buttonTravelRouteFour);
+			}
+		});
+		buttonTravelRouteFour.setBounds(1210, 895, 610, 50);
+		add(buttonTravelRouteFour);
+		
+		buttonTravelRouteFive = new JButton("");
+		buttonTravelRouteFive.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				buttonPressedTravel(buttonTravelRouteFive);
+			}
+		});
+		buttonTravelRouteFive.setBounds(1210, 955, 610, 50);
+		add(buttonTravelRouteFive);
+		
+		buttons = new ArrayList<JButton>();
+		buttons.add(buttonTravelRouteOne);
+		buttons.add(buttonTravelRouteTwo);
+		buttons.add(buttonTravelRouteThree);
+		buttons.add(buttonTravelRouteFour);
+		buttons.add(buttonTravelRouteFive);
+		
+	}
+	
+	/**
+	 * Handles traveling from an island when one of the travel buttons is pressed
+	 * @param button
+	 */
 	private void buttonPressedTravel(JButton button) {
 		
 		//index of the button in the button array, is the key of the route/island pair in the traveloptions hashmap
@@ -876,6 +908,10 @@ public class IslandPanel extends JPanel {
 		
 	}
 	
+	/**
+	 * Handles purchasing items from the store inventory to the player's inventory when buy button is clicked
+	 * @param item the item being purchased
+	 */
 	private void buyItem(Item item) {
 
 		Store store = GameEnvironment.getCurrentIsland().getIslandStore();
@@ -914,6 +950,10 @@ public class IslandPanel extends JPanel {
 
 	}
 	
+	/**
+	 * Handles selling goods from player's inventory to the store inventory when sell button is clicked
+	 * @param item the item being sold
+	 */
 	private void sellItem(Item item) {
 		
 		Store store = GameEnvironment.getCurrentIsland().getIslandStore();
@@ -951,6 +991,9 @@ public class IslandPanel extends JPanel {
 		
 	}
 	
+	/**
+	 * Resets the text fields representing the selected number of items to buy/sell
+	 */
 	private void resetItemTextFields() {
 		
 		textFieldLuxuryGoodsQuantity.setText("0");
@@ -960,6 +1003,9 @@ public class IslandPanel extends JPanel {
 		
 	}
 	
+	/**
+	 * Updates all dynamic GUI elements with details pertinent to the current locaiton
+	 */
 	public void populateFieldsWithData() {
 		
 		setBackgroundByCurrentIsland();
@@ -972,6 +1018,9 @@ public class IslandPanel extends JPanel {
 		
 	}
 	
+	/**
+	 * Updates all GUI elements representing dynamic market information at the current location
+	 */
 	private void populateMarketData() {
 		
 		setCargoLabel();
@@ -984,6 +1033,9 @@ public class IslandPanel extends JPanel {
 		
 	}
 	
+	/**
+	 * Updates the labels representing the current price of the items in the current store
+	 */
 	private void setItemPriceLabels() {
 		
 		Store store = GameEnvironment.getCurrentIsland().getIslandStore();
@@ -999,6 +1051,9 @@ public class IslandPanel extends JPanel {
 		labelFoodPrice.setText(store.getItemPrice(food) + "¢");
 	}
 	
+	/**
+	 * Updates the labels representing the quantity of each of the items in the current store
+	 */
 	private void setItemStockQuantityLabels() {
 		
 		Store store = GameEnvironment.getCurrentIsland().getIslandStore();
@@ -1015,12 +1070,16 @@ public class IslandPanel extends JPanel {
 		
 	}
 	
+	/**
+	 * Updates the label representing the current and remaining cargo capacity of the Player's ship
+	 */
 	private void setCargoLabel() {
-		
 		labelCargo.setText(Player.getShip().getCargo() + "/" + Player.getShip().getCargoCapacity() + " capacity " + Player.getShip().getInventoryString());
-		
 	}
 	
+	/**
+	 * Updates the imports and exports labels to display the details pertinent to the current island
+	 */
 	private void setIslandImportsExportsLabels() {
 		
 		labelImports.setText(GameEnvironment.getImportsString(GameEnvironment.getCurrentIsland().getIslandStore()));
@@ -1028,14 +1087,23 @@ public class IslandPanel extends JPanel {
 		
 	}
 	
+	/**
+	 * Updates the label representing the number of days passed and remaining
+	 */
 	private void setCurrentDayLabel() {
 		labelDay.setText("It is day " + (GameEnvironment.getHoursSinceStart() / 24) + " of " + GameEnvironment.getGameDuration() + ".");
 	}
 	
+	/**
+	 * Updates the label representing the current wealth of the player
+	 */
 	private void setCurrentMoneyLabel() {
 		labelWealth.setText("You have " + Player.getGold() + " " + Constants.NAME_CURRENCY + ".");
 	}
 	
+	/**
+	 * Updates the travel buttons to display the correct route information
+	 */
 	private void populateRoutesByCurrentIsland() {
 		
 		travelOptions = GameEnvironment.getTravelOptions(0, GameEnvironment.getCurrentIsland());
@@ -1065,6 +1133,9 @@ public class IslandPanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * Sets the name of the island to match the current island
+	 */
 	private void setNameLabelByCurrentIsland() {
 		
 		String curIslandName = GameEnvironment.getCurrentIsland().getIslandName();
@@ -1072,12 +1143,18 @@ public class IslandPanel extends JPanel {
 		
 	}
 	
+	/**
+	 * Sets the description of the island on the panel to match the current location
+	 */
 	private void setDescriptionLabelByCurrentIsland() {
 		
 		String curIslandDescription = GameEnvironment.getCurrentIsland().getIslandDescription();
 		textAreaIslandDescription.setText(curIslandDescription);
 	}
 	
+	/**
+	 * Changes the background of the panel based on the current island the player is on
+	 */
 	private void setBackgroundByCurrentIsland() {
 		
 		String curIslandName = GameEnvironment.getCurrentIsland().getIslandName();

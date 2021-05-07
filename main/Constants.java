@@ -1,41 +1,31 @@
 package main;
 
-
+/**
+ * Contains static values used in multiple places that will remain fixed for the entire game
+ * @author Ryan Croucher rcr69
+ *
+ */
 public class Constants {
 	//
 	// Constant Strings
 	//
 	
-	
-	/**
-	 * Name of the ingame currency
-	 */
 	public final static String NAME_CURRENCY = "Gold Crowns";
-	
-	
-	/**
-	 * The character creation greeting text
-	 */
+
 	public final static String PRIMER = "You are a proud dwarf from The Saltforge, but the mountain-island is in decline." 
 						+ "\n\nThe costs to repair the decaying mountainside are rising ever higher."
 						+ "\n\nOld Saltbeard himself has tasked you to set forth and acquire 10,000 " + NAME_CURRENCY + " to return to your home."
 						+ "\n\nIt would be unwise to disobey him.\n";
 	
-	
-	// Location blurbs
 	public final static String ISLAND_SALTFORGE = "The Salt Forge";
-	/**
-	 * The description text for the Salt Forge
-	 */
+
 	public final static String ISLAND_SALTFORGE_DESCRIPTION = "Welcome to The Salt Forge, the home to the salt dwarves ruled by the great Old Saltbeard, the saltiest of them all."
 						+ "\n\nAs you pull into port on the mountainous island, you can see that the fortress-city is in a state of disrepair, buildings and roads need upkeep, and parts of the cliff are eroding, occassionally falling into areas of the city."
 						+ "\n\nWhen you arrive at the market however you are overwhelmed by the sound of smithies working in their forges and the sight of stacks of iron and other materials."
 						+ "\nI’m sure you won’t find it hard to to buy raw materials to take with you here, it’s also said that the dwarves will pay big coin for beers and ales, I hope you have some on board.";
 	
 	public final static String ISLAND_TUNIA = "The Grand Duchy of Tunia";
-	/**
-	 * The description text for the Grand Duchy of Tunia
-	 */
+
 	public final static String ISLAND_TUNIA_DESCRIPTION = "Welcome to the Grand Duchy of Tunia. It is ruled by the Grand Duke Frederick Von Kraus, and is home to the richest and greediest people along the coasts."
 						+ "\n\nAfter you manage to deal with the bureaucracy of coming into port, you see a grand city ahead of you filled with all the expected pomp and circumstance you have heard about."
 						+ "\nIt boasts arguably the largest and busiest of marketplaces you’ve ever witnessed, with people trying to flog their wares to you from every angle."
@@ -43,26 +33,20 @@ public class Constants {
 						+ "\nWith the number of people around here hawking alcohols of various varieties you should be able to haggle some good prices for them, that being said if you have anything aboard that might help someone flaunt their wealth you might be able to make a fair bit of coin here.";
 	
 	public final static String ISLAND_SANDYFIELDS= "Sandy Fields";
-	/**
-	 *  The description text for Sandy Fields
-	 */
+
 	public final static String ISLAND_SANDYFIELDS_DESCRIPTION = "Welcome to Sandy Fields. A town led by a peasant syndicate, it is the home to some of the hardest working and humblest farmers this side of the continent."
 						+ "\nYou dock at their pier and take in the sights of this humble town. There are no major defensive walls or castles in sight. For as far as your eyes can see there are fields of every variety you can imagine, with farmhouses dotted amongst them."
 						+ "\n\nJust down from the pier you find the marketplace a fairly busy place yet no one seems to be forcing their wares upon you. Most of the people selling goods have wagons filled with many different foodstuffs, wheat, pumpkins, fruits and meats. Each merchant is happy to sell you whatever you need."
 						+ "\n\nThese people have ample food to go around and have no need of high prices; all foodstuffs seem to be incredibly cheap here. However, you have heard a few people mention they need more materials such as wood for more barns and metals for their tools. Perhaps you could oblige these needs?";
 						
 	public final static String ISLAND_SKULLHAVEN = "Skull Haven";
-	/**
-	 * The description text for Skull Haven
-	 */
+
 	public final static String ISLAND_SKULLHAVEN_DESCRIPTION = "YARRR!!! Welcome to Skull Haven. The hidden island home of the worst and most dangerous people around."
 						+ "\n\nThis place doesn’t seem to have a stable leader but someone new appears to take the title by force once a week or so. The port is unkempt and riddled with ships flying a variety of colours, you can see in the city that fights break out at the slightest of arguments and drunkards can be found littering the streets."
 						+ "\n\nWhat they pass as a marketplace has seen better days and doesn’t have a lot to offer you, however they are very eager to purchase food and alcohol from you if you have it and are more than happy to use their ill gotten gains to get it. If you’re brave enough and think you can handle them, you may also be able to aquire some cheap labour to help top up your crew here.";
 						
 	public final static String ISLAND_SEANOMADS = "The Nomad Flotilla";
-	/**
-	 * The description text for The Sea Nomad Flotilla
-	 */		
+
 	public final static String ISLAND_SEANOMADS_DESCRIPTION = "Welcome to the flotilla of the Sea Nomads. This is an artificial island made of connected ships and is ruled by “The Mother”, a particularly old and wise woman among the nomads."
 						+"\n\nUsually quite hard to find as they go where the currents take them, they have of late found themselves staying a bit more sedentary so they can trade for the things they need more easily."
 						+"\nWhen you pull alongside the island and attach your ship you can see that it appears to function as any town would; on the deck you see tents that the people work and socialise in during the day while they go below deck at night to their homes."
@@ -279,14 +263,11 @@ public class Constants {
 	public final static int SHIP_MAX_MAX_CREW = 50;
 	
 	
-	
 	//ITEM stats
 	public final static int ITEM_BASE_PRICE_LUXURY = 100;
 	public final static int ITEM_BASE_PRICE_ALCOHOL = 50;
 	public final static int ITEM_BASE_PRICE_RAW_MATERIALS = 50;
 	public final static int ITEM_BASE_PRICE_FOOD = 20;
-	
-	
 	
 	//GUI settings
 	public final static int WINDOW_WIDTH = 1920;
