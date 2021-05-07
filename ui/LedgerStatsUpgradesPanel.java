@@ -29,14 +29,25 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 
+/**
+ * 
+ * @author Ryan Croucher rcr69
+ *
+ */
 public class LedgerStatsUpgradesPanel extends JPanel {
 	
+	//displays properties of your ship
 	private JTextArea textAreaShipInfo;
+	
+	//displays historical transactions
 	private JTextArea textAreaLedger;
+	
+	//elements to buy upgrades
 	private JTextArea textAreaUpgrade;
 	private JLabel labelAlreadyHaveUpgrade;
 	private JButton buttonBuyUpgrade;
 	
+	//background panel image holder
 	private JLabel labelBackgroundImage;
 
 	/**
@@ -46,6 +57,60 @@ public class LedgerStatsUpgradesPanel extends JPanel {
 			
 		setBounds(0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		setLayout(null);
+		
+		constructShipInfoPane();
+		
+		constructUpgradePane();
+		
+		constructLedgerPane();
+
+		
+		JButton buttonBackToMarket = new JButton("BACK TO MARKET");
+		buttonBackToMarket.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				PanelManager.setPanel("IslandPanel");
+			}
+		});
+		buttonBackToMarket.setVerticalAlignment(SwingConstants.BOTTOM);
+		buttonBackToMarket.setOpaque(false);
+		buttonBackToMarket.setForeground(Color.RED);
+		buttonBackToMarket.setFont(new Font("Lato Black", Font.PLAIN, 48));
+		buttonBackToMarket.setFocusPainted(false);
+		buttonBackToMarket.setBackground(new Color(200, 200, 0, 0));
+		buttonBackToMarket.setBounds(1320, 926, 500, 80);
+		add(buttonBackToMarket);
+		
+		labelBackgroundImage = new JLabel("");
+		labelBackgroundImage.setBounds(0, 0, 1920, 1080);
+		labelBackgroundImage.setIcon(new ImageIcon(IslandPanel.class.getResource("/ui/images/dullTrio.png")));
+		add(labelBackgroundImage);
+		
+	}
+	
+	/**
+	 * Creates the pane on the left, displaying the player's ship's properties
+	 */
+	private void constructShipInfoPane() {
+		
+		textAreaShipInfo = new JTextArea("");
+		textAreaShipInfo.setWrapStyleWord(true);
+		textAreaShipInfo.setFont(new Font("Lato Black", Font.PLAIN, 16));
+		textAreaShipInfo.setLineWrap(true);
+		textAreaShipInfo.setEditable(false);
+		textAreaShipInfo.setBounds(100, 100, 500, 800);
+		textAreaShipInfo.setBackground(new Color(255,255,255,175));
+		textAreaShipInfo.setMargin(new Insets(15,15,15,15));
+		//fixes selected text highlighting bug
+		textAreaShipInfo.getCaret().deinstall(textAreaShipInfo);
+		add(textAreaShipInfo);
+		textAreaShipInfo.setOpaque(true);
+		
+	}
+	
+	/**
+	 * Creates the center pane, displaying the available upgrade at this island
+	 */
+	private void constructUpgradePane() {
 		
 		labelAlreadyHaveUpgrade = new JLabel("You already have this upgrade.");
 		labelAlreadyHaveUpgrade.setFont(new Font("Lato Black", Font.PLAIN, 16));
@@ -98,20 +163,6 @@ public class LedgerStatsUpgradesPanel extends JPanel {
 		buttonBuyUpgrade.setBounds(990, 800, 200, 80);
 		add(buttonBuyUpgrade);
 		
-		//the greeting text on the left
-		textAreaShipInfo = new JTextArea("");
-		textAreaShipInfo.setWrapStyleWord(true);
-		textAreaShipInfo.setFont(new Font("Lato Black", Font.PLAIN, 16));
-		textAreaShipInfo.setLineWrap(true);
-		textAreaShipInfo.setEditable(false);
-		textAreaShipInfo.setBounds(100, 100, 500, 800);
-		textAreaShipInfo.setBackground(new Color(255,255,255,175));
-		textAreaShipInfo.setMargin(new Insets(15,15,15,15));
-		//fixes selected text highlighting bug
-		textAreaShipInfo.getCaret().deinstall(textAreaShipInfo);
-		add(textAreaShipInfo);
-		textAreaShipInfo.setOpaque(true);
-		
 		textAreaUpgrade = new JTextArea("");
 		textAreaUpgrade.setWrapStyleWord(true);
 		textAreaUpgrade.setOpaque(true);
@@ -125,6 +176,12 @@ public class LedgerStatsUpgradesPanel extends JPanel {
 		textAreaUpgrade.getCaret().deinstall(textAreaUpgrade);
 		add(textAreaUpgrade);
 		
+	}
+	
+	/**
+	 * Creates the pane on the right, displaying the transaction ledger
+	 */
+	private void constructLedgerPane() {
 		
 		textAreaLedger = new JTextArea("");
 		textAreaLedger.setWrapStyleWord(true);
@@ -150,39 +207,14 @@ public class LedgerStatsUpgradesPanel extends JPanel {
 		    }
 			
 		});
-		
-		//scrollPaneLedger.setBounds(1820, 100, 10, 800);
 		scrollPaneLedger.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		
-		//textAreaLedger.add(scrollPaneLedger);
-		//add(textAreaLedger);
 		add(scrollPaneLedger);
-
-		
-		JButton buttonBackToMarket = new JButton("BACK TO MARKET");
-		buttonBackToMarket.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				PanelManager.setPanel("IslandPanel");
-			}
-		});
-		buttonBackToMarket.setVerticalAlignment(SwingConstants.BOTTOM);
-		buttonBackToMarket.setOpaque(false);
-		buttonBackToMarket.setForeground(Color.RED);
-		buttonBackToMarket.setFont(new Font("Lato Black", Font.PLAIN, 48));
-		buttonBackToMarket.setFocusPainted(false);
-		buttonBackToMarket.setBackground(new Color(200, 200, 0, 0));
-		buttonBackToMarket.setBounds(1320, 926, 500, 80);
-		add(buttonBackToMarket);
-		
-		
-		
-		labelBackgroundImage = new JLabel("");
-		labelBackgroundImage.setBounds(0, 0, 1920, 1080);
-		labelBackgroundImage.setIcon(new ImageIcon(IslandPanel.class.getResource("/ui/images/dullTrio.png")));
-		add(labelBackgroundImage);
 		
 	}
 	
+	/**
+	 * Fills in all of the panel elements with up to date information
+	 */
 	public void updatePanel() {
 		
 		updateShipInfo();
@@ -191,10 +223,16 @@ public class LedgerStatsUpgradesPanel extends JPanel {
 		
 	}
 	
+	/**
+	 * Updates the ship properties panel with up to date information
+	 */
 	private void updateShipInfo() {
 		textAreaShipInfo.setText(GameEnvironment.getShipDetailsString());
 	}
 	
+	/**
+	 * Displays the available upgrade at this island
+	 */
 	private void updateUpgradeInfo() {
 		
 		String upgradeString = Constants.CRAGNUS_UPGRADE + "\n\n";
@@ -242,6 +280,9 @@ public class LedgerStatsUpgradesPanel extends JPanel {
 		
 	}
 	
+	/**
+	 * Updates the transaction ledger with the latest data
+	 */
 	private void updateLedger() {
 		
 		String ledgerString = Constants.OLARD_LEDGER + "\n";

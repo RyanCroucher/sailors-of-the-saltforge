@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 import main.Player;
 
+/**
+ * Event of the type 'something happens and your ship takes damage'
+ * @author Ryan Croucher rcr69
+ *
+ */
 public class ShipDamageEvent extends RandomEvent {
 	
 	/**

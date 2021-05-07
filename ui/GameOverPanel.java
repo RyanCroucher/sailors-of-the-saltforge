@@ -18,10 +18,20 @@ import java.awt.Font;
 import javax.swing.JTextArea;
 import java.awt.Insets;
 
+/**
+ * GUI panel to display the end-game screen after the player won or lost
+ * @author Ryan Croucher rcr69
+ *
+ */
 public class GameOverPanel extends JPanel {
 	
+	//panel title
 	private static JLabel labelGameOver;
+	
+	//end-game stats and score
 	private static JTextArea textAreaStatistics;
+	
+	//kills the program
 	private static JButton buttonExit;
 
 	/**

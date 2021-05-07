@@ -19,17 +19,28 @@ import java.awt.Font;
 import javax.swing.JTextArea;
 import java.awt.Insets;
 
+/**
+ * GUI panel to handle displaying random event details and options
+ * @author Ryan Croucher rcr69
+ *
+ */
 public class EventPanel extends JPanel {
 	
+	//basic event text details
 	private static JLabel labelEventName;
 	private static JLabel labelResultEffect;
 	private static JTextArea textAreaEventDescription;
 	
+	//proceed to island button
 	private static JButton buttonNext;
+	
+	//dice game button
 	private static JButton buttonRollDice;
 
+	//event decision buttons
 	private static JButton buttonOptionOne, buttonOptionTwo, buttonOptionThree;
 	
+	//the generated event object
 	private static RandomEvent event;
 
 	/**

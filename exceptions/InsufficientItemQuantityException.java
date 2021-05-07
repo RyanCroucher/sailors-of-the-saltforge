@@ -7,6 +7,10 @@ package exceptions;
  */
 public class InsufficientItemQuantityException extends Exception {
 
+	/**
+	 * Constructs a new InsufficientItemQuantityException
+	 * @param errorMessage the error details
+	 */
 	public InsufficientItemQuantityException(String errorMessage) {
 		super(errorMessage);
 	}

@@ -31,6 +31,11 @@ import java.awt.Insets;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+/**
+ * GUI panel to handle island-based activities including trading in the market
+ * @author Ryan Croucher rcr69
+ *
+ */
 public class IslandPanel extends JPanel {
 	
 	//basic island information labels
@@ -115,6 +120,513 @@ public class IslandPanel extends JPanel {
 		constructTravelButtons();
 		
 		constructImportExportAndCargoInformation();
+		
+		constructAlcoholElements();
+		constructRawMaterialsElements();
+		constructFoodElements();
+		constructLuxuryGoodsElements();
+		
+		//text area to give feedback about buying/selling items
+		textAreaTransactionResult = new JTextArea("");
+		textAreaTransactionResult.setWrapStyleWord(true);
+		textAreaTransactionResult.setOpaque(true);
+		textAreaTransactionResult.setMargin(new Insets(5, 15, 15, 15));
+		textAreaTransactionResult.setLineWrap(true);
+		textAreaTransactionResult.setFont(new Font("Lato Black", Font.PLAIN, 16));
+		textAreaTransactionResult.setEditable(false);
+		textAreaTransactionResult.setBackground(new Color(255, 255, 255, 175));
+		textAreaTransactionResult.setBounds(100, 965, 800, 50);
+		//fixes selected text highlighting bug
+		textAreaTransactionResult.getCaret().deinstall(textAreaTransactionResult);
+		add(textAreaTransactionResult);
+		
+		//create button to view ship properties, ledger and upgrades
+		buttonLedgerAndInfo = new JButton("View ledger, ship details and island upgrades");
+		buttonLedgerAndInfo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				PanelManager.setPanel("LedgerStatsUpgradesPanel");
+			}
+		});
+		buttonLedgerAndInfo.setBounds(1210, 500, 610, 50);
+		add(buttonLedgerAndInfo);
+		
+		
+		//create background image label
+		labelBackgroundImage = new JLabel("");
+		labelBackgroundImage.setBounds(0, 0, 1920, 1080);
+		add(labelBackgroundImage);
+		
+	}
+	
+	/**
+	 * Builds all of the GUI elements needed to buy and sell the Food item
+	 */
+	private void constructFoodElements() {
+		
+		textAreaItemNameFood = new JTextArea("          Food");
+		textAreaItemNameFood.setWrapStyleWord(true);
+		textAreaItemNameFood.setOpaque(true);
+		textAreaItemNameFood.setMargin(new Insets(5, 0, 0, 0));
+		textAreaItemNameFood.setLineWrap(true);
+		textAreaItemNameFood.setFont(new Font("Lato Black", Font.PLAIN, 16));
+		textAreaItemNameFood.setEditable(false);
+		textAreaItemNameFood.setBackground(new Color(255, 255, 255, 175));
+		textAreaItemNameFood.setBounds(395, 570, 120, 25);
+		//fixes selected text highlighting bug
+		textAreaItemNameFood.getCaret().deinstall(textAreaItemNameFood);
+		add(textAreaItemNameFood);
+		
+		labelFoodPrice = new JLabel("0");
+		labelFoodPrice.setHorizontalAlignment(SwingConstants.LEFT);
+		labelFoodPrice.setForeground(new Color(0, 0, 0));
+		labelFoodPrice.setFont(new Font("Lato Black", Font.PLAIN, 26));
+		labelFoodPrice.setBounds(398, 605, 80, 30);
+		add(labelFoodPrice);
+		
+		labelItemStockQuantityFood = new JLabel("");
+		labelItemStockQuantityFood.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelItemStockQuantityFood.setForeground(Color.RED);
+		labelItemStockQuantityFood.setFont(new Font("Lato Black", Font.PLAIN, 26));
+		labelItemStockQuantityFood.setBounds(460, 605, 50, 30);
+		add(labelItemStockQuantityFood);
+		
+		buttonFoodIncreaseQuantity = new JButton("+");
+		buttonFoodIncreaseQuantity.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				String curText = textFieldFoodQuantity.getText();
+				String newText;
+				
+				try {
+					newText = (Math.min(100, Integer.parseInt(curText) + 1)) + "";
+				} catch (NumberFormatException e) {
+					//default back to 0
+					newText = "0";
+				}
+				
+				textFieldFoodQuantity.setText(newText);
+				
+			}
+		});
+		
+		labelItemImageFood = new JLabel("");
+		labelItemImageFood.setIcon(new ImageIcon(IslandPanel.class.getResource("/ui/images/foodIcon.png")));
+		labelItemImageFood.setHorizontalAlignment(SwingConstants.TRAILING);
+		labelItemImageFood.setBackground(Color.BLACK);
+		labelItemImageFood.setBounds(395, 600, 120, 120);
+		add(labelItemImageFood);
+		buttonFoodIncreaseQuantity.setVerticalAlignment(SwingConstants.TOP);
+		buttonFoodIncreaseQuantity.setFont(new Font("Lato Black", Font.BOLD, 18));
+		buttonFoodIncreaseQuantity.setBounds(525, 600, 45, 25);
+		add(buttonFoodIncreaseQuantity);
+		
+		textFieldFoodQuantity = new JTextField();
+		textFieldFoodQuantity.getDocument().addDocumentListener(new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+				updatePrice();
+			}
+			
+			public void removeUpdate(DocumentEvent e) {
+				if (!textFieldFoodQuantity.getText().isEmpty())
+					updatePrice();
+			}
+			
+			public void insertUpdate(DocumentEvent e) {
+				updatePrice();
+			}
+			
+			public void updatePrice() {
+				try {
+					int quantity = Integer.parseInt(textFieldFoodQuantity.getText());
+					Item food = GameEnvironment.getItems().get(3);
+					Store store = GameEnvironment.getCurrentIsland().getIslandStore();
+					int updatedPrice = Math.max(1, quantity) * store.getItemPrice(food);
+					labelFoodPrice.setText(updatedPrice + "¢");
+				} catch (NumberFormatException | NullPointerException exception) {
+					System.err.println(exception.getMessage());
+				}
+			}
+			
+		});
+		textFieldFoodQuantity.setText("0");
+		textFieldFoodQuantity.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldFoodQuantity.setFont(new Font("Lato Black", Font.PLAIN, 18));
+		textFieldFoodQuantity.setColumns(10);
+		textFieldFoodQuantity.setBounds(525, 638, 45, 45);
+		add(textFieldFoodQuantity);
+		
+		buttonFoodDecreaseQuantity = new JButton("-");
+		buttonFoodDecreaseQuantity.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				String curText = textFieldFoodQuantity.getText();
+				String newText;
+				
+				try {
+					newText = (Math.max(0, Integer.parseInt(curText) - 1)) + "";
+				} catch (NumberFormatException e) {
+					//default back to 0
+					newText = "0";
+				}
+				
+				textFieldFoodQuantity.setText(newText);
+				
+			}
+		});
+		buttonFoodDecreaseQuantity.setVerticalAlignment(SwingConstants.TOP);
+		buttonFoodDecreaseQuantity.setFont(new Font("Lato Black", Font.BOLD, 18));
+		buttonFoodDecreaseQuantity.setBounds(525, 695, 45, 25);
+		add(buttonFoodDecreaseQuantity);
+		
+		buttonBuyFood = new JButton("Buy");
+		buttonBuyFood.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				buyItem(GameEnvironment.getItems().get(3));
+			}
+		});
+		buttonBuyFood.setFont(new Font("Lato Black", Font.PLAIN, 16));
+		buttonBuyFood.setBounds(585, 600, 70, 50);
+		add(buttonBuyFood);
+		
+		buttonSellFood = new JButton("Sell");
+		buttonSellFood.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				sellItem(GameEnvironment.getItems().get(3));
+			}
+		});
+		buttonSellFood.setFont(new Font("Lato Black", Font.PLAIN, 16));
+		buttonSellFood.setBounds(585, 670, 70, 50);
+		add(buttonSellFood);
+		
+		textAreaItemDescriptionFood = new JTextArea(GameEnvironment.getItems().get(3).getDescription());
+		textAreaItemDescriptionFood.setWrapStyleWord(true);
+		textAreaItemDescriptionFood.setOpaque(true);
+		textAreaItemDescriptionFood.setMargin(new Insets(7, 5, 0, 0));
+		textAreaItemDescriptionFood.setLineWrap(true);
+		textAreaItemDescriptionFood.setFont(new Font("Lato Black", Font.PLAIN, 13));
+		textAreaItemDescriptionFood.setEditable(false);
+		textAreaItemDescriptionFood.setBackground(new Color(255, 255, 255, 175));
+		textAreaItemDescriptionFood.setBounds(395, 725, 260, 25);
+		//fixes selected text highlighting bug
+		textAreaItemDescriptionFood.getCaret().deinstall(textAreaItemDescriptionFood);
+		add(textAreaItemDescriptionFood);
+		
+	}
+	
+	/**
+	 * Builds all of the GUI elements needed to buy and sell the Luxury Goods item
+	 */
+	private void constructLuxuryGoodsElements() {
+		
+		textAreaItemNameLuxuryGoods = new JTextArea("  Luxury Goods");
+		textAreaItemNameLuxuryGoods.setWrapStyleWord(true);
+		textAreaItemNameLuxuryGoods.setOpaque(true);
+		textAreaItemNameLuxuryGoods.setMargin(new Insets(5, 0, 0, 0));
+		textAreaItemNameLuxuryGoods.setLineWrap(true);
+		textAreaItemNameLuxuryGoods.setFont(new Font("Lato Black", Font.PLAIN, 16));
+		textAreaItemNameLuxuryGoods.setEditable(false);
+		textAreaItemNameLuxuryGoods.setBackground(new Color(255, 255, 255, 175));
+		textAreaItemNameLuxuryGoods.setBounds(395, 770, 120, 25);
+		//fixes selected text highlighting bug
+		textAreaItemNameLuxuryGoods.getCaret().deinstall(textAreaItemNameLuxuryGoods);
+		add(textAreaItemNameLuxuryGoods);
+		
+		labelLuxuryGoodsPrice = new JLabel("0");
+		labelLuxuryGoodsPrice.setHorizontalAlignment(SwingConstants.LEFT);
+		labelLuxuryGoodsPrice.setForeground(new Color(0, 0, 0));
+		labelLuxuryGoodsPrice.setFont(new Font("Lato Black", Font.PLAIN, 26));
+		labelLuxuryGoodsPrice.setBounds(398, 805, 80, 30);
+		add(labelLuxuryGoodsPrice);
+		
+		labelItemStockQuantityLuxuryGoods = new JLabel("");
+		labelItemStockQuantityLuxuryGoods.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelItemStockQuantityLuxuryGoods.setForeground(Color.RED);
+		labelItemStockQuantityLuxuryGoods.setFont(new Font("Lato Black", Font.PLAIN, 26));
+		labelItemStockQuantityLuxuryGoods.setBounds(460, 805, 50, 30);
+		add(labelItemStockQuantityLuxuryGoods);
+		
+		labelItemImageLuxuryGoods = new JLabel("");
+		labelItemImageLuxuryGoods.setIcon(new ImageIcon(IslandPanel.class.getResource("/ui/images/luxuryIcon.png")));
+		labelItemImageLuxuryGoods.setHorizontalAlignment(SwingConstants.TRAILING);
+		labelItemImageLuxuryGoods.setBackground(Color.BLACK);
+		labelItemImageLuxuryGoods.setBounds(395, 800, 120, 120);
+		add(labelItemImageLuxuryGoods);
+		
+		buttonLuxuryGoodsIncreaseQuantity = new JButton("+");
+		buttonLuxuryGoodsIncreaseQuantity.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				String curText = textFieldLuxuryGoodsQuantity.getText();
+				String newText;
+				
+				try {
+					newText = (Math.min(100, Integer.parseInt(curText) + 1)) + "";
+				} catch (NumberFormatException e) {
+					//default back to 0
+					newText = "0";
+				}
+				
+				textFieldLuxuryGoodsQuantity.setText(newText);
+				
+			}
+		});
+		buttonLuxuryGoodsIncreaseQuantity.setVerticalAlignment(SwingConstants.TOP);
+		buttonLuxuryGoodsIncreaseQuantity.setFont(new Font("Lato Black", Font.BOLD, 18));
+		buttonLuxuryGoodsIncreaseQuantity.setBounds(525, 800, 45, 25);
+		add(buttonLuxuryGoodsIncreaseQuantity);
+		
+		textFieldLuxuryGoodsQuantity = new JTextField();
+		textFieldLuxuryGoodsQuantity.getDocument().addDocumentListener(new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+				updatePrice();
+			}
+			
+			public void removeUpdate(DocumentEvent e) {
+				if (!textFieldLuxuryGoodsQuantity.getText().isEmpty())
+					updatePrice();
+			}
+			
+			public void insertUpdate(DocumentEvent e) {
+				updatePrice();
+			}
+			
+			public void updatePrice() {
+				try {
+					int quantity = Integer.parseInt(textFieldLuxuryGoodsQuantity.getText());
+					Item luxuryGoods = GameEnvironment.getItems().get(0);
+					Store store = GameEnvironment.getCurrentIsland().getIslandStore();
+					int updatedPrice = Math.max(1, quantity) * store.getItemPrice(luxuryGoods);
+					labelLuxuryGoodsPrice.setText(updatedPrice + "¢");
+				} catch (NumberFormatException | NullPointerException exception) {
+					System.err.println(exception.getMessage());
+				}
+			}
+			
+		});
+		textFieldLuxuryGoodsQuantity.setText("0");
+		textFieldLuxuryGoodsQuantity.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldLuxuryGoodsQuantity.setFont(new Font("Lato Black", Font.PLAIN, 18));
+		textFieldLuxuryGoodsQuantity.setColumns(10);
+		textFieldLuxuryGoodsQuantity.setBounds(525, 838, 45, 45);
+		add(textFieldLuxuryGoodsQuantity);
+		
+		buttonBuyLuxuryGoods = new JButton("Buy");
+		buttonBuyLuxuryGoods.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				buyItem(GameEnvironment.getItems().get(0));
+			}
+		});
+		buttonBuyLuxuryGoods.setFont(new Font("Lato Black", Font.PLAIN, 16));
+		buttonBuyLuxuryGoods.setBounds(585, 800, 70, 50);
+		add(buttonBuyLuxuryGoods);
+		
+		buttonSellLuxuryGoods = new JButton("Sell");
+		buttonSellLuxuryGoods.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				sellItem(GameEnvironment.getItems().get(0));
+			}
+		});
+		buttonSellLuxuryGoods.setFont(new Font("Lato Black", Font.PLAIN, 16));
+		buttonSellLuxuryGoods.setBounds(585, 870, 70, 50);
+		add(buttonSellLuxuryGoods);
+		
+		buttonLuxuryGoodsDecreaseQuantity = new JButton("-");
+		buttonLuxuryGoodsDecreaseQuantity.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				String curText = textFieldLuxuryGoodsQuantity.getText();
+				String newText;
+				
+				try {
+					newText = (Math.max(0, Integer.parseInt(curText) - 1)) + "";
+				} catch (NumberFormatException e) {
+					//default back to 0
+					newText = "0";
+				}
+				
+				textFieldLuxuryGoodsQuantity.setText(newText);
+				
+			}
+		});
+		buttonLuxuryGoodsDecreaseQuantity.setVerticalAlignment(SwingConstants.TOP);
+		buttonLuxuryGoodsDecreaseQuantity.setFont(new Font("Lato Black", Font.BOLD, 18));
+		buttonLuxuryGoodsDecreaseQuantity.setBounds(525, 895, 45, 25);
+		add(buttonLuxuryGoodsDecreaseQuantity);
+		
+		textAreaItemDescriptionLuxuryGoods = new JTextArea(GameEnvironment.getItems().get(0).getDescription());
+		textAreaItemDescriptionLuxuryGoods.setWrapStyleWord(true);
+		textAreaItemDescriptionLuxuryGoods.setOpaque(true);
+		textAreaItemDescriptionLuxuryGoods.setMargin(new Insets(7, 5, 0, 0));
+		textAreaItemDescriptionLuxuryGoods.setLineWrap(true);
+		textAreaItemDescriptionLuxuryGoods.setFont(new Font("Lato Black", Font.PLAIN, 13));
+		textAreaItemDescriptionLuxuryGoods.setEditable(false);
+		textAreaItemDescriptionLuxuryGoods.setBackground(new Color(255, 255, 255, 175));
+		textAreaItemDescriptionLuxuryGoods.setBounds(395, 925, 260, 25);
+		//fixes selected text highlighting bug
+		textAreaItemDescriptionLuxuryGoods.getCaret().deinstall(textAreaItemDescriptionLuxuryGoods);
+		add(textAreaItemDescriptionLuxuryGoods);
+		
+	}
+	
+	/**
+	 * Builds all of the GUI elements needed to buy and sell the Raw Materials item
+	 */
+	private void constructRawMaterialsElements() {
+		
+		labelItemStockQuantityRawMaterials = new JLabel("");
+		labelItemStockQuantityRawMaterials.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelItemStockQuantityRawMaterials.setForeground(Color.RED);
+		labelItemStockQuantityRawMaterials.setFont(new Font("Lato Black", Font.PLAIN, 26));
+		labelItemStockQuantityRawMaterials.setBounds(165, 805, 50, 30);
+		add(labelItemStockQuantityRawMaterials);
+		
+		labelRawMaterialsPrice = new JLabel("0");
+		labelRawMaterialsPrice.setHorizontalAlignment(SwingConstants.LEFT);
+		labelRawMaterialsPrice.setForeground(new Color(0, 0, 0));
+		labelRawMaterialsPrice.setFont(new Font("Lato Black", Font.PLAIN, 26));
+		labelRawMaterialsPrice.setBounds(103, 805, 80, 30);
+		add(labelRawMaterialsPrice);
+		
+		JLabel labelItemImageRawMaterials = new JLabel("");
+		labelItemImageRawMaterials.setHorizontalAlignment(SwingConstants.TRAILING);
+		labelItemImageRawMaterials.setIcon(new ImageIcon(IslandPanel.class.getResource("/ui/images/rawMaterialIcon.png")));
+		labelItemImageRawMaterials.setBackground(Color.BLACK);
+		labelItemImageRawMaterials.setBounds(100, 800, 120, 120);
+		add(labelItemImageRawMaterials);
+		
+		textAreaItemNameRawMaterials = new JTextArea("  Raw Materials");
+		textAreaItemNameRawMaterials.setWrapStyleWord(true);
+		textAreaItemNameRawMaterials.setOpaque(true);
+		textAreaItemNameRawMaterials.setMargin(new Insets(5, 0, 0, 0));
+		textAreaItemNameRawMaterials.setLineWrap(true);
+		textAreaItemNameRawMaterials.setFont(new Font("Lato Black", Font.PLAIN, 16));
+		textAreaItemNameRawMaterials.setEditable(false);
+		textAreaItemNameRawMaterials.setBackground(new Color(255, 255, 255, 175));
+		textAreaItemNameRawMaterials.setBounds(100, 770, 120, 25);
+		//fixes selected text highlighting bug
+		textAreaItemNameRawMaterials.getCaret().deinstall(textAreaItemNameRawMaterials);
+		add(textAreaItemNameRawMaterials);
+		
+		buttonRawMaterialsIncreaseQuantity = new JButton("+");
+		buttonRawMaterialsIncreaseQuantity.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				String curText = textFieldRawMaterialsQuantity.getText();
+				String newText;
+				
+				try {
+					newText = (Math.min(100, Integer.parseInt(curText) + 1)) + "";
+				} catch (NumberFormatException e) {
+					//default back to 0
+					newText = "0";
+				}
+				
+				textFieldRawMaterialsQuantity.setText(newText);
+				
+			}
+		});
+		buttonRawMaterialsIncreaseQuantity.setVerticalAlignment(SwingConstants.TOP);
+		buttonRawMaterialsIncreaseQuantity.setFont(new Font("Lato Black", Font.BOLD, 18));
+		buttonRawMaterialsIncreaseQuantity.setBounds(230, 800, 45, 25);
+		add(buttonRawMaterialsIncreaseQuantity);
+		
+		buttonRawMaterialsDecreaseQuantity = new JButton("-");
+		buttonRawMaterialsDecreaseQuantity.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				String curText = textFieldRawMaterialsQuantity.getText();
+				String newText;
+				
+				try {
+					newText = (Math.max(0, Integer.parseInt(curText) - 1)) + "";
+				} catch (NumberFormatException e) {
+					//default back to 0
+					newText = "0";
+				}
+				
+				textFieldRawMaterialsQuantity.setText(newText);
+				
+			}
+		});
+		buttonRawMaterialsDecreaseQuantity.setVerticalAlignment(SwingConstants.TOP);
+		buttonRawMaterialsDecreaseQuantity.setFont(new Font("Lato Black", Font.BOLD, 18));
+		buttonRawMaterialsDecreaseQuantity.setBounds(230, 895, 45, 25);
+		add(buttonRawMaterialsDecreaseQuantity);
+		
+		textFieldRawMaterialsQuantity = new JTextField();
+		textFieldRawMaterialsQuantity.getDocument().addDocumentListener(new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+				updatePrice();
+			}
+			
+			public void removeUpdate(DocumentEvent e) {
+				if (!textFieldRawMaterialsQuantity.getText().isEmpty())
+					updatePrice();
+			}
+			
+			public void insertUpdate(DocumentEvent e) {
+				updatePrice();
+			}
+			
+			public void updatePrice() {
+				try {
+					int quantity = Integer.parseInt(textFieldRawMaterialsQuantity.getText());
+					Item rawMaterials = GameEnvironment.getItems().get(2);
+					Store store = GameEnvironment.getCurrentIsland().getIslandStore();
+					int updatedPrice = Math.max(1, quantity) * store.getItemPrice(rawMaterials);
+					labelRawMaterialsPrice.setText(updatedPrice + "¢");
+				} catch (NumberFormatException | NullPointerException exception) {
+					System.err.println(exception.getMessage());
+				}
+			}
+			
+		});
+		textFieldRawMaterialsQuantity.setText("0");
+		textFieldRawMaterialsQuantity.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldRawMaterialsQuantity.setFont(new Font("Lato Black", Font.PLAIN, 18));
+		textFieldRawMaterialsQuantity.setColumns(10);
+		textFieldRawMaterialsQuantity.setBounds(230, 838, 45, 45);
+		add(textFieldRawMaterialsQuantity);
+		
+		textAreaItemDescriptionRawMaterials = new JTextArea(GameEnvironment.getItems().get(2).getDescription());
+		textAreaItemDescriptionRawMaterials.setWrapStyleWord(true);
+		textAreaItemDescriptionRawMaterials.setOpaque(true);
+		textAreaItemDescriptionRawMaterials.setMargin(new Insets(7, 5, 0, 0));
+		textAreaItemDescriptionRawMaterials.setLineWrap(true);
+		textAreaItemDescriptionRawMaterials.setFont(new Font("Lato Black", Font.PLAIN, 13));
+		textAreaItemDescriptionRawMaterials.setEditable(false);
+		textAreaItemDescriptionRawMaterials.setBackground(new Color(255, 255, 255, 175));
+		textAreaItemDescriptionRawMaterials.setBounds(100, 925, 260, 25);
+		//fixes selected text highlighting bug
+		textAreaItemDescriptionRawMaterials.getCaret().deinstall(textAreaItemDescriptionRawMaterials);
+		add(textAreaItemDescriptionRawMaterials);
+		
+		buttonBuyRawMaterials = new JButton("Buy");
+		buttonBuyRawMaterials.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				buyItem(GameEnvironment.getItems().get(2));
+			}
+		});
+		buttonBuyRawMaterials.setFont(new Font("Lato Black", Font.PLAIN, 16));
+		buttonBuyRawMaterials.setBounds(290, 800, 70, 50);
+		add(buttonBuyRawMaterials);
+		
+		buttonSellRawMaterials = new JButton("Sell");
+		buttonSellRawMaterials.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				sellItem(GameEnvironment.getItems().get(2));
+			}
+		});
+		buttonSellRawMaterials.setFont(new Font("Lato Black", Font.PLAIN, 16));
+		buttonSellRawMaterials.setBounds(290, 870, 70, 50);
+		add(buttonSellRawMaterials);
+		
+	}
+	
+	/**
+	 * Builds all of the GUI elements needed to buy and sell the Alcohol item
+	 */
+	private void constructAlcoholElements() {
 		
 		JButton buttonAlcoholIncreaseQuantity = new JButton("+");
 		buttonAlcoholIncreaseQuantity.addActionListener(new ActionListener() {
@@ -266,485 +778,12 @@ public class IslandPanel extends JPanel {
 		textAreaItemDescriptionAlcohol.getCaret().deinstall(textAreaItemDescriptionAlcohol);
 		add(textAreaItemDescriptionAlcohol);
 		
-		labelItemStockQuantityRawMaterials = new JLabel("");
-		labelItemStockQuantityRawMaterials.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelItemStockQuantityRawMaterials.setForeground(Color.RED);
-		labelItemStockQuantityRawMaterials.setFont(new Font("Lato Black", Font.PLAIN, 26));
-		labelItemStockQuantityRawMaterials.setBounds(165, 805, 50, 30);
-		add(labelItemStockQuantityRawMaterials);
-		
-		labelRawMaterialsPrice = new JLabel("0");
-		labelRawMaterialsPrice.setHorizontalAlignment(SwingConstants.LEFT);
-		labelRawMaterialsPrice.setForeground(new Color(0, 0, 0));
-		labelRawMaterialsPrice.setFont(new Font("Lato Black", Font.PLAIN, 26));
-		labelRawMaterialsPrice.setBounds(103, 805, 80, 30);
-		add(labelRawMaterialsPrice);
-		
-		JLabel labelItemImageRawMaterials = new JLabel("");
-		labelItemImageRawMaterials.setHorizontalAlignment(SwingConstants.TRAILING);
-		labelItemImageRawMaterials.setIcon(new ImageIcon(IslandPanel.class.getResource("/ui/images/rawMaterialIcon.png")));
-		labelItemImageRawMaterials.setBackground(Color.BLACK);
-		labelItemImageRawMaterials.setBounds(100, 800, 120, 120);
-		add(labelItemImageRawMaterials);
-		
-		textAreaItemNameRawMaterials = new JTextArea("  Raw Materials");
-		textAreaItemNameRawMaterials.setWrapStyleWord(true);
-		textAreaItemNameRawMaterials.setOpaque(true);
-		textAreaItemNameRawMaterials.setMargin(new Insets(5, 0, 0, 0));
-		textAreaItemNameRawMaterials.setLineWrap(true);
-		textAreaItemNameRawMaterials.setFont(new Font("Lato Black", Font.PLAIN, 16));
-		textAreaItemNameRawMaterials.setEditable(false);
-		textAreaItemNameRawMaterials.setBackground(new Color(255, 255, 255, 175));
-		textAreaItemNameRawMaterials.setBounds(100, 770, 120, 25);
-		//fixes selected text highlighting bug
-		textAreaItemNameRawMaterials.getCaret().deinstall(textAreaItemNameRawMaterials);
-		add(textAreaItemNameRawMaterials);
-		
-		buttonRawMaterialsIncreaseQuantity = new JButton("+");
-		buttonRawMaterialsIncreaseQuantity.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				String curText = textFieldRawMaterialsQuantity.getText();
-				String newText;
-				
-				try {
-					newText = (Math.min(100, Integer.parseInt(curText) + 1)) + "";
-				} catch (NumberFormatException e) {
-					//default back to 0
-					newText = "0";
-				}
-				
-				textFieldRawMaterialsQuantity.setText(newText);
-				
-			}
-		});
-		buttonRawMaterialsIncreaseQuantity.setVerticalAlignment(SwingConstants.TOP);
-		buttonRawMaterialsIncreaseQuantity.setFont(new Font("Lato Black", Font.BOLD, 18));
-		buttonRawMaterialsIncreaseQuantity.setBounds(230, 800, 45, 25);
-		add(buttonRawMaterialsIncreaseQuantity);
-		
-		buttonRawMaterialsDecreaseQuantity = new JButton("-");
-		buttonRawMaterialsDecreaseQuantity.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				String curText = textFieldRawMaterialsQuantity.getText();
-				String newText;
-				
-				try {
-					newText = (Math.max(0, Integer.parseInt(curText) - 1)) + "";
-				} catch (NumberFormatException e) {
-					//default back to 0
-					newText = "0";
-				}
-				
-				textFieldRawMaterialsQuantity.setText(newText);
-				
-			}
-		});
-		buttonRawMaterialsDecreaseQuantity.setVerticalAlignment(SwingConstants.TOP);
-		buttonRawMaterialsDecreaseQuantity.setFont(new Font("Lato Black", Font.BOLD, 18));
-		buttonRawMaterialsDecreaseQuantity.setBounds(230, 895, 45, 25);
-		add(buttonRawMaterialsDecreaseQuantity);
-		
-		textFieldRawMaterialsQuantity = new JTextField();
-		textFieldRawMaterialsQuantity.getDocument().addDocumentListener(new DocumentListener() {
-			public void changedUpdate(DocumentEvent e) {
-				updatePrice();
-			}
-			
-			public void removeUpdate(DocumentEvent e) {
-				if (!textFieldRawMaterialsQuantity.getText().isEmpty())
-					updatePrice();
-			}
-			
-			public void insertUpdate(DocumentEvent e) {
-				updatePrice();
-			}
-			
-			public void updatePrice() {
-				try {
-					int quantity = Integer.parseInt(textFieldRawMaterialsQuantity.getText());
-					Item rawMaterials = GameEnvironment.getItems().get(2);
-					Store store = GameEnvironment.getCurrentIsland().getIslandStore();
-					int updatedPrice = Math.max(1, quantity) * store.getItemPrice(rawMaterials);
-					labelRawMaterialsPrice.setText(updatedPrice + "¢");
-				} catch (NumberFormatException | NullPointerException exception) {
-					System.err.println(exception.getMessage());
-				}
-			}
-			
-		});
-		textFieldRawMaterialsQuantity.setText("0");
-		textFieldRawMaterialsQuantity.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldRawMaterialsQuantity.setFont(new Font("Lato Black", Font.PLAIN, 18));
-		textFieldRawMaterialsQuantity.setColumns(10);
-		textFieldRawMaterialsQuantity.setBounds(230, 838, 45, 45);
-		add(textFieldRawMaterialsQuantity);
-		
-		textAreaItemDescriptionRawMaterials = new JTextArea(GameEnvironment.getItems().get(2).getDescription());
-		textAreaItemDescriptionRawMaterials.setWrapStyleWord(true);
-		textAreaItemDescriptionRawMaterials.setOpaque(true);
-		textAreaItemDescriptionRawMaterials.setMargin(new Insets(7, 5, 0, 0));
-		textAreaItemDescriptionRawMaterials.setLineWrap(true);
-		textAreaItemDescriptionRawMaterials.setFont(new Font("Lato Black", Font.PLAIN, 13));
-		textAreaItemDescriptionRawMaterials.setEditable(false);
-		textAreaItemDescriptionRawMaterials.setBackground(new Color(255, 255, 255, 175));
-		textAreaItemDescriptionRawMaterials.setBounds(100, 925, 260, 25);
-		//fixes selected text highlighting bug
-		textAreaItemDescriptionRawMaterials.getCaret().deinstall(textAreaItemDescriptionRawMaterials);
-		add(textAreaItemDescriptionRawMaterials);
-		
-		buttonBuyRawMaterials = new JButton("Buy");
-		buttonBuyRawMaterials.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				buyItem(GameEnvironment.getItems().get(2));
-			}
-		});
-		buttonBuyRawMaterials.setFont(new Font("Lato Black", Font.PLAIN, 16));
-		buttonBuyRawMaterials.setBounds(290, 800, 70, 50);
-		add(buttonBuyRawMaterials);
-		
-		buttonSellRawMaterials = new JButton("Sell");
-		buttonSellRawMaterials.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				sellItem(GameEnvironment.getItems().get(2));
-			}
-		});
-		buttonSellRawMaterials.setFont(new Font("Lato Black", Font.PLAIN, 16));
-		buttonSellRawMaterials.setBounds(290, 870, 70, 50);
-		add(buttonSellRawMaterials);
-		
-		textAreaItemNameFood = new JTextArea("          Food");
-		textAreaItemNameFood.setWrapStyleWord(true);
-		textAreaItemNameFood.setOpaque(true);
-		textAreaItemNameFood.setMargin(new Insets(5, 0, 0, 0));
-		textAreaItemNameFood.setLineWrap(true);
-		textAreaItemNameFood.setFont(new Font("Lato Black", Font.PLAIN, 16));
-		textAreaItemNameFood.setEditable(false);
-		textAreaItemNameFood.setBackground(new Color(255, 255, 255, 175));
-		textAreaItemNameFood.setBounds(395, 570, 120, 25);
-		//fixes selected text highlighting bug
-		textAreaItemNameFood.getCaret().deinstall(textAreaItemNameFood);
-		add(textAreaItemNameFood);
-		
-		labelFoodPrice = new JLabel("0");
-		labelFoodPrice.setHorizontalAlignment(SwingConstants.LEFT);
-		labelFoodPrice.setForeground(new Color(0, 0, 0));
-		labelFoodPrice.setFont(new Font("Lato Black", Font.PLAIN, 26));
-		labelFoodPrice.setBounds(398, 605, 80, 30);
-		add(labelFoodPrice);
-		
-		labelItemStockQuantityFood = new JLabel("");
-		labelItemStockQuantityFood.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelItemStockQuantityFood.setForeground(Color.RED);
-		labelItemStockQuantityFood.setFont(new Font("Lato Black", Font.PLAIN, 26));
-		labelItemStockQuantityFood.setBounds(460, 605, 50, 30);
-		add(labelItemStockQuantityFood);
-		
-		buttonFoodIncreaseQuantity = new JButton("+");
-		buttonFoodIncreaseQuantity.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				String curText = textFieldFoodQuantity.getText();
-				String newText;
-				
-				try {
-					newText = (Math.min(100, Integer.parseInt(curText) + 1)) + "";
-				} catch (NumberFormatException e) {
-					//default back to 0
-					newText = "0";
-				}
-				
-				textFieldFoodQuantity.setText(newText);
-				
-			}
-		});
-		
-		labelItemImageFood = new JLabel("");
-		labelItemImageFood.setIcon(new ImageIcon(IslandPanel.class.getResource("/ui/images/foodIcon.png")));
-		labelItemImageFood.setHorizontalAlignment(SwingConstants.TRAILING);
-		labelItemImageFood.setBackground(Color.BLACK);
-		labelItemImageFood.setBounds(395, 600, 120, 120);
-		add(labelItemImageFood);
-		buttonFoodIncreaseQuantity.setVerticalAlignment(SwingConstants.TOP);
-		buttonFoodIncreaseQuantity.setFont(new Font("Lato Black", Font.BOLD, 18));
-		buttonFoodIncreaseQuantity.setBounds(525, 600, 45, 25);
-		add(buttonFoodIncreaseQuantity);
-		
-		textFieldFoodQuantity = new JTextField();
-		textFieldFoodQuantity.getDocument().addDocumentListener(new DocumentListener() {
-			public void changedUpdate(DocumentEvent e) {
-				updatePrice();
-			}
-			
-			public void removeUpdate(DocumentEvent e) {
-				if (!textFieldFoodQuantity.getText().isEmpty())
-					updatePrice();
-			}
-			
-			public void insertUpdate(DocumentEvent e) {
-				updatePrice();
-			}
-			
-			public void updatePrice() {
-				try {
-					int quantity = Integer.parseInt(textFieldFoodQuantity.getText());
-					Item food = GameEnvironment.getItems().get(3);
-					Store store = GameEnvironment.getCurrentIsland().getIslandStore();
-					int updatedPrice = Math.max(1, quantity) * store.getItemPrice(food);
-					labelFoodPrice.setText(updatedPrice + "¢");
-				} catch (NumberFormatException | NullPointerException exception) {
-					System.err.println(exception.getMessage());
-				}
-			}
-			
-		});
-		textFieldFoodQuantity.setText("0");
-		textFieldFoodQuantity.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldFoodQuantity.setFont(new Font("Lato Black", Font.PLAIN, 18));
-		textFieldFoodQuantity.setColumns(10);
-		textFieldFoodQuantity.setBounds(525, 638, 45, 45);
-		add(textFieldFoodQuantity);
-		
-		buttonFoodDecreaseQuantity = new JButton("-");
-		buttonFoodDecreaseQuantity.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				String curText = textFieldFoodQuantity.getText();
-				String newText;
-				
-				try {
-					newText = (Math.max(0, Integer.parseInt(curText) - 1)) + "";
-				} catch (NumberFormatException e) {
-					//default back to 0
-					newText = "0";
-				}
-				
-				textFieldFoodQuantity.setText(newText);
-				
-			}
-		});
-		buttonFoodDecreaseQuantity.setVerticalAlignment(SwingConstants.TOP);
-		buttonFoodDecreaseQuantity.setFont(new Font("Lato Black", Font.BOLD, 18));
-		buttonFoodDecreaseQuantity.setBounds(525, 695, 45, 25);
-		add(buttonFoodDecreaseQuantity);
-		
-		buttonBuyFood = new JButton("Buy");
-		buttonBuyFood.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				buyItem(GameEnvironment.getItems().get(3));
-			}
-		});
-		buttonBuyFood.setFont(new Font("Lato Black", Font.PLAIN, 16));
-		buttonBuyFood.setBounds(585, 600, 70, 50);
-		add(buttonBuyFood);
-		
-		buttonSellFood = new JButton("Sell");
-		buttonSellFood.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				sellItem(GameEnvironment.getItems().get(3));
-			}
-		});
-		buttonSellFood.setFont(new Font("Lato Black", Font.PLAIN, 16));
-		buttonSellFood.setBounds(585, 670, 70, 50);
-		add(buttonSellFood);
-		
-		textAreaItemDescriptionFood = new JTextArea(GameEnvironment.getItems().get(3).getDescription());
-		textAreaItemDescriptionFood.setWrapStyleWord(true);
-		textAreaItemDescriptionFood.setOpaque(true);
-		textAreaItemDescriptionFood.setMargin(new Insets(7, 5, 0, 0));
-		textAreaItemDescriptionFood.setLineWrap(true);
-		textAreaItemDescriptionFood.setFont(new Font("Lato Black", Font.PLAIN, 13));
-		textAreaItemDescriptionFood.setEditable(false);
-		textAreaItemDescriptionFood.setBackground(new Color(255, 255, 255, 175));
-		textAreaItemDescriptionFood.setBounds(395, 725, 260, 25);
-		//fixes selected text highlighting bug
-		textAreaItemDescriptionFood.getCaret().deinstall(textAreaItemDescriptionFood);
-		add(textAreaItemDescriptionFood);
-		
-		textAreaItemNameLuxuryGoods = new JTextArea("  Luxury Goods");
-		textAreaItemNameLuxuryGoods.setWrapStyleWord(true);
-		textAreaItemNameLuxuryGoods.setOpaque(true);
-		textAreaItemNameLuxuryGoods.setMargin(new Insets(5, 0, 0, 0));
-		textAreaItemNameLuxuryGoods.setLineWrap(true);
-		textAreaItemNameLuxuryGoods.setFont(new Font("Lato Black", Font.PLAIN, 16));
-		textAreaItemNameLuxuryGoods.setEditable(false);
-		textAreaItemNameLuxuryGoods.setBackground(new Color(255, 255, 255, 175));
-		textAreaItemNameLuxuryGoods.setBounds(395, 770, 120, 25);
-		//fixes selected text highlighting bug
-		textAreaItemNameLuxuryGoods.getCaret().deinstall(textAreaItemNameLuxuryGoods);
-		add(textAreaItemNameLuxuryGoods);
-		
-		labelLuxuryGoodsPrice = new JLabel("0");
-		labelLuxuryGoodsPrice.setHorizontalAlignment(SwingConstants.LEFT);
-		labelLuxuryGoodsPrice.setForeground(new Color(0, 0, 0));
-		labelLuxuryGoodsPrice.setFont(new Font("Lato Black", Font.PLAIN, 26));
-		labelLuxuryGoodsPrice.setBounds(398, 805, 80, 30);
-		add(labelLuxuryGoodsPrice);
-		
-		labelItemStockQuantityLuxuryGoods = new JLabel("");
-		labelItemStockQuantityLuxuryGoods.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelItemStockQuantityLuxuryGoods.setForeground(Color.RED);
-		labelItemStockQuantityLuxuryGoods.setFont(new Font("Lato Black", Font.PLAIN, 26));
-		labelItemStockQuantityLuxuryGoods.setBounds(460, 805, 50, 30);
-		add(labelItemStockQuantityLuxuryGoods);
-		
-		labelItemImageLuxuryGoods = new JLabel("");
-		labelItemImageLuxuryGoods.setIcon(new ImageIcon(IslandPanel.class.getResource("/ui/images/luxuryIcon.png")));
-		labelItemImageLuxuryGoods.setHorizontalAlignment(SwingConstants.TRAILING);
-		labelItemImageLuxuryGoods.setBackground(Color.BLACK);
-		labelItemImageLuxuryGoods.setBounds(395, 800, 120, 120);
-		add(labelItemImageLuxuryGoods);
-		
-		buttonLuxuryGoodsIncreaseQuantity = new JButton("+");
-		buttonLuxuryGoodsIncreaseQuantity.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				String curText = textFieldLuxuryGoodsQuantity.getText();
-				String newText;
-				
-				try {
-					newText = (Math.min(100, Integer.parseInt(curText) + 1)) + "";
-				} catch (NumberFormatException e) {
-					//default back to 0
-					newText = "0";
-				}
-				
-				textFieldLuxuryGoodsQuantity.setText(newText);
-				
-			}
-		});
-		buttonLuxuryGoodsIncreaseQuantity.setVerticalAlignment(SwingConstants.TOP);
-		buttonLuxuryGoodsIncreaseQuantity.setFont(new Font("Lato Black", Font.BOLD, 18));
-		buttonLuxuryGoodsIncreaseQuantity.setBounds(525, 800, 45, 25);
-		add(buttonLuxuryGoodsIncreaseQuantity);
-		
-		textFieldLuxuryGoodsQuantity = new JTextField();
-		textFieldLuxuryGoodsQuantity.getDocument().addDocumentListener(new DocumentListener() {
-			public void changedUpdate(DocumentEvent e) {
-				updatePrice();
-			}
-			
-			public void removeUpdate(DocumentEvent e) {
-				if (!textFieldLuxuryGoodsQuantity.getText().isEmpty())
-					updatePrice();
-			}
-			
-			public void insertUpdate(DocumentEvent e) {
-				updatePrice();
-			}
-			
-			public void updatePrice() {
-				try {
-					int quantity = Integer.parseInt(textFieldLuxuryGoodsQuantity.getText());
-					Item luxuryGoods = GameEnvironment.getItems().get(0);
-					Store store = GameEnvironment.getCurrentIsland().getIslandStore();
-					int updatedPrice = Math.max(1, quantity) * store.getItemPrice(luxuryGoods);
-					labelLuxuryGoodsPrice.setText(updatedPrice + "¢");
-				} catch (NumberFormatException | NullPointerException exception) {
-					System.err.println(exception.getMessage());
-				}
-			}
-			
-		});
-		textFieldLuxuryGoodsQuantity.setText("0");
-		textFieldLuxuryGoodsQuantity.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldLuxuryGoodsQuantity.setFont(new Font("Lato Black", Font.PLAIN, 18));
-		textFieldLuxuryGoodsQuantity.setColumns(10);
-		textFieldLuxuryGoodsQuantity.setBounds(525, 838, 45, 45);
-		add(textFieldLuxuryGoodsQuantity);
-		
-		buttonBuyLuxuryGoods = new JButton("Buy");
-		buttonBuyLuxuryGoods.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				buyItem(GameEnvironment.getItems().get(0));
-			}
-		});
-		buttonBuyLuxuryGoods.setFont(new Font("Lato Black", Font.PLAIN, 16));
-		buttonBuyLuxuryGoods.setBounds(585, 800, 70, 50);
-		add(buttonBuyLuxuryGoods);
-		
-		buttonSellLuxuryGoods = new JButton("Sell");
-		buttonSellLuxuryGoods.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				sellItem(GameEnvironment.getItems().get(0));
-			}
-		});
-		buttonSellLuxuryGoods.setFont(new Font("Lato Black", Font.PLAIN, 16));
-		buttonSellLuxuryGoods.setBounds(585, 870, 70, 50);
-		add(buttonSellLuxuryGoods);
-		
-		buttonLuxuryGoodsDecreaseQuantity = new JButton("-");
-		buttonLuxuryGoodsDecreaseQuantity.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				String curText = textFieldLuxuryGoodsQuantity.getText();
-				String newText;
-				
-				try {
-					newText = (Math.max(0, Integer.parseInt(curText) - 1)) + "";
-				} catch (NumberFormatException e) {
-					//default back to 0
-					newText = "0";
-				}
-				
-				textFieldLuxuryGoodsQuantity.setText(newText);
-				
-			}
-		});
-		buttonLuxuryGoodsDecreaseQuantity.setVerticalAlignment(SwingConstants.TOP);
-		buttonLuxuryGoodsDecreaseQuantity.setFont(new Font("Lato Black", Font.BOLD, 18));
-		buttonLuxuryGoodsDecreaseQuantity.setBounds(525, 895, 45, 25);
-		add(buttonLuxuryGoodsDecreaseQuantity);
-		
-		textAreaItemDescriptionLuxuryGoods = new JTextArea(GameEnvironment.getItems().get(0).getDescription());
-		textAreaItemDescriptionLuxuryGoods.setWrapStyleWord(true);
-		textAreaItemDescriptionLuxuryGoods.setOpaque(true);
-		textAreaItemDescriptionLuxuryGoods.setMargin(new Insets(7, 5, 0, 0));
-		textAreaItemDescriptionLuxuryGoods.setLineWrap(true);
-		textAreaItemDescriptionLuxuryGoods.setFont(new Font("Lato Black", Font.PLAIN, 13));
-		textAreaItemDescriptionLuxuryGoods.setEditable(false);
-		textAreaItemDescriptionLuxuryGoods.setBackground(new Color(255, 255, 255, 175));
-		textAreaItemDescriptionLuxuryGoods.setBounds(395, 925, 260, 25);
-		//fixes selected text highlighting bug
-		textAreaItemDescriptionLuxuryGoods.getCaret().deinstall(textAreaItemDescriptionLuxuryGoods);
-		add(textAreaItemDescriptionLuxuryGoods);
-		
-		textAreaTransactionResult = new JTextArea("");
-		textAreaTransactionResult.setWrapStyleWord(true);
-		textAreaTransactionResult.setOpaque(true);
-		textAreaTransactionResult.setMargin(new Insets(5, 15, 15, 15));
-		textAreaTransactionResult.setLineWrap(true);
-		textAreaTransactionResult.setFont(new Font("Lato Black", Font.PLAIN, 16));
-		textAreaTransactionResult.setEditable(false);
-		textAreaTransactionResult.setBackground(new Color(255, 255, 255, 175));
-		textAreaTransactionResult.setBounds(100, 965, 800, 50);
-		//fixes selected text highlighting bug
-		textAreaTransactionResult.getCaret().deinstall(textAreaTransactionResult);
-		add(textAreaTransactionResult);
-		
-		//create button to view ship properties, ledger and upgrades
-		buttonLedgerAndInfo = new JButton("View ledger, ship details and island upgrades");
-		buttonLedgerAndInfo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				PanelManager.setPanel("LedgerStatsUpgradesPanel");
-			}
-		});
-		buttonLedgerAndInfo.setBounds(1210, 500, 610, 50);
-		add(buttonLedgerAndInfo);
-		
-		
-		//create background image label
-		labelBackgroundImage = new JLabel("");
-		labelBackgroundImage.setBounds(0, 0, 1920, 1080);
-		add(labelBackgroundImage);
-		
 	}
 	
 	/**
 	 * Creates the basic information labels such as name and description of the island
 	 */
-	public void constructIslandInformation() {
+	private void constructIslandInformation() {
 		
 		labelIslandName = new JLabel("");
 		labelIslandName.setHorizontalAlignment(SwingConstants.CENTER);

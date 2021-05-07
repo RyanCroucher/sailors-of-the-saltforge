@@ -7,6 +7,10 @@ package exceptions;
  */
 public class InsufficientGoldException extends Exception {
 
+	/**
+	 * Constructs a new InsufficientGoldException
+	 * @param errorMessage the error details
+	 */
 	public InsufficientGoldException(String errorMessage) {
 		super(errorMessage);
 	}

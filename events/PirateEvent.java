@@ -41,6 +41,13 @@ public class PirateEvent extends RandomEvent {
 	 */
 	private int roundChunk = 1;
 	
+	/**
+	 * Constructs a new Pirate Event.
+	 * @param name the title of the event
+	 * @param description a description of what happens in the event
+	 * @param pirateShip the generated pirate ship object
+	 * @param prizeIfWon gold reward for the player if they win a fight
+	 */
 	public PirateEvent(String name, String description, Ship pirateShip, int prizeIfWon) {
 		super(name, description);
 		
@@ -321,10 +328,10 @@ public class PirateEvent extends RandomEvent {
 		
 	}
 	
-	@Override
 	/**
 	 * Breaks string into chunks if there was a round by round dice game
 	 */
+	@Override
 	public String getEffect() {
 
 		//there was a fight or a flee, break string up into chunks

@@ -27,11 +27,20 @@ import java.awt.event.ActionListener;
 import java.util.Enumeration;
 import java.awt.event.ActionEvent;
 
+/**
+ * GUI Panel to handle character creation and initiating the game
+ * @author Ryan Croucher rcr69
+ *
+ */
 public class CharacterCreatePanel extends JPanel {
 	
+	//to enter a character name
 	private JTextField textFieldChooseName;
+	
+	//to display errors with entered data during character creation
 	private JLabel labelErrorMessage;
 	
+	//slider bar to choose game duration
 	private JSlider sliderGameDuration;
 
 	/**

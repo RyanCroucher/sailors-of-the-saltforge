@@ -20,25 +20,37 @@ import java.awt.Font;
 import javax.swing.JTextArea;
 import java.awt.Insets;
 
+/**
+ * Panel to display travel between islands
+ * @author Ryan Croucher rcr69
+ *
+ */
 public class RoutePanel extends JPanel {
 	
+	//route labels
 	private static JLabel labelRouteName;
 	private static JTextArea textAreaRouteDescription;
-	private static JButton buttonNext;
-	
 	private static JLabel labelTravelInfo;
 	
+	//button to proceed from route panel
+	private static JButton buttonNext;
+	
+	//uses real elapsed time to update ships position and visible timer
 	private static int travelSeconds;
 	private static int millisecondsElapsed = 0;
 	private static int remainingTravelSeconds;
-	
-	private static Island destination;
-	private static boolean eventOccurs;
-	private JLabel labelShipImage;
-	
 	private static javax.swing.Timer timer;
 	
-	public int shipXPosition = -150;
+	//the island we're travelling to
+	private static Island destination;
+	
+	//whether or not an event occurs on our journey
+	private static boolean eventOccurs;
+	
+	//the player's ship icon
+	private JLabel labelShipImage;
+	
+	private int shipXPosition = -150;
 
 	/**
 	 * Create the panel.
@@ -48,30 +60,34 @@ public class RoutePanel extends JPanel {
 		setBounds(0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		setLayout(null);
 		
-		labelRouteName = new JLabel("");
-		labelRouteName.setForeground(Color.RED);
-		labelRouteName.setFont(new Font("Lato Black", Font.PLAIN, 48));
-		labelRouteName.setHorizontalAlignment(SwingConstants.CENTER);
-		labelRouteName.setBounds(660, 30, 600, 50);
-		add(labelRouteName);
+		constructTexts();
 		
-		labelTravelInfo = new JLabel("");
-		labelTravelInfo.setFont(new Font("Lato Black", Font.PLAIN, 20));
-		labelTravelInfo.setBounds(570, 662, 400, 25);
-		add(labelTravelInfo);
+		constructNextButton();
 		
-		textAreaRouteDescription = new JTextArea("");
-		textAreaRouteDescription.setWrapStyleWord(true);
-		textAreaRouteDescription.setOpaque(true);
-		textAreaRouteDescription.setMargin(new Insets(15, 15, 15, 15));
-		textAreaRouteDescription.setLineWrap(true);
-		textAreaRouteDescription.setFont(new Font("Lato Black", Font.PLAIN, 20));
-		textAreaRouteDescription.setEditable(false);
-		textAreaRouteDescription.setBackground(new Color(255, 255, 255, 175));
-		textAreaRouteDescription.setBounds(560, 95, 800, 600);
-		//fixes selected text highlighting bug
-		textAreaRouteDescription.getCaret().deinstall(textAreaRouteDescription);
-		add(textAreaRouteDescription);
+		//front layer of the background
+		JLabel labelBackgroundFore = new JLabel("");
+		labelBackgroundFore.setIcon(new ImageIcon(RoutePanel.class.getResource("/ui/images/basaltSpiresForeground.png")));
+		labelBackgroundFore.setBounds(0, 0, 1920, 1080);
+		add(labelBackgroundFore);
+		
+		//the ship image, between the two background
+		labelShipImage = new JLabel("");
+		labelShipImage.setIcon(new ImageIcon(RoutePanel.class.getResource("/ui/images/basaltSpiresShip.png")));
+		labelShipImage.setBounds(-150, 305, 400, 300);
+		add(labelShipImage);
+		
+		//rear layer of the background
+		JLabel labelBackgroundRear = new JLabel("");
+		labelBackgroundRear.setIcon(new ImageIcon(RoutePanel.class.getResource("/ui/images/basaltSpiresBackground.png")));
+		labelBackgroundRear.setBounds(0, 0, 1920, 1080);
+		add(labelBackgroundRear);
+
+	}
+	
+	/**
+	 * Creates the button used to proceed to the next panel
+	 */
+	private void constructNextButton() {
 		
 		buttonNext = new JButton("ARRIVE");
 		buttonNext.addActionListener(new ActionListener() {
@@ -98,24 +114,46 @@ public class RoutePanel extends JPanel {
 		buttonNext.setBounds(1490, 915, 400, 100);
 		add(buttonNext);
 		
-		JLabel labelBackgroundFore = new JLabel("");
-		labelBackgroundFore.setIcon(new ImageIcon(RoutePanel.class.getResource("/ui/images/basaltSpiresForeground.png")));
-		labelBackgroundFore.setBounds(0, 0, 1920, 1080);
-		add(labelBackgroundFore);
-		
-		labelShipImage = new JLabel("");
-		labelShipImage.setIcon(new ImageIcon(RoutePanel.class.getResource("/ui/images/basaltSpiresShip.png")));
-		labelShipImage.setBounds(-150, 305, 400, 300);
-		add(labelShipImage);
-		
-		JLabel labelBackgroundRear = new JLabel("");
-		labelBackgroundRear.setIcon(new ImageIcon(RoutePanel.class.getResource("/ui/images/basaltSpiresBackground.png")));
-		labelBackgroundRear.setBounds(0, 0, 1920, 1080);
-		add(labelBackgroundRear);
-
 	}
 	
+	/**
+	 * Creates the labels and text areas for the panel
+	 */
+	private void constructTexts() {
+		
+		labelRouteName = new JLabel("");
+		labelRouteName.setForeground(Color.RED);
+		labelRouteName.setFont(new Font("Lato Black", Font.PLAIN, 48));
+		labelRouteName.setHorizontalAlignment(SwingConstants.CENTER);
+		labelRouteName.setBounds(660, 30, 600, 50);
+		add(labelRouteName);
+		
+		labelTravelInfo = new JLabel("");
+		labelTravelInfo.setFont(new Font("Lato Black", Font.PLAIN, 20));
+		labelTravelInfo.setBounds(570, 662, 400, 25);
+		add(labelTravelInfo);
+		
+		textAreaRouteDescription = new JTextArea("");
+		textAreaRouteDescription.setWrapStyleWord(true);
+		textAreaRouteDescription.setOpaque(true);
+		textAreaRouteDescription.setMargin(new Insets(15, 15, 15, 15));
+		textAreaRouteDescription.setLineWrap(true);
+		textAreaRouteDescription.setFont(new Font("Lato Black", Font.PLAIN, 20));
+		textAreaRouteDescription.setEditable(false);
+		textAreaRouteDescription.setBackground(new Color(255, 255, 255, 175));
+		textAreaRouteDescription.setBounds(560, 95, 800, 600);
+		//fixes selected text highlighting bug
+		textAreaRouteDescription.getCaret().deinstall(textAreaRouteDescription);
+		add(textAreaRouteDescription);
+		
+	}
 	
+	/**
+	 * Updates the panel with relevant route information for this journey
+	 * @param route the current route
+	 * @param destinationIsland the island we're traveling to
+	 * @param event whether an event will occur or not
+	 */
 	public void updateDetails(Route route, Island destinationIsland, boolean event) {
 		
 		int modifiedDuration = GameEnvironment.getModifiedTravelTime(route.getDistance());
@@ -134,29 +172,22 @@ public class RoutePanel extends JPanel {
 		
 		labelTravelInfo.setForeground(Color.BLACK);
 		
-//		if (eventOccurs) {
-//			labelTravelInfo.setForeground(Color.RED);
-//			labelTravelInfo.setText("Something happens on your journey.");
-//			
-//			buttonNext.setText("Next");
-//			
-//		} else {
-//			labelTravelInfo.setForeground(Color.BLACK);
-//			labelTravelInfo.setText("Your journey was uneventful.");
-//			
-//			buttonNext.setText("Arrive");
-//		}
-		
 		stopTimerAndStartNewTimer();
 		
 	}
 	
+	/**
+	 * Stop the timer and make a new one
+	 */
 	private void stopTimerAndStartNewTimer() {
 		if (timer != null)
 			timer.stop();
 		moveShipAndUpdateTimer();
 	}
 	
+	/**
+	 * Translates the ship on the screen, at a rate proportional to travel time. Also updates a visual timer.
+	 */
 	private void moveShipAndUpdateTimer() {
 		
 		int distanceToMove = 2000;
@@ -199,5 +230,12 @@ public class RoutePanel extends JPanel {
 		
 		timer.start();
 		
+	}
+	
+	/**
+	 * Puts the ship image back in the start position
+	 */
+	public void resetShipXPosition() {
+		shipXPosition = -150;
 	}
 }

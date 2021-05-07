@@ -7,6 +7,10 @@ package exceptions;
  */
 public class InsufficientCargoCapacityException extends Exception {
 
+	/**
+	 * Constructs a new InsufficientCargoCapacityException
+	 * @param errorMessage the error details
+	 */
 	public InsufficientCargoCapacityException(String errorMessage) {
 		super(errorMessage);
 	}

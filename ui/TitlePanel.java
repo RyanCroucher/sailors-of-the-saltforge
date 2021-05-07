@@ -13,6 +13,11 @@ import main.Constants;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 
+/**
+ * The first panel of the game, displayed on startup
+ * @author Ryan Croucher rcr69
+ *
+ */
 public class TitlePanel extends JPanel {
 
 	/**
@@ -23,6 +28,7 @@ public class TitlePanel extends JPanel {
 		setBounds(0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		setLayout(null);
 		
+		//starts the game
 		JButton buttonPlayGame = new JButton("PLAY");
 		buttonPlayGame.setVerticalAlignment(SwingConstants.BOTTOM);
 		buttonPlayGame.setFont(new Font("Lato Black", Font.PLAIN, 60));
@@ -39,6 +45,7 @@ public class TitlePanel extends JPanel {
 		buttonPlayGame.setFocusPainted(false);
 		buttonPlayGame.setForeground(new Color(255,0,0,255));
 		
+		//authors
 		JLabel labelCreatedBy = new JLabel("Created by Ryan Croucher and Steven Johnson");
 		labelCreatedBy.setForeground(Color.RED);
 		labelCreatedBy.setHorizontalAlignment(SwingConstants.CENTER);
@@ -46,6 +53,7 @@ public class TitlePanel extends JPanel {
 		labelCreatedBy.setBounds(660, 120, 600, 100);
 		add(labelCreatedBy);
 		
+		//background image
 		JLabel labelBackgroundImage = new JLabel("");
 		labelBackgroundImage.setIcon(new ImageIcon(TitlePanel.class.getResource("/ui/images/title.png")));
 		labelBackgroundImage.setBounds(0, 0, 1920, 1080);
