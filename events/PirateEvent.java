@@ -106,7 +106,7 @@ public class PirateEvent extends RandomEvent {
 		
 		//Escaped
 		else if (super.getStage() == 4){
-			
+			//there is no effect
 		}
 	}
 	
