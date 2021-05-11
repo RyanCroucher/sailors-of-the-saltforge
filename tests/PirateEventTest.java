@@ -64,6 +64,9 @@ class PirateEventTest {
 			assertEquals(Player.getKilledByEvent(), true);
 		}
 		
+		//un-end the game, if it ended
+		Player.setKilledByEvent(false);
+		
 	}
 	
 	@Test

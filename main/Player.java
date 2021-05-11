@@ -109,8 +109,8 @@ public class Player {
 	/**
 	 * Sets the killedByEvent flag to true, for instance when killed by pirates
 	 */
-	public static void setKilledByEvent() {
-		killedByEvent = true;
+	public static void setKilledByEvent(boolean state) {
+		killedByEvent = state;
 	}
 	
 }

@@ -99,7 +99,7 @@ public class PirateEvent extends RandomEvent {
 			
 			Player.getShip().setCargo(0);
 			
-			Player.setKilledByEvent();
+			Player.setKilledByEvent(true);
 			GameEnvironment.checkEndgameConditions();
 			
 		}

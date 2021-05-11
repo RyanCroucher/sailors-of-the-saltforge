@@ -19,6 +19,7 @@ class WeatherEventTest {
 		
 		GameEnvironment.setupGame();
 		GameEnvironment.setGameDuration(20);
+		Player.setGold(1000);
 		Player.setShip(new Ship(ShipModel.MERCHANTMAN));
 		int eventDamage = (int) (Math.random() * 5f + 10f);
 		int eventCrewLoss = (int) (Math.random() * 1f + 10f);
