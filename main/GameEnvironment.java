@@ -867,8 +867,10 @@ public class GameEnvironment {
 		
 		setupGame();
 		
-		if (GUIMode)
+		if (GUIMode) {
 			PanelManager.startGUIGame();
+			Sound.playSound("Pirates.wav", true);
+		}
 		else
 			Console.startConsoleGame();
 		
