@@ -3,6 +3,7 @@ package main;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -20,10 +21,11 @@ public class Sound {
 		
 		try {
 			
-			File audioFile = new File("./src/sound/" + soundName);
+			//File audioFile = new File("./src/sound/" + soundName);
+			//File audioFile = new File(Sound.class.getResource("/sound/" + soundName));
 			
 			
-			AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+			AudioInputStream audioStream = AudioSystem.getAudioInputStream(Sound.class.getResource("/sound/" + soundName));
 			
 			AudioFormat format = audioStream.getFormat();
 			
@@ -49,7 +51,7 @@ public class Sound {
 			
 		} catch (LineUnavailableException e) {
 			System.err.println(e.getMessage());
-		}
+		} 
 		
 	}
 
