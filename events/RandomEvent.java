@@ -3,7 +3,7 @@ package events;
 import java.util.ArrayList;
 
 /**
- * 
+ * All events inherit from this class, defined useful shared properties/methods
  * @author Ryan Croucher rcr69
  *
  */

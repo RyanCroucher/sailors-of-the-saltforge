@@ -30,7 +30,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 
 /**
- * 
+ * Panel that displays three different subpanels of information
  * @author Ryan Croucher rcr69
  *
  */

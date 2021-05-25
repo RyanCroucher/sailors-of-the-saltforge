@@ -38,7 +38,7 @@ public class Inventory {
 	/**
 	 * Set the quantity of an item
 	 * @param item The item to set, given it exists
-	 * @param quantity The quantity to set, must be > 0
+	 * @param quantity The quantity to set, must be greater than 0
 	 */
 	public void setItemQuantity(Item item, int quantity) throws IllegalArgumentException {
 		if (quantity < 0) {
@@ -56,7 +56,7 @@ public class Inventory {
 	/**
 	 * Add quantity of an item into inventory 
 	 * @param item Item to be added
-	 * @param quantity Quantity to be added, must be >=1
+	 * @param quantity Quantity to be added, must be greater or equal to 1
 	 */
 	public void addItem(Item item, int quantity) {
 		if (quantity < 1) {
@@ -73,7 +73,7 @@ public class Inventory {
 	/**
 	 * Remove quantity of an item from inventory
 	 * @param item Item to remove quantity from. Must exist.
-	 * @param quantity Quantity to remove. Must be >=1 and cannot be greater than current inventory amount.
+	 * @param quantity Quantity to remove. Must be greater or equal to 1 and cannot be greater than current inventory amount.
 	 */
 	public void removeItem(Item item, int quantity) {
 		if (!inventory.containsKey(item)) {

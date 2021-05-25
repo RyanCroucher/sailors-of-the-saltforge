@@ -573,13 +573,14 @@ class GameEnvironmentTest {
 	void buyIslandUpgradeTest() {
 		
 		Player.setShip(new Ship(ShipModel.CUTTER));
-		Player.setGold(5000);
+		GameEnvironment.setGameDuration(50);
+		Player.setGold(5500);
 		
 		//buy every upgrade, make sure it was added to the ship and money deducted
 		try {
 			GameEnvironment.buyIslandUpgrade(Constants.UPGRADE_CANNONS, 1000);
 			assertTrue(Player.getShip().getUpgrades().contains(Constants.UPGRADE_CANNONS));
-			assertEquals(Player.getGold(), 4000);
+			assertEquals(Player.getGold(), 4500);
 		} catch (IllegalArgumentException | InsufficientGoldException e) {
 			fail("Valid test, shouldn't have thrown exception- " + e.getMessage());
 		}
@@ -587,7 +588,7 @@ class GameEnvironmentTest {
 		try {
 			GameEnvironment.buyIslandUpgrade(Constants.UPGRADE_CONTRACT, 1000);
 			assertTrue(Player.getShip().getUpgrades().contains(Constants.UPGRADE_CONTRACT));
-			assertEquals(Player.getGold(), 3000);
+			assertEquals(Player.getGold(), 3500);
 		} catch (IllegalArgumentException | InsufficientGoldException e) {
 			fail("Valid test, shouldn't have thrown exception- " + e.getMessage());
 		}
@@ -595,7 +596,7 @@ class GameEnvironmentTest {
 		try {
 			GameEnvironment.buyIslandUpgrade(Constants.UPGRADE_FLAG, 1000);
 			assertTrue(Player.getShip().getUpgrades().contains(Constants.UPGRADE_FLAG));
-			assertEquals(Player.getGold(), 2000);
+			assertEquals(Player.getGold(), 2500);
 		} catch (IllegalArgumentException | InsufficientGoldException e) {
 			fail("Valid test, shouldn't have thrown exception- " + e.getMessage());
 		}
@@ -603,7 +604,7 @@ class GameEnvironmentTest {
 		try {
 			GameEnvironment.buyIslandUpgrade(Constants.UPGRADE_HULL, 1000);
 			assertTrue(Player.getShip().getUpgrades().contains(Constants.UPGRADE_HULL));
-			assertEquals(Player.getGold(), 1000);
+			assertEquals(Player.getGold(), 1500);
 		} catch (IllegalArgumentException | InsufficientGoldException e) {
 			fail("Valid test, shouldn't have thrown exception- " + e.getMessage());
 		}
@@ -611,7 +612,7 @@ class GameEnvironmentTest {
 		try {
 			GameEnvironment.buyIslandUpgrade(Constants.UPGRADE_SAILS, 1000);
 			assertTrue(Player.getShip().getUpgrades().contains(Constants.UPGRADE_SAILS));
-			assertEquals(Player.getGold(), 0);
+			assertEquals(Player.getGold(), 500);
 		} catch (IllegalArgumentException | InsufficientGoldException e) {
 			fail("Valid test, shouldn't have thrown exception- " + e.getMessage());
 		}

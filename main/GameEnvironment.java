@@ -449,7 +449,7 @@ public class GameEnvironment {
 	/**
 	 * Calculates whether a random event will occur, based on route properties
 	 * @param chosenRoute the route the player is traveling by
-	 * @return true if random roll < route risk level, else false
+	 * @return true if random roll is less than the route risk level, else false
 	 */
 	public static boolean doesEventOccur(Route chosenRoute) {
 		return Math.random() * 100 < chosenRoute.getRiskLevel();

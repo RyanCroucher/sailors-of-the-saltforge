@@ -13,17 +13,22 @@ import javax.sound.sampled.DataLine.Info;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-
+/**
+ * Allows soundclips to be played in the game
+ * @author Ryan Croucher rcr69
+ *
+ */
 public class Sound {
 	
+	/**
+	 * Plays a sound clip
+	 * @param soundName the name of the file to play
+	 * @param loop if true, the sound loops forever
+	 */
 	public static void playSound(String soundName, boolean loop) {
 
 		
-		try {
-			
-			//File audioFile = new File("./src/sound/" + soundName);
-			//File audioFile = new File(Sound.class.getResource("/sound/" + soundName));
-			
+		try {	
 			
 			AudioInputStream audioStream = AudioSystem.getAudioInputStream(Sound.class.getResource("/sound/" + soundName));
 			

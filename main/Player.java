@@ -53,7 +53,7 @@ public class Player {
 
 	/**
 	 * 
-	 * @param sets the ship object of the player
+	 * @param ship the player's new ship
 	 */
 	public static void setShip(Ship ship) {
 		Player.ship = ship;

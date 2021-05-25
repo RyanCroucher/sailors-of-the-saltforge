@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import main.Constants.ShipModel;
 
 /**
- * 
+ * Defines the Ship Objects used by Player and Pirates
  * @author Ryan Croucher rcr69
  *
  */
@@ -247,7 +247,7 @@ public class Ship {
 
 	/**
 	 * 
-	 * @param set the hull value
+	 * @param hull the new hull value of the ship
 	 */
 	public void setHull(int hull) {
 		this.hull = hull;
@@ -271,7 +271,7 @@ public class Ship {
 
 	/**
 	 * 
-	 * @param set the crew value
+	 * @param crew the new crew value of the ship
 	 */
 	public void setCrew(int crew) {
 		this.crew = crew;
@@ -295,7 +295,7 @@ public class Ship {
 
 	/**
 	 * 
-	 * @param set the cargo value
+	 * @param cargo the new cargo value of the ship
 	 */
 	public void setCargo(int cargo) {
 		this.cargo = cargo;
@@ -327,7 +327,7 @@ public class Ship {
 
 	/**
 	 * 
-	 * @param Set the weapon rating
+	 * @param weaponRating the new weaponRating of the ship
 	 */
 	public void setWeaponRating(int weaponRating) {
 		this.weaponRating = weaponRating;
