@@ -64,6 +64,32 @@ public class EventPanel extends JPanel {
 	 */
 	private void constructTexts() {
 		
+		//used to play either of the two pirate dice games
+		buttonRollDice = new JButton("ROLL DICE");
+		buttonRollDice.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//keep getting chunks of the event effect text until we hit the end (a period)
+				String effectChunk = event.getEffect();
+				
+				textAreaEventDescription.setText(effectChunk);
+				PanelManager.refreshFrame();
+				
+				//we hit the end of the dice game, hide this button and show next button
+				if (effectChunk.endsWith(".") || effectChunk.endsWith("!")) {
+					buttonRollDice.setVisible(false);
+					buttonNext.setVisible(true);
+				}
+			}
+		});
+		buttonRollDice.setVerticalAlignment(SwingConstants.BOTTOM);
+		buttonRollDice.setOpaque(false);
+		buttonRollDice.setForeground(Color.RED);
+		buttonRollDice.setFont(new Font("Lato Black", Font.PLAIN, 48));
+		buttonRollDice.setFocusPainted(false);
+		buttonRollDice.setBackground(new Color(200, 200, 0, 0));
+		buttonRollDice.setBounds(1150, 740, 300, 75);
+		add(buttonRollDice);
+		
 		labelEventName = new JLabel("");
 		labelEventName.setForeground(Color.RED);
 		labelEventName.setFont(new Font("Lato Black", Font.PLAIN, 48));
@@ -96,32 +122,6 @@ public class EventPanel extends JPanel {
 	 * Creates all buttons used in the panel
 	 */
 	private void constructButtons() {
-		
-		//used to play either of the two pirate dice games
-		buttonRollDice = new JButton("ROLL DICE");
-		buttonRollDice.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				//keep getting chunks of the event effect text until we hit the end (a period)
-				String effectChunk = event.getEffect();
-				
-				textAreaEventDescription.setText(effectChunk);
-				PanelManager.refreshFrame();
-				
-				//we hit the end of the dice game, hide this button and show next button
-				if (effectChunk.endsWith(".") || effectChunk.endsWith("!")) {
-					buttonRollDice.setVisible(false);
-					buttonNext.setVisible(true);
-				}
-			}
-		});
-		buttonRollDice.setVerticalAlignment(SwingConstants.BOTTOM);
-		buttonRollDice.setOpaque(false);
-		buttonRollDice.setForeground(Color.RED);
-		buttonRollDice.setFont(new Font("Lato Black", Font.PLAIN, 48));
-		buttonRollDice.setFocusPainted(false);
-		buttonRollDice.setBackground(new Color(200, 200, 0, 0));
-		buttonRollDice.setBounds(1150, 740, 300, 75);
-		add(buttonRollDice);
 		
 		//used to proceed to the next island
 		buttonNext = new JButton("NEXT");
