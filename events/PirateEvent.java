@@ -329,10 +329,14 @@ public class PirateEvent extends RandomEvent {
 	}
 	
 	/**
-	 * Breaks string into chunks if there was a round by round dice game
+	 * Return the event result string.
+	 * Breaks string into chunks if we're in GUI mode
 	 */
 	@Override
 	public String getEffect() {
+		
+		if (GameEnvironment.GUIMode == false)
+			return super.getEffect();
 
 		//there was a fight or a flee, break string up into chunks
 		if (super.getEffect().contains("Round")) {

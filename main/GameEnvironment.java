@@ -59,7 +59,7 @@ public class GameEnvironment {
 	/**
 	 * When GUIMode is turned on, the console no longer expects input.
 	 */
-	private static Boolean GUIMode = true;
+	public static Boolean GUIMode = true;
 	
 	
 	
@@ -440,6 +440,9 @@ public class GameEnvironment {
 		}
 		
 		Player.setGold(Player.getGold() - upgradeCost);
+		
+		//we might have just lost!
+		checkEndgameConditions();
 		
 	}
 	
@@ -860,19 +863,22 @@ public class GameEnvironment {
 	
 	
 	/**
-	 * Initializes the game and walks the player through character creation.
-	 * @param args No arguments are currently used for the main method.
+	 * Initializes the game.
+	 * @param args Give 'Console' argument to run as console game rather than GUI
 	 */
 	public static void main(String[] args) {
 		
 		setupGame();
 		
-		if (GUIMode) {
+		if (args.length > 0 && args[0].equals("Console")) {
+			GUIMode = false;
+			Console.startConsoleGame();
+		} else {
+			GUIMode = true;
 			PanelManager.startGUIGame();
 			Sound.playSound("Pirates.wav", true);
 		}
-		else
-			Console.startConsoleGame();
+		
 		
 	}
 
